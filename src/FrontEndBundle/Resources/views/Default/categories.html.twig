@@ -1,0 +1,156 @@
+{% extends ":accueil:index.html.twig" %}
+     {% block contenu %}
+         <br/>
+boules
+         <div class="row-container container-small" style="padding-bottom: 0;">
+             <div class="container">
+                 <div class="row">
+                     <div class="col-xs-12">
+                         <h1 class="text-center"> {{ titreCategorie }}</h1>
+                         <h2 class="h4 text-center"> {{ descriptionCategoire }} </h2>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         <div class="row-container container-small border odd filters filters-three-lines hidden-xs hidden-sm">
+             <div class="container">
+                 <div class="row">
+                     <div class="col-xs-12 col-md-12">
+                         <div class="">
+                             <div class="row">
+                                 <div class="col-sm-1 col-lg-offset-1 text-right"> <i class="ion ion-3x ion-funnel filters-icon"></i>
+                                     <div class="text-filter"> <span class="text-muted hidden-sm vertical-middle"> </span>
+                                     </div>
+                                 </div>
+                                 <div class="col-sm-10">
+                                     <div class="row">
+                                         <div class="col-sm-12">
+                                             <div class="btn-group btn-group-filter-par-bu" data-toggle="buttons">
+                                                 <label class="btn btn-md btn-default btn-flat" data-to-filter="ENTREPRISE">
+                                                     <input type="checkbox" class="card-filter-type">Startups (<span class="filter-counter-ENTREPRISE">4</span>) </label>
+                                                 <label class="btn btn-md btn-default btn-flat" data-to-filter="IMMOBILIER">
+                                                     <input type="checkbox" class="card-filter-type">Immobilier (<span class="filter-counter-IMMOBILIER">1</span>) </label>
+                                                 <label class="btn btn-md btn-default btn-flat" data-to-filter="COOPERATIVE"> <input type="checkbox" class="card-filter-type">Innovation Sociale (<span class="filter-counter-COOPERATIVE">0</span>) </label>
+                                                 <label class="btn btn-md btn-default btn-flat" data-to-filter="ENR"> <input type="checkbox" class="card-filter-type">Énergies (<span class="filter-counter-ENR">1</span>) </label>
+                                                 <label class="btn btn-md btn-default btn-flat" data-to-filter="FORET"> <input type="checkbox" class="card-filter-type">Agroforesterie (<span class="filter-counter-FORET">0</span>) </label>
+                                             </div>
+                                         </div>
+                                     </div>
+
+                                     <div class="row">
+                                         <div class="text-filter">
+                                             <div class="col-xs-9">
+                                                 <div class="input-group">
+                                                     <div class="input-group-addon">Recherche par nom de projet</div>
+                                                     <input type="search" name="filterByName" class="form-control input-sm" placeholder="Ex: LEVELS3D, 11 CENTRALES PHOTOVOLTAÏQUES DANS L'ALLIER..." list="list-projets"> <datalist id="list-projets">
+                                                         <option value="Levels3d"></option>
+                                                         <option value="11 Centrales Photovoltaïques Dans L'allier"></option>
+                                                         <option value="Ffly4u"></option>
+                                                         <option value="Op2lysis"></option>
+                                                         <option value="Aviwell"></option>
+                                                         <option value="Castel Roc"> </option>
+                                                     </datalist>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                                 <div class="btn-delete-container">
+                                     <button type="button" class="btn btn-sm btn-danger btn-delete-filters pull-right tooltip-show hidden three-lines" data-placement="bottom" title="" data-original-title="Supprimer les filtres"><i class="ion ion-ios-close-empty ion-4x"></i></button>
+                                     <div class="pull-right text-right filters-counters filters-counters-three-lines text-muted hidden"> <p> <strong><span class="filters-nb-projets-affiches">6</span> projet(s)</strong><br>sur <span class="filters-nb-projets-total">6</span> </p>
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         <div class="row-container container-small border-bottom list-cards">
+             <div class="container">
+                 <div class="row">
+                     {% set totaldon = 0 %}
+                     {% for projet in projets %}
+                         {% for don in projet.dons %}
+                             {% set totaldon =totaldon+ don.montant %}
+                         {% endfor %}
+                         <div class="col-xs-12 col-sm-6 col-md-4 col-project-card">
+                             <div class="project-card startup" id="{{ projet.id }}">
+                                 <a href="" class="link">
+                                     {% for media in projet.media|slice(0,1)%}
+                                         <div class="project-thumbnail text-right" style="background-image: url('{{ asset ('uploads/admin/images/')}}{{ media.chemin  }}')"> </div>
+
+
+                                     {% endfor %}
+                                     <div class="bandeau"> {{ projet.categorie.nomCategorie }} &nbsp; · &nbsp;
+                                     </div>
+                                     <h3>
+                                         <span class="project-name" data-project-name="{{ projet.nomProjet }}">{{ projet.nomProjet }}</span>
+                                         {% set porteur ='' %}
+                                         {% if projet.porteur.type.id ==1 %}
+                                             {% set porteur = projet.porteur.raisonSociale %}
+
+                                         {% else %}
+                                             {% set porteur = projet.porteur.nom ~ " " ~ projet.porteur.prenom %}
+
+
+                                         {% endif %}
+                                         &nbsp;<small title="{{ porteur }}">par {{ porteur }}</small>
+                                     </h3></a>
+                                 <a href="{{ path('le_projet',{'id': projet.id}) }}">
+                                     <p class="description-courte">{{ projet.descriptionCourteProjet|slice(0,300)|raw }}</p> <br/><br/><br/>
+                                 </a>
+                                 <div class="progress" style="margin:10px;">
+                                     <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"></div>
+                                 </div>
+                                 {#<div class="call-to-action selection-tool ">#}
+                                 {#<form class="add-to-my-selection" action="/fr/public/front/a/ajouterselection" method="POST" accept-charset="utf-8">#}
+                                 {#<input type="hidden" name="id" value="19370683">#}
+                                 {#<div class="row">#}
+                                 {#<div class="col-xs-10">#}
+                                 {#<label class="text-center">Ajouter au panier : </label>#}
+                                 {#<div class="slider-cool  noUi-target noUi-ltr noUi-horizontal noUi-connect" data-min="100" data-step="10" data-max="100000" data-selected="">#}
+                                 {#<input type="hidden" name="montant" value="">#}
+                                 {#<div class="noUi-base">#}
+                                 {#<div class="noUi-origin noUi-background" style="left: 0%;">#}
+                                 {#<div class="noUi-handle noUi-handle-lower">#}
+                                 {#<div class="noUiSlider-tooltip top show">#}
+                                 {#<strong>100&nbsp;€</strong>#}
+                                 {#</div>#}
+                                 {#</div>#}
+                                 {#</div>#}
+                                 {#</div>#}
+                                 {#</div>#}
+                                 {#<small> <span class="text-muted"> A partir de 100 € </span> </small>#}
+                                 {#</div>#}
+                                 {#<div class="col-xs-2"> <button type="submit" class="btn btn-primary no-margin call-to-action-btn">OK</button>#}
+                                 {#</div>#}
+                                 {#</div>#}
+                                 {#</form>#}
+                                 {#</div>#}
+                                 {#<div class="call-to-action text-center hidden"> <h4 class="text-bold text-primary">Projet ajouté au panier !</h4>#}
+                                 {#<form style="display: inline;" class="add-to-my-selection form-inline" action="/fr/public/front/a/retirerselection" method="POST" accept-charset="utf-8">#}
+                                 {#<input type="hidden" name="id" value="19370683">#}
+                                 {#<button type="submit" class="btn btn-default btn-sm tooltip-show" title="" data-original-title="Retirer du panier, ne plus recevoir d'actualités">#}
+                                 {#<i class="ion ion-android-close"></i> Retirer</button>#}
+                                 {#</form>#}
+                                 {#<a href="/fr/compte/ma-selection" class="btn btn-primary btn-sm">Mon panier</a>#}
+                                 {#</div>#}
+                                 <div class="key-data">
+                                     <ul class="list-inline col-4">
+                                         <li> <strong class="text-on-one-line">Collecte</strong><br>
+                                             <strong class="text-on-one-line">en cours</strong>
+                                         </li>
+                                         <li> <strong>{{ projet.objectif|number_format(0, ' ', ' ') }}</strong> <br>recherchés </li>
+                                         <li> <strong>{{ totaldon }}</strong> <br>Contributeurs </li>
+                                         <li> <strong>{{ totaldon|number_format(0, ' ', ' ') }}</strong> <br>Récoltées </li>
+                                     </ul>
+                                 </div>
+                             </div>
+                         </div>
+                     {% endfor %}
+                 </div>
+
+             </div>
+         </div>
+        {% endblock %}

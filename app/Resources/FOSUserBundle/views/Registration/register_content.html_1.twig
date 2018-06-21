@@ -1,0 +1,214 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{% extends "@FOSUser/layout_user_form.html.twig" %}
+{% block monform %}
+    <div class="row">
+{#{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register login-form'}}) }}#}
+
+        <form action="
+
+{% if app.request.attributes.get('_route') == 'user_one_registration' %}
+{{ path('user_one_registration_register') }}
+{% endif %}
+
+{% if app.request.attributes.get('_route') == 'user_two_registration' %}
+{{ path('user_two_registration_register') }}
+{% endif %}
+
+"{{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+
+    <div class="row">
+        <div class="input-field col s12 center">
+            <h4>Register</h4>
+            <p class="center">Join to our community now !</p>
+        </div>
+    </div>
+        <div class="row">
+            <div class="input-field col s12">
+                #
+                {{ form_widget(form.type,{'attr':{'id': 'adminbundle_porteur_type'}}) }}
+            </div>
+        </div>
+        <div class="row" id="personne">
+            <div class="row">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">account_circle</i>
+                    {#<input id="icon_prefix" type="text" class="validate">#}
+                    {{ form_widget(form.nom) }}
+
+                    <label> {{ form_label(form.nom) }}</label>
+                </div>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">phone</i>
+
+                    {{ form_widget(form.prenom,{'attr':{'class': 'validate'}}) }}
+
+                    <label> {{ form_label(form.prenom) }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">account_circle</i>
+                    {#<input id="icon_prefix" type="text" class="validate">#}
+                    {{ form_widget(form.dateNaissance) }}
+
+                    <label> {{ form_label(form.dateNaissance) }}</label>
+                </div>
+                <div class="input-field col s6">
+                    <i class="material-icons prefix">phone</i>
+
+                    {{ form_widget(form.lieuNaissance,{'attr':{'class': 'validate'}}) }}
+
+                    <label> {{ form_label(form.lieuNaissance) }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>Envoyer votre CNI</span>
+                            {{ form_widget(form.imageFileCni) }}
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                    {#<input id="icon_prefix" type="text" class="validate">#}
+
+
+
+                </div>
+                <div class="input-field col s12">
+
+                </div>
+            </div>
+        </div>
+        <div id="societe">
+            <div class="row">
+                <div class="input-field col s12">
+                <i class="material-icons prefix">phone</i>
+                <label> {{ form_label(form.raisonSociale) }}</label>
+
+                {{ form_widget(form.raisonSociale,{'attr':{'class': 'validate'}}) }}
+
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                {#<input id="icon_prefix" type="text" class="validate">#}
+                {{ form_widget(form.telephone) }}
+
+                <label> {{ form_label(form.telephone) }}</label>
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">phone</i>
+
+                {{ form_widget(form.adresse,{'attr':{'class': 'validate'}}) }}
+
+                <label> {{ form_label(form.adresse) }}</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>Votre photo/logo</span>
+                        {{ form_widget(form.imageFile) }}
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+                {#<input id="icon_prefix" type="text" class="validate">#}
+
+
+
+            </div>
+            <div class="input-field col s12">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                {#<input id="icon_prefix" type="text" class="validate">#}
+                {{ form_widget(form.username) }}
+
+                <label> {{ form_label(form.username) }}</label>
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">phone</i>
+
+                {{ form_widget(form.email,{'attr':{'class': 'validate'}}) }}
+
+                <label> {{ form_label(form.email) }}</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                {#<input id="icon_prefix" type="text" class="validate">#}
+                {{ form_widget(form.pays) }}
+
+                <label> {{ form_label(form.pays) }}</label>
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">phone</i>
+
+                {{ form_widget(form.ville,{'attr':{'class': 'validate'}}) }}
+
+                <label> {{ form_label(form.ville) }}</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">account_circle</i>
+                {#<input id="icon_prefix" type="text" class="validate">#}
+                {{ form_widget(form.plainPassword.first) }}
+
+                <label> {{ form_label(form.plainPassword.first) }}</label>
+            </div>
+            <div class="input-field col s6">
+                <i class="material-icons prefix">phone</i>
+
+                {{ form_widget(form.plainPassword.second,{'attr':{'class': 'validate'}}) }}
+
+                <label> {{ form_label(form.plainPassword.second) }}</label>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div>
+        <input type="submit" value="{{ 'registration.submit'|trans }}" />
+    </div>
+{{ form_end(form) }}
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script>
+        $(document).ready(function(){
+            $('#societe').hide();
+
+            $("#adminbundle_porteur_type").change(function() {
+                if ( $("#adminbundle_porteur_type").val() == "2"){
+                    $('#societe').show();
+
+                    $('#personne').hide();
+
+                }
+                else{
+                    $('#personne').show();
+                    $('#societe').hide();
+
+                }
+            })
+
+        });
+    </script>
+{% endblock %}
+

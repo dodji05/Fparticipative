@@ -1,0 +1,26 @@
+{% extends '@Acteur/public/Template/Materialize/layout.html.twig' %}
+    {% block menu %}
+        {% include'@Acteur/Promotteurs/Partials/_nemu.html.twig' %}
+    {% endblock %}
+    {% block contenuprincipal %}
+        {% if type == 'nouveau' %}
+
+            {% include '@Acteur/Promotteurs/Partials/_poject_form.html.twig' %}
+
+            {% else %}
+                {% include '@Acteur/Promotteurs/Partials/_soumiss_confirmation.html.twig' %}
+
+            {% endif %}
+
+    {% endblock %}
+{% block javascript %}
+
+
+    {#{{ tinymce_init({#}
+    {#theme: {'simple':{'language': app.request.locale, 'height': 300 }},#}
+    {#toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",#}
+    {#autosave_ask_before_unload: false,#}
+{#})#}
+{#}}#}
+
+{% endblock %}

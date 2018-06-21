@@ -1,0 +1,28 @@
+{% extends "backend/layout.html.twig" %}
+{% block menuprincipal %}
+    <li class="nav-item">
+        <a href="{{ path('categories_index') }}"><i class="ft-droplet"></i><span data-i18n="" class="menu-title">Catégories</span></a>
+    </li>
+    <li class="has-sub nav-item"><a href="#"><i class="ft-layers"></i><span data-i18n="" class="menu-title">Porteurs de projets</span></a>
+        <ul class="menu-content">
+            <li><a href="{{ path('porteur_new') }}" class="menu-item">Ajouter un porteur de projet</a>
+            </li>
+            <li><a href="{{ path('porteur_index') }}" class="menu-item">Liste des porteurs de projet</a>
+            </li>
+        </ul>
+    </li>
+    <li class="has-sub nav-item"><a href="#"><i class="ft-layers"></i><span data-i18n="" class="menu-title">Projets</span></a>
+        <ul class="menu-content">
+            <li><a href="{{ path('projet_new') }}" class="menu-item">Ajouter</a>
+            </li>
+            <li><a href="{{ path('projet_liste') }}" class="menu-item">Liste</a>
+            </li>
+            <li><a href="{{ path('projet_valide') }}" class="menu-item">Projets validés</a>
+            </li>
+            <li><a href="{{ path('porteur_index') }}" class="menu-item">Projets en instance</a>
+            </li>
+        </ul>
+    </li>
+
+
+{% endblock %}

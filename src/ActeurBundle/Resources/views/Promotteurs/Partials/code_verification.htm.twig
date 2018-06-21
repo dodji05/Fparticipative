@@ -1,0 +1,116 @@
+{% extends "@FOSUser/layout_user_form.html.twig" %}
+{% block monform %}
+    {{ form_start(form) }}
+
+    {#{{ form_widget(form) }}#}
+
+        <div >
+            <p style="color: darkcyan">Veuillez le code d'incrisption fournie par </p>
+            <p style="color: darkcyan">l'equipe de SoutenirUnProjet</p>
+
+
+    </div>
+    <div class="row">
+            <div class="input-field col s12">
+                <label> {{ form_label(form.code) }}</label>
+                              {#<input id="icon_prefix" type="text" class="validate">#}
+                {{ form_widget(form.code) }}
+
+
+            </div>
+    </div>
+
+
+    <div id="card-alert-error" class="card red">
+        <div class="card-content white-text">
+            <small>ERREUR: Code erronee reverifier le code</small>
+            <small>Veuillez contacter l'equipe ...</small>
+        </div>
+
+    </div>
+    <div id="card-alert-succes" class="card green">
+        <div class="card-content white-text">
+            <small>FELICITATION : votre code est valide passe a l'etape suivante.</small>
+        </div>
+
+    </div>
+    <div id="btn_validation"style="margin: 10px">
+
+        <button class="btn waves-effect waves-light " type="submit">Etape suivante
+            <i class="material-icons right">send</i>
+        </button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+{% block javascript %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script>
+        function remplissage(e, elem){
+            e.preventDefault();
+            var code = $('.code_inscription').val();
+            // alert(parent.html());
+
+                $.ajax({
+                    type: 'get',
+                    url: Routing.generate('codeverification', {code: code}),
+                    dataType: "json",
+                    // data: {
+                    //     term: request.term
+                    // },
+                    function(response){
+                        if(response.success){
+                            $("#card-alert-succes").show()
+                            $("#card-alert-error").hide()
+                        }
+                        else{
+                            $("#card-alert-succes").hide()
+                            $("#card-alert-error").show()
+                        }
+                    },
+
+
+                })
+
+
+        }
+        function aButtonPressed(){
+
+            var code = $('.code_inscription').val();
+
+            $.post(
+                Routing.generate('codeverification', {code: code}),
+
+
+                function(response){
+                    if(response.success){
+                        $("#card-alert-succes").show()
+                        $("#btn_validation").show()
+                        $("#card-alert-error").hide()
+                    }
+                    else{
+                        $("#card-alert-succes").hide()
+                        $("#btn_validation").hide()
+                        $("#card-alert-error").show()
+                    }
+                },
+                "json"
+            );
+        }
+        jQuery(document).ready(function() {
+            //$("body").delegate("#addItem", "click", addItem)
+            // Get the ul that holds the collection of tags
+            $("#card-alert-succes").hide()
+            $("#btn_validation").hide()
+            $("#card-alert-error").hide()
+            $('.code_inscription').on('blur', function(){aButtonPressed();});
+            $('.code_inscription').on('focus', function(){
+                $("#card-alert-succes").hide()
+                $("#card-alert-error").hide()
+                $("#btn_validation").hide()
+            });
+
+        });
+    </script>
+
+{% endblock %}

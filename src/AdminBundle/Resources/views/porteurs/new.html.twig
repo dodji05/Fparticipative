@@ -1,0 +1,134 @@
+{% extends '@Admin/Default/index.html.twig' %}
+
+{% block contenuprincipal %}
+    <section id="basic-form-layouts">
+        <div class="row justify-content-md-center">
+            <div class="col-md-8">
+                <div class="card">
+
+                    <div class="card-header">
+                        <h4 class="card-title" id="basic-layout-card-center">Porteur creation</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="px-3">
+
+                            {{ form_start(form ,{'attr':{'class': 'form'}})}}
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label> {{ form_label(form.type) }}</label>
+
+                                    {{ form_widget(form.type,{'attr':{'class': 'form-control'}}) }}
+
+                                </div>
+                                <h4 class="form-section"><i class="ft-user"></i>
+                                    <div id="personne_info">Informations personnelles</div> <div id="societe_info">Societe</div></h4>
+
+                                <div class="row" id="personne">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label> {{ form_label(form.nom) }}</label>
+
+                                            {{ form_widget(form.nom,{'attr':{'class': 'form-control'}}) }}
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label> {{ form_label(form.prenom) }}</label>
+
+                                            {{ form_widget(form.prenom,{'attr':{'class': 'form-control'}}) }}
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="societe">
+
+                                    <div class="form-group">
+                                        <label> {{ form_label(form.raisonSociale) }}</label>
+
+                                        {{ form_widget(form.raisonSociale,{'attr':{'class': 'form-control'}}) }}
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label> {{ form_label(form.mail) }}</label>
+
+                                            {{ form_widget(form.mail,{'attr':{'class': 'form-control'}}) }}
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label> {{ form_label(form.telephone) }}</label>
+
+                                            {{ form_widget(form.telephone,{'attr':{'class': 'form-control'}}) }}
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label> {{ form_label(form.adresse) }}</label>
+
+                                    {{ form_widget(form.adresse,{'attr':{'class': 'form-control'}}) }}
+
+                                </div>
+                                <h4 class="form-section"><i class="ft-user"></i> Autres informations</h4>
+                                <div class="form-group">
+                                    <label> {{ form_label(form.imageFile) }}</label>
+
+                                    {{ form_widget(form.imageFile,{'attr':{'class': 'form-control-file'}}) }}
+
+                                </div>
+
+
+
+
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-9 col-sm-offset-3">
+                                    <button class="btn btn-success" type="submit"><span
+                                                class="glyphicon glyphicon-ok"></span> ajouter
+                                    </button>
+                                </div>
+                            </div>
+
+                            {{ form_widget(form) }}
+
+                        {{ form_end(form) }}
+
+
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block javascript %}
+<script>
+    $(document).ready(function(){
+        $('#societe').hide();
+        $('#societe_info').hide();
+        $("#adminbundle_porteur_type").change(function() {
+            if ( $("#adminbundle_porteur_type").val() == "2"){
+                $('#societe').show();
+                $('#societe_info').show();
+                $('#personne').hide();
+                $('#personne_info').hide();
+
+            }
+            else{
+                $('#personne').show();
+                $('#societe').hide();
+                $('#societe_info').hide();
+                $('#personne_info').show();
+            }
+        })
+
+    });
+</script>
+{% endblock %}
+

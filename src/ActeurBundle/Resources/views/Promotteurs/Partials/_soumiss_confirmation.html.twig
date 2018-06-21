@@ -1,0 +1,22 @@
+<div class="row">
+<div class="col s6 m6 l6 offset-s3 offset-l3 offset-m3">
+    <div class="card-panel">
+        <h4 class="header2 " style="text-align: center; font-size: 22px !important;"> VOTRE PROJET A ETE SOUMIS AVEC SUCCEES AUX ORGANISATEURS  </h4>
+
+    <div class="row">
+        <h4 align="center"> {{ projet.nomProjet }}</h4>
+        <center>  <img src="{{ asset ('uploads/admin/images/')}}{{ projet.logo  }}" align="center"></center>
+    </div>
+    <div class="row">
+
+        <p>Categorie : {{ projet.categorie.nomCategorie }} </p>
+        <p>Descrition courte du projet</p>
+        <p> {{ projet.descriptionCourteProjet  }} </p>
+    </div>
+    <div class="row">
+        <a href="{{ path('porteur_admin') }}" class="right"> Retour  vers le tableau de bord </a>
+    </div>
+
+</div>
+</div>
+</div>

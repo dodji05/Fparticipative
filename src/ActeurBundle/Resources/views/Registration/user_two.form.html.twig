@@ -1,0 +1,121 @@
+
+{#{% extends "@FOSUser/layout_user_form.html.twig" %}#}
+{% extends ":accueil:index.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+     {% block contenu %}
+         <div class="container" style="margin-top: 25px; margin-bottom: 30px">
+             <div class="row">
+                 <div class="col-lg-4 col-lg-push-8 col-md-4 col-md-push-8 col-xs-12 col-xs-pull-0 col-sm-12 col-sm-pull-0">
+                     <div class="donateur-details-content" style="">
+                         <h3>Veuillez vous connecter à votre compte.</h3> <hr/>
+                         <form  action="{{ path("fos_user_security_check")}}" class="login form-horizontal" data-toggle="validator" method="post" accept-charset="utf-8">
+                             {#<input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>#}
+
+                             <div class="form-group">
+
+                                 <label for="full_name" class="col-sm-3 control-label">Login : </label>
+                                 <div class="col-sm-8">
+                                     <input type="text" class="form-control" placeholder="Identifiant" name="_username" required="required"/>
+                                 </div>
+                             </div>
+
+                             <div class="form-group">
+                                 <label for="full_name" class="col-sm-3 control-label">Mot de passe : </label>
+                                 <div class="col-sm-8">
+                                     <input type="password" id="password" name="_password" required="required" class="form-control" placeholder="Mot de Passe "/>
+                                 </div>
+                             </div>
+                             <div class="form-group text-center">
+                                 <div class="col-sm-offset-2 col-sm-10">
+                                     <button type="submit" class="btn  btn-success">Se connecter</button>
+                                 </div>
+                             </div>
+
+                         </form>
+
+                     </div>
+                 </div>
+                 <div class="col-lg-8 col-lg-pull-4 col-md-8 col-md-pull-4 col-xs-12 col-xs-push-0 col-sm-12 col-sm-push-0">
+
+                     <div class="donateur-details-content" style="">
+                         <h3>S'inscrire</h3>
+                         <hr/>
+                     {{ form_start(form, {'method': 'post', 'action': path('donateur_register'), 'attr': {'class': 'fos_user_registration_register form-horizontal'}}) }}
+
+                     <div class="form-group">
+
+                         <label for="full_name" class="col-sm-3 control-label">Nom : </label>
+                         <div class="col-sm-8">
+                             {{ form_widget(form.nom,{'attr':{'class': 'form-control'}}) }}
+                         </div>
+                     </div>
+
+                     <div class="form-group">
+                         <label for="full_name" class="col-sm-3 control-label">prenom(s) : </label>
+                         <div class="col-sm-8">
+                             {{ form_widget(form.prenom,{'attr':{'class': 'form-control'}}) }}
+                         </div>
+                     </div>
+
+                     <div class="form-group">
+                         <label for="full_name" class="col-sm-3 control-label">Adresse: </label>
+
+                         <div class="col-sm-8">
+                             {{ form_widget(form.adresse,{'attr':{'class': 'form-control'}}) }}
+                         </div>
+                     </div>
+
+                     <div class="form-group">
+                         <label for="full_name" class="col-sm-3 control-label">Telephone : </label>
+
+                         <div class="col-sm-8">
+                             {{ form_widget(form.telephone,{'attr':{'class': 'form-control'}}) }}
+                         </div>
+                     </div>
+
+                     <div class="form-group">
+                         <label for="full_name" class="col-sm-3 control-label"> Nom utilisateur : </label>
+
+                         <div class="col-sm-8">
+                             {{ form_widget(form.username,{'attr':{'class': 'form-control'}}) }}
+                         </div>
+                     </div>
+
+                     <div class="form-group">
+                         <label for="full_name" class="col-sm-3 control-label">E-mail: </label>
+
+                         <div class="col-sm-8">
+                             {{ form_widget(form.email,{'attr':{'class': 'form-control'}}) }}
+                         </div>
+                     </div>
+
+                     <div class="form-group">
+                         <label for="full_name" class="col-sm-3 control-label">Mot de passe: </label>
+                         <div class="col-sm-8">
+                             {{ form_widget(form.plainPassword.first,{'attr':{'class': 'form-control'}}) }}
+                         </div>
+                     </div>
+
+                     <div class="form-group">
+                         <label for="full_name" class="col-sm-3 control-label">Répéter le mot de passe</label>
+                         <div class="col-sm-8">
+                             {{ form_widget(form.plainPassword.second,{'attr':{'class': 'form-control'}}) }}
+                         </div>
+                     </div>
+                         <div class="form-group text-center">
+                             <div class="col-sm-offset-2 col-sm-10">
+                                 <button type="submit" class="btn  btn-success">{{ 'registration.submit'|trans }}</button>
+                             </div>
+                         </div>
+
+
+                     {{ form_end(form) }}
+                 </div>
+             </div>
+             </div>
+         </div>
+
+
+
+
+     {% endblock %}

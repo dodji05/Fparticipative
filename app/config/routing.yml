@@ -1,0 +1,29 @@
+acteur:
+    resource: "@ActeurBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+admin_porteur:
+    resource: "@AdminBundle/Controller/PorteurController.php"
+    type:     annotation
+
+admin_categories:
+    resource: "@AdminBundle/Controller/CategoriesController.php"
+    type:     annotation
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+frontendbundle:
+    resource: "@FrontEndBundle/Controller/"
+    type:     annotation
+    prefix:   /
+adminbundle:
+    resource: "@AdminBundle/Controller/"
+    type:     annotation
+    prefix:   /		
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

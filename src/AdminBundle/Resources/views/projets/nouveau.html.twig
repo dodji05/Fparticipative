@@ -1,0 +1,74 @@
+{% extends '@Admin/Default/index.html.twig' %}
+{% block contenuprincipal %}
+    <section id="basic-form-layouts">
+        <div class="row justify-content-md-center">
+            <div class="col-md-8">
+                <div class="card">
+
+                    <div class="card-header">
+                        <h4 class="card-title" id="basic-layout-card-center">AJOUTER UN NOUVEAU PROJET</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="px-3">
+                            {{ form_start(form ,{'attr':{'class': 'form'}})}}
+                            <div class="form-body">
+                                <div class="form-group">
+                                    <label> {{ form_label(form.categorie) }}</label>
+
+                                    {{ form_widget(form.categorie,{'attr':{'class': 'form-control'}}) }}
+
+                                </div>
+                                <div class="form-group">
+                                    <label> {{ form_label(form.porteur) }}</label>
+
+                                    {{ form_widget(form.porteur,{'attr':{'class': 'form-control','placeholder':'Veuillez selectionner le porteur du projet'}}) }}
+
+                                </div>
+                                <div class="form-group">
+                                    <label> {{ form_label(form.nomProjet) }}</label>
+
+                                    {{ form_widget(form.nomProjet,{'attr':{'class': 'form-control','placeholder':'Nom du projet'}}) }}
+
+                                </div>
+                                <div class="form-group">
+                                    <label> {{ form_label(form.descriptionCourteProjet) }}</label>
+
+                                    {{ form_widget(form.descriptionCourteProjet,{'attr':{'class': 'form-control','placeholder':'Description courte du projet en 2 phrases','rows':'7'}}) }}
+
+                                </div>
+                                <div class="form-group">
+                                    <label> {{ form_label(form.descriptionProjet) }}</label>
+
+                                    {{ form_widget(form.descriptionProjet,{'attr':{'class': 'form-control tinymce','placeholder':'Description complete du projet','rows':'15'}}) }}
+
+                                </div>
+                                <div class="form-group">
+                                    <label> {{ form_label(form.imageFile) }}</label>
+
+                                    {{ form_widget(form.imageFile,{'attr':{'class': 'form-control-file'}}) }}
+
+                                </div>
+
+                                {{ form_widget(form) }}
+                                <input type="submit" value="Create" />
+                            </div>
+                            {{ form_end(form) }}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+{% block javascript %}
+    {{ tinymce_init({
+        theme: {'simple':{'language': app.request.locale, 'height': 500 }},
+        toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+        autosave_ask_before_unload: false,
+        })
+    }}
+
+{% endblock %}

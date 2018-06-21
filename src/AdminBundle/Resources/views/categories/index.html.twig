@@ -1,0 +1,250 @@
+{% extends '@Admin/Default/index.html.twig' %}
+
+{% block contenuprincipal %}
+    <section id="base-style">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Les Categories</h4>
+                    </div>
+                    <div class="card-body collapse show">
+
+
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Catégorie</th>
+                                    <th>Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for category in categories %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td>
+                                        <td>{{ category.nomCategorie }}</td>
+                                        <td>{{ category.descriptionCategorie }}</td>
+                                        <td>
+                                            <a href="{{ path('categories_show', { 'id': category.id }) }}" onclick="catShow(event, this)" data-rec="{{ category.id }}"><i class="fa fa-eye" aria-hidden="true"></i></a> | <a href="{{ path('categories_edit', { 'id': category.id }) }}">edit</a>
+
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+
+
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Ajouter une nouvelle categorie</h4>
+                    </div>
+                    <div class="card-body collapse show">
+
+
+                        {{ form_start(form ,{'attr':{'class': 'form-horizontal'}}) }}
+
+                        <div class="form-group">
+                            <label class="col-sm-8 control-label"> {{ form_label(form.nomCategorie) }}</label>
+                            <div class="col-sm-12">
+                                {{ form_widget(form.nomCategorie,{'attr':{'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-8 control-label"> {{ form_label(form.descriptionCategorie) }}</label>
+                            <div class="col-sm-12">
+                                {{ form_widget(form.descriptionCategorie,{'attr':{'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-9 col-sm-offset-3">
+                                <button class="btn btn-success" type="submit"><span
+                                            class="glyphicon glyphicon-ok"></span> ajouter
+                                </button>
+                            </div>
+                        </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% include 'default/modal.html.twig' with { modalId: 'preview-modal', modalTitle: 'Détails membre', modalSize : "modal-md" } %}
+    {% include 'default/modal.html.twig' with { modalId: 'edit-modal', modalTitle: 'Modifier un membre' } %}
+    <div class="modal" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-body" style="position:absolute;
+                                left: 50%;
+                                top: 50%;
+                                width: 200px;
+                                margin-left: -100px;
+                                margin-top: -100px;
+                                background-color: rgba(0, 0, 0, 0);
+                                ">
+            <div class="progress progress-striped active"
+                 style="text-align: center; height: 100px; background-color: rgba(0, 0, 0, 0);">
+                <div class="bar">
+                    <i class="fa fa-circle-o-notch fa-spin fa-5x fa-fw" style="color: #f5f5f5;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    <script>
+        function catShow(e, $elem) {
+            e.preventDefault();
+            //Get record to edit
+            var $id = $($elem).data('rec');
+            var $modal = $('#pleaseWaitDialog');
+            var $candidatForm = $('#preview-modal');
+            // Block screen
+            $modal.modal('show');
+            // var $url =  Routing.generate('membre_preview', {'id': $id});
+            // alert($id);
+
+            // Ajax request for get preview candidat form
+            $.ajax({
+
+                url:  Routing.generate('cat_preview', {'id': $id}),
+
+                type: 'GET',
+                success: function (html) {
+                    // Permit
+
+                    $modal.modal('hide');
+                    // add content to display
+                    $candidatForm.find('.modal-body').html(html);
+                    // Display
+                    $candidatForm.modal('show');
+                }
+            })
+        }
+        function candidatEdit(e, $elem) {
+            e.preventDefault();
+            //Get record to edit
+            var $id = $($elem).data('rec');
+            var $modal = $('#pleaseWaitDialog');
+            var $candidatForm = $('#edit-modal');
+            // Block screen
+            $modal.modal('show');
+
+            // Ajax request for get edit candidat form
+            $.ajax({
+                url: Routing.generate('membre_edit', {'id': $id}),
+                type: 'GET',
+                success: function (html) {
+                    // Permit
+                    $modal.modal('hide');
+                    // add content to display
+                    $candidatForm.find('.modal-body').html(html);
+                    console.log( $candidatForm)
+
+                    // Add submit link to finish
+                    var $submit = $("<input type='button' class ='candidat_edit_popup_submit btn btn-primary' value='ValiderM' />").on('click', function (e) {
+                        e.preventDefault();
+                        // Get form to submit
+                        var $form = $('form[name = "adminbundle_membresparrain"]');
+
+                        // Validate the form
+                        if (!formIsValide()) {
+                            console.log('Some fields are required !!!');
+                            return false;
+                        }
+
+                        // Block btn action for future click
+                        var $el = $(this);
+                        $el.button('loading');
+                        // Submit form
+                        $.ajax({
+                            type: $form.attr('method'),
+                            url: Routing.generate('maj_membre_section', {'id': $id}),
+                            data: $form.serialize()
+                        })
+                            .done(function (data) {
+                                if (!data.success) {
+                                    console.log(JSON.stringify(data.errors));
+                                } else {
+                                    // Redirect to Home page
+                                    window.location.href = Routing.generate('membre_section');
+                                }
+                            }).fail(function (jqXHR, textStatus, errorThrown) {
+                            console.log(jqXHR);
+                            console.log(textStatus);
+                            console.log(errorThrown);
+
+                            // Permit the button
+                            $el.button('reset');
+                        });
+                    });
+
+                    // Append it
+                    $candidatForm.find('.modal-footer').empty().append($submit);
+                    // Display
+                    $candidatForm.modal('show');
+                }
+            })
+        }
+        function formIsValide() {
+            var isvalid = true;
+
+            // Vérifier si tous les champs obligatoires sont remplis
+            $('.mandatory').each(function () {
+                var $el = $(this);
+                var val, $parent;
+                if ($el.is('input')) {
+                    if ($el.attr('type') === 'number') {
+                        val = $.trim($el.val());
+                        $parent = $el.closest('.form-group');
+                        $parent.removeClass('has-error');
+                        if (val == '') {
+                            $parent.addClass('has-error');
+                            isvalid = isvalid && false;
+                        }
+                    } else if ($el.attr('type') === 'checkbox') {
+                    } else {
+                        val = $.trim($el.val());
+                        $parent = $el.closest('.form-group');
+                        $parent.removeClass('has-error');
+                        if (val == '') {
+                            $parent.addClass('has-error');
+                            isvalid = isvalid && false;
+                        }
+                    }
+                } else if ($el.is('select')) {
+                    val = $.trim($el.val());
+                    $parent = $el.closest('.form-group');
+                    $parent.removeClass('has-error');
+                    if (val == '') {
+                        $parent.addClass('has-error');
+                        isvalid = isvalid && false;
+                    }
+                } else if ($el.is('textarea')) {
+                    val = $.trim($el.val());
+                    $parent = $el.closest('.form-group');
+                    $parent.removeClass('has-error');
+                    if (val == '') {
+                        $parent.addClass('has-error');
+                        isvalid = isvalid && false;
+                    }
+                }
+            });
+
+            return isvalid;
+        }
+
+    </script>
+
+{% endblock %}
+
+
+

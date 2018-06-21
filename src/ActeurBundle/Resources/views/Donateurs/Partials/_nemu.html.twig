@@ -1,0 +1,78 @@
+<li class="no-padding">
+    <ul class="collapsible" data-collapsible="accordion">
+        <li class="bold">
+            <a href="{{ path('donateur_admin') }}" class="waves-effect waves-cyan">
+                <i class="material-icons">dashboard</i>
+                <span class="nav-text">Tableau de bord</span>
+            </a>
+
+        </li>
+        <li class="bold">
+            <a class="collapsible-header waves-effect waves-cyan">
+                <i class="material-icons">dvr</i>
+                <span class="nav-text">les projets</span>
+            </a>
+            <div class="collapsible-body">
+                <ul>
+                    <li>
+                        <a href="{{ path('porteur_projet_new') }}">
+                            <i class="material-icons">keyboard_arrow_right</i>
+                            <span> Projets en cours </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('donateur_projets_finances') }}">
+                            <i class="material-icons">keyboard_arrow_right</i>
+                            <span> Projets financés </span>
+                        </a>
+                    </li>
+                    {#<li>#}
+                        {#<a href="{{ path('mes_projets') }}">#}
+                            {#<i class="material-icons">keyboard_arrow_right</i>#}
+                            {#<span> Tous les projets</span>#}
+                        {#</a>#}
+                    {#</li>#}
+
+                </ul>
+            </div>
+        </li>
+        <li class="bold">
+            <a href="{{ path('don_historique') }}" class="waves-effect waves-cyan">
+                <i class="material-icons">dashboard</i>
+                <span class="nav-text">Historique de mes investissements</span>
+            </a>
+
+        </li>
+        <li class="bold">
+            <a class="collapsible-header waves-effect waves-cyan">
+                <i class="material-icons">web</i>
+                <span class="nav-text">Parametres</span>
+            </a>
+            <div class="collapsible-body">
+                <ul>
+                    <li>
+                        <a href="{{ path('fos_user_profile_show') }}">
+                            <i class="material-icons">keyboard_arrow_right</i>
+                            <span>Mon profil</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('fos_user_profile_edit') }}">
+                            <i class="material-icons">keyboard_arrow_right</i>
+                            <span>Modifier profil</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('fos_user_change_password') }}">
+                            <i class="material-icons">keyboard_arrow_right</i>
+                            <span>Change mot de passe </span>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </li>
+
+
+    </ul>
+</li>

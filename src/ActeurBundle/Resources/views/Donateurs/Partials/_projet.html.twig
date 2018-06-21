@@ -1,0 +1,52 @@
+<div class="row" style="margin-top: 42px">
+<div class="col s6 m6 l6 offset-s3 offset-l3 offset-m3">
+<div class="card card-product" data-count="1" style="padding: 25px" style="display: flex;">
+    <div class="card-header card-header-image" data-header-animation="true">
+
+        {% for media in projet.media|slice(0,1)%}
+            <img class="img img-soutenir" src="{{  asset ('uploads/admin/images/')}}{{ media.chemin  }}">
+
+        {% endfor %}
+    </div>
+    <div class="card-body">
+
+        <h4 class="card-title">
+            {{ projet.nomProjet }}
+        </h4>
+        <div class="card-description" style="text-align: justify">
+            {{ projet.descriptionCourteProjet|slice(0,550)|raw  }}
+        </div>
+    </div>
+    <div >
+        <div>
+            {% set totaldon = 0 %}
+            {% for don in projet.dons %}
+                {% set totaldon =totaldon+ don.montant %}
+            {% endfor %}
+
+            OBJECTIF : atteint a {{ ( totaldon / projet.objectif)*100 }}%
+            <div class="progress" style="margin:10px;">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{ ( totaldon / projet.objectif)*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ ( totaldon / projet.objectif)*100 }}%;"></div>
+            </div>
+
+        </div>
+        <div class="stats">
+            {{ form_start(form, {attr: {id: form.vars.id}}) }}
+            <div class="form-group">
+                <label for="card-element">
+                    Credit or Debit Card
+                </label>
+                <div id="card-element" class="form-control"></div>
+                <div id="card-errors" class="help-block" role="alert"></div>
+            </div>
+            {{ form_widget(form.token) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+</div>
+</div>
+    <div class="progress" style="margin:10px;">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{ ( totaldon / projet.objectif)*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ ( totaldon / projet.objectif)*100 }}%;"></div>
+    </div>
+
+</div>

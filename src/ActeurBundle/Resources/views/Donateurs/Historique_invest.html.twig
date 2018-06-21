@@ -1,0 +1,37 @@
+{% extends '@Acteur/public/Template/Materialize/layout.html.twig' %}
+    {% block menu %}
+        {% include'@Acteur/Donateurs/Partials/_nemu.html.twig' %}
+    {% endblock %}
+    {% block contenuprincipal %}
+        <div class="row" style="margin-top: 10px">
+            <div class="col s12 m12 l12">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="header mt-0"> Historique des mes investissements </h4>
+                        <table  class="striped responsive-table">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Date</th>
+                                <th>Projet</th>
+                                <th>Montant</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for fond in fonds %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ fond.dateDons|date('d-m-Y') }}</td>
+                                    <td> {{ fond.projet.nomProjet }}</td>
+                                    <td> {{ fond.montant|number_format(0, ' ', ' ')}}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}

@@ -1,0 +1,65 @@
+{% extends '@Admin/Default/index.html.twig' %}
+
+{% block contenuprincipal %}
+    <section>
+        <div class="row">
+            <div class="col-12 mt-3 mb-1">
+                <div class="content-header">LISTE DES PORTEURS DE PROJETS</div>
+                <p class="content-sub-header"> PORTEURS DE PROJETES
+                    </p>
+            </div>
+        </div>
+
+        <div class="row match-height">
+            {% for porteur in porteurs %}
+                <div class="col-lg-3 col-md-12 col-sm-12">
+                    <div class="card" style="height: 416px;">
+                        <div class="card-body">
+                            <div class="card-img">
+                                <img src="{{ asset('uploads/admin/images/') }}{{ porteur.img }}" class="card-img-top img-fluid" alt="{{ porteur.nom }} {{ porteur.prenom }}" style="
+    height: 195px;">
+
+                                <a class="btn btn-floating halfway-fab bg-warning"><i class="ft-plus"></i></a>
+                            </div>
+                            <div class="card-block">
+                                <h4 class="card-title">{{ porteur.nom }} {{ porteur.prenom }}</h4>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <p class="font-small-2" > Adresse</p>
+                                    </div>
+                                    <div class="col-md-8 col-sm-8">
+                                        <p class="font-small-2" >  {{ porteur.adresse }}</p>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <p class="font-small-2" > e-mail </p>
+
+                                    </div>
+                                    <div class="col-md-8 col-sm-8">
+                                        <p class="font-small-2" > {{ porteur.mail }} </p>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 col-sm-4">
+                                        <p class="font-small-2" >  Téléphone </p>
+
+                                    </div>
+                                    <div class="col-md-8 col-sm-8">
+                                        <p class="font-small-2" >{{  porteur.telephone }} </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+    
+{% endblock %}

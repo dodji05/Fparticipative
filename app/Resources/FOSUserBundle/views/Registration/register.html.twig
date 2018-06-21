@@ -1,0 +1,12 @@
+{% extends "@FOSUser/layout_base.html.twig" %}
+
+{% block fos_user_content %}
+{#{% include "@FOSUser/Registration/porteur_form.html.twig" %}#}
+    {% include "@FOSUser/Registration/register_content.html.twig" %}
+    {% if app.request.attributes.get('_route') == 'porteur_register' %}
+        {% include "@FOSUser/Registration/porteur_form.html.twig" %}
+    {% endif %}
+    {% if app.request.attributes.get('_route') == 'donateur_register' %}
+        {% include "@Acteur/Registration/user_two.form.html.twig" %}
+    {% endif %}
+{% endblock fos_user_content %}

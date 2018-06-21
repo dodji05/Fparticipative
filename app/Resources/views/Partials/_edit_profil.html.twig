@@ -1,0 +1,42 @@
+<div style="margin-bottom: 62px"></div>
+
+<div class="row">
+    <div class="col s8 m6 l8">
+        <div class="cards">
+            <div class="card-header" data-background-color="purple">
+                <h4 class="title" style="font-size: 14px !important;">Mon Profil</h4>
+                <p class="category" style="font-size: 12px !important;">Modifier mes infornations</p>
+            </div>
+            <div class="card-content">
+                {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
+                {{ form_widget(form) }}
+                <div>
+
+                    <button type="submit" class="btn btn-primary offset-s6">Valider</button>
+                    <div class="clearfix"></div>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    <div class="col s8 m6 l4">
+        <div class="cards card-profile">
+            <div class="card-avatar">
+                <a href="#pablo">
+
+                    <img class="img" src="{{ asset('uploads/admin/images/images (1).jpg') }}" />
+
+                </a>
+            </div>
+            <div class="content">
+
+                <h4 class="card-title"></h4>
+                <p class="card-content">
+                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+                </p>
+                <a href="#pablo" class="btn btn-primary btn-round">Follow</a>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,85 @@
+<div style="margin-bottom: 62px"></div>
+
+<div class="row">
+    <div class="col s8 m6 l8">
+        <div class="cards">
+            <div class="card-header" data-background-color="purple">
+                <h4 class="title" style="font-size: 14px !important;">Mon Profile</h4>
+                <p class="category" style="font-size: 12px !important;">Mes informations</p>
+            </div>
+            <div class="card-content">
+                <div class="row">
+                    <div class=" col s12 m6 l6">
+                   <p>Nom d'utilisateur:  {{ user.username }} </p>
+                    </div>
+                    <div class="col s12 m6 l6">
+                        <p>Adresse mail:  {{ user.email }} </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <p>Nom:  {{ user.nom }} </p>
+                    </div>
+                    <div class=" col s12 m6 l6">
+                        <p>Prénom(s):  {{ user.prenom }} </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <p>Date de naissance:  {{ user.dateNaissance|date('d-m-Y') }} </p>
+                    </div>
+                    <div class="col s12 m6 l6">
+                        <p>Lieu de naissance:  {{ user.lieuNaissance }} </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <p>Ville:  {{ user.ville }} </p>
+                    </div>
+                    <div class="col s12 m6 l6">
+                        <p>Pays:  {{ user.pays }} </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <p>Adresse:  {{ user.adresse }} </p>
+                    </div>
+                    <div class="col s12 m6 l6">
+                        <p>Telephone:  {{ user.telephone }} </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12 m6 l6">
+                        <p> Ma photo :</p>
+                 <img src="{{ asset ('uploads/admin/images/')}}{{user.photo   }}">
+                    </div>
+                    <div class="s12 m6 l6">
+                        <p> CNI</p>
+                        <img src="{{ asset ('uploads/admin/images/')}}{{user.cni   }}" style="width: 300px!important;">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col s8 m6 l4">
+        <div class="cards card-profile">
+            <div class="card-avatar">
+                <a href="#pablo">
+
+                    <img class="img" src="{{ asset('uploads/admin/images/images (1).jpg') }}" />
+
+                </a>
+            </div>
+            <div class="content">
+
+                <h4 class="card-title"></h4>
+                <p class="card-content">
+                    Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+</div>

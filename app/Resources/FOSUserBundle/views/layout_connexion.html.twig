@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %} SOUTENIR UN PROJET  !{% endblock %}</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="shortcut icon" href="<?= $assets ?>images/icon.png"/>
+    <link rel="stylesheet" href="{{ asset('bundles/boss/authentification/css/theme.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/boss/authentification/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/boss/authentification/css/login.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="<?= $assets ?>js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="login-page">
+<noscript>
+    <div class="global-site-notice noscript">
+        <div class="notice-inner">
+            <p>
+                <strong>JavaScript seems to be disabled in your browser.</strong><br>You must have JavaScript enabled in
+                your browser to utilize the functionality of this website.
+            </p>
+        </div>
+    </div>
+</noscript>
+<div class="page-back bblue">
+    <div class="text-center">
+        <img src="{{ asset('bundles/boss/images/LogoApp-Manager.png') }}" alt="DSCOM Mamager" style="margin-bottom:10px;"> </div>
+
+    <div id="login">
+        <div class=" container">
+            <div class="login-form-div">
+                <div class="login-content">
+                    <form  action="{{ path("fos_user_security_check") }}" class="login" data-toggle="validator" method="post" accept-charset="utf-8">
+                        {% if app.request.hasPreviousSession %}
+                            {% for notice, messages in app.session.flashbag.all() %}
+                                {% for msg in messages %}
+                                    <div class="alert alert-{{ notice }}">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong> {{ msg }}.</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.message | trans }}</div>
+                        {% endif %}
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+                        <div class="div-title col-sm-12">
+                            <h3 class="text-primary">Veuillez vous connecter à votre compte.</h3>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="textbox-wrap form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    <input type="text" class="form-control" placeholder="Identifiant" name="_username" required="required"/>
+
+                                </div>
+                            </div>
+                            <div class="textbox-wrap form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    <input type="password" id="password" name="_password" required="required" class="form-control" placeholder="Mot de Passe "/>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-action col-sm-12">
+                            <div class="checkbox pull-left">
+                                <div class="custom-checkbox">
+                                    <div class="icheckbox_square-blue" aria-checked="false" aria-disabled="false" style="position: relative;"><input type="checkbox" name="remember" value="1" id="remember" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"><ins class="iCheck-helper" style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div>
+                                </div>
+                                <span class="checkbox-text pull-left"><label for="remember">Se rappeler de moi</label></span>
+                            </div>
+                            <button type="submit" class="btn btn-success pull-right" name="_submit">Connexion &nbsp; <i class="fa fa-sign-in"></i></button>
+                        </div>
+                    </form> <div class="clearfix"></div>
+                </div>
+                <div class="login-form-links link2">
+                    <h4 class="text-danger">Vous avez oublié votre mot de passe?</h4>
+                    <span>Ne vous inquiétez pas!</span>
+                    <a href="#forgot_password" class="text-danger forgot_password_link">cliquez ici</a>
+                    <span>Réinitialiser</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="forgot_password" style="display: none;">
+        <div class=" container">
+            <div class="login-form-div">
+                <div class="login-content">
+                    <div class="div-title col-sm-12">
+                        <h3 class="text-primary">Vous avez oublié votre mot de passe?</h3>
+                    </div>
+                    <form action="https://sma.tecdiary.com/admin/auth/forgot_password" class="login" data-toggle="validator" method="post" accept-charset="utf-8">
+                        <input type="hidden" name="token" value="1a5f886b41b346632e47e12d7b0713b7">
+                        <div class="col-sm-12">
+                            <p>
+                                Veuillez saisir l'adresse e-mail pour obtenir des instructions de réinitialisation </p>
+                            <div class="textbox-wrap form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon "><i class="fa fa-envelope"></i></span>
+                                    <input type="email" name="forgot_email" class="form-control " placeholder="Addresse Email " required="required">
+                                </div>
+                            </div>
+                            <div class="form-action">
+                                <a class="btn btn-success pull-left login_link" href="#login">
+                                    <i class="fa fa-chevron-left"></i> Précédent </a>
+                                <button type="submit" class="btn btn-primary pull-right" disabled="disabled">
+                                    Soumettre &nbsp;&nbsp; <i class="fa fa-envelope"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form> <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /.login-box -->
+
+<script src="{{ asset('bundles/boss/authentification/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('bundles/boss/authentification/js/query.cookie.js') }}"></script>
+<script src="{{ asset('bundles/boss/authentification/js/login.js') }}"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        localStorage.clear();
+        var hash = window.location.hash;
+        if (hash && hash != '') {
+            $("#login").hide();
+            $(hash).show();
+        }
+    });
+</script>
+</body>
+
+
+</html>

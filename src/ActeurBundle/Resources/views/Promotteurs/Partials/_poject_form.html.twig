@@ -1,0 +1,97 @@
+<div class="row">
+<div class="col s8 m8 l8 offset-s2 offset-l2 offset-m2">
+    <div class="card-panel">
+            <h4 class="header2 " style="text-align: center; font-size: 22px !important;"> Soumettre mon projet </h4>
+            <div class="row">
+                {{ form_start(form)}}
+                {{ form_errors(form) }}
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_widget(form.categorie,{'attr':{'id': 'adminbundle_porteur_type'}}) }}
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field  col s12">
+                        {{ form_label(form.nomProjet) }}
+                        {{ form_widget(form.nomProjet) }}
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <div class="row">
+                            <div class="col s12 m4 l3">
+                                {{ form_label(form.imageFile) }}
+                            </div>
+                            <div class="col s12 m8 l9">
+                                {{ form_widget(form.imageFile,{'attr':{'class':'dropify' }}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <div class="row">
+                            <div class="col s12 m4 l3">
+                                {{ form_label(form.planFile) }}
+                            </div>
+                            <div class="col s12 m8 l9">
+                                {{ form_widget(form.planFile,{'attr':{'class':'dropify' }}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_label(form.descriptionCourteProjet) }}
+                        {{ form_widget(form.descriptionCourteProjet,{'attr':{'class': 'materialize-textarea','rows':'5'}}) }}
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_label(form.descriptionProjet) }}
+                        {{ form_widget(form.descriptionProjet,{'attr':{'class': 'materialize-textarea','rows':'15'}}) }}
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        {{ form_label(form.budgetPropose) }}
+                        {{ form_widget(form.budgetPropose) }}
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    {% for photo in form.media %}
+                    <div class="input-field col s12">
+                        <div class="row">
+                            <div class="col s12 m4 l3">
+                                {{ form_label(photo.imageFile) }}
+                            </div>
+                            <div class="col s12 m8 l9">
+                                {{ form_widget(photo.imageFile,{'attr':{'class':'dropify' }}) }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {{ form_widget(form) }}
+                <button class="btn cyan waves-effect waves-light right" type="submit" name="action">Soumettre le projet
+
+                </button>
+                {{ form_end(form) }}
+
+            </div>
+
+    </div>
+</div>
+</div>
+
+

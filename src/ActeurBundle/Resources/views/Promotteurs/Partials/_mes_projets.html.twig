@@ -1,0 +1,74 @@
+
+    <div id="base-style">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="card">
+                    <div class="card-content">
+                        <h4 class="header mt-0"> Mes projets </h4>
+                        <table class="striped responsive-table" valign="middle">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Logo</th>
+                                <th>Titre</th>
+                                {#<th>Description</th>#}
+                                <th>Categorie</th>
+                                <th>Etat</th>
+                                <th>Nbre de vues</th>
+                                <th>Fonds recoltés</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {#{{ dump(projets) }}#}
+                            {% for projet in projets %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>
+                                        <img src="{{ asset('uploads/admin/images/') }}{{ projet.logo }}"
+                                             class="img-thumbnail" style="height: 60px;">
+                                    </td>
+                                    <td>{{ projet.nomProjet }}</td>
+
+                                    {#<td>{{ projet.descriptionProjet|slice(0,50)|raw }}</td>#}
+                                    <td> {{ projet.categorie.nomCategorie }}</td>
+                                    <td>
+                                        {% if projet.selectionne == false %}
+                                            non validee
+                                        {% else %}
+                                            validee
+                                        {% endif %}
+                                    </td>
+
+                                    <td> <small> 15</small></td>
+                                    <td> 15 000</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'default/modal.html.twig' with { modalId: 'preview-modal', modalTitle: 'Détails membre', modalSize : "modal-md" } %}
+    {% include 'default/modal.html.twig' with { modalId: 'edit-modal', modalTitle: 'Valider un projet' } %}
+    <div class="modal" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-body" style="position:absolute;
+                                left: 50%;
+                                top: 50%;
+                                width: 200px;
+                                margin-left: -100px;
+                                margin-top: -100px;
+                                background-color: rgba(0, 0, 0, 0);
+                                ">
+            <div class="progress progress-striped active"
+                 style="text-align: center; height: 100px; background-color: rgba(0, 0, 0, 0);">
+                <div class="bar">
+                    <i class="fa fa-circle-o-notch fa-spin fa-5x fa-fw" style="color: #f5f5f5;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+

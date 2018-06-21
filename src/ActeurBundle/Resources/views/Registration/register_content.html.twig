@@ -1,0 +1,11 @@
+<form action="
+
+{% if app.request.attributes.get('_route') == 'porteur_register' %}
+{{ path('porteur_register') }}
+{% endif %}
+
+{% if app.request.attributes.get('_route') == 'donateur_register' %}
+{{ path('donateur_register') }}
+{% endif %}
+
+" method="POST" class="fos_user_registration_register"></form>

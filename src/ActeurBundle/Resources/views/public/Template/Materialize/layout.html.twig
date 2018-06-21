@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>Soutenir un projet | Financement participatif </title>
+    <!-- Favicons-->
+    <link rel="icon" href="../../images/favicon/favicon-32x32.png" sizes="32x32">
+    <!-- Favicons-->
+    <link rel="apple-touch-icon-precomposed" href="../../images/favicon/apple-touch-icon-152x152.png">
+    <!-- For iPhone -->
+    <meta name="msapplication-TileColor" content="#00bcd4">
+    <meta name="msapplication-TileImage" content="images/favicon/mstile-144x144.png">
+    <!-- For Windows Phone -->
+    <!-- CORE CSS-->
+
+    {% stylesheets '@ActeurBundle/Resources/views/public/Template/Materialize/css/materialize.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+
+    {% stylesheets '@ActeurBundle/Resources/views/public/Template/Materialize/css/themes/collapsible-menu/style.css'  %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+    <!-- Custome CSS-->
+
+    {% stylesheets '@ActeurBundle/Resources/views/public/Template/Materialize/css/custom/custom.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+    <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+
+    {% stylesheets '@ActeurBundle/Resources/views/public/Template/Materialize/vendors/perfect-scrollbar/perfect-scrollbar.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+    {#<link href="../../vendors/flag-icon/css/flag-icon.min.css" type="text/css" rel="stylesheet">#}
+    {% stylesheets '@ActeurBundle/Resources/views/public/Template/Materialize/vendors/flag-icon/css/flag-icon.min.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {% endstylesheets %}
+    {% block stylesheet %}
+    {% endblock %}
+</head>
+
+<body>
+<!-- Start Page Loading -->
+<div id="loader-wrapper">
+    {#<div id="loader"></div>#}
+    {#<div class="loader-section section-left"></div>#}
+    {#<div class="loader-section section-right"></div>#}
+</div>
+<!-- End Page Loading -->
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+<!-- START HEADER -->
+<header id="header" class="page-topbar">
+    <div class="navbar-fixed">
+        <nav class="navbar-color gradient-45deg-purple-deep-orange gradient-shadow">
+            <div class="nav-wrapper">
+
+                <ul class="right hide-on-med-and-down">
+
+                    <li>
+                        <a href="javascript:void(0);" class="waves-effect waves-block waves-light notification-button" data-activates="notifications-dropdown">
+                            <i class="material-icons">notifications_none
+                                <small class="notification-badge">5</small>
+                            </i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0);" class="waves-effect waves-block waves-light profile-button" data-activates="profile-dropdown">
+                  <span class="avatar-status avatar-online">
+                    <img src="../../images/avatar/avatar-7.png" alt="avatar">
+                    <i></i>
+                  </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-activates="chat-out" class="waves-effect waves-block waves-light chat-collapse">
+                            <i class="material-icons">format_indent_increase</i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- translation-button -->
+                <ul id="translation-dropdown" class="dropdown-content">
+                    <li>
+                        <a href="#!" class="grey-text text-darken-1">
+                            <i class="flag-icon flag-icon-gb"></i> English</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="grey-text text-darken-1">
+                            <i class="flag-icon flag-icon-fr"></i> French</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="grey-text text-darken-1">
+                            <i class="flag-icon flag-icon-cn"></i> Chinese</a>
+                    </li>
+                    <li>
+                        <a href="#!" class="grey-text text-darken-1">
+                            <i class="flag-icon flag-icon-de"></i> German</a>
+                    </li>
+                </ul>
+                <!-- notifications-dropdown -->
+                <ul id="notifications-dropdown" class="dropdown-content">
+                    <li>
+                        <h6>NOTIFICATIONS
+                            <span class="new badge">5</span>
+                        </h6>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#!" class="grey-text text-darken-2">
+                            <span class="material-icons icon-bg-circle cyan small">add_shopping_cart</span> A new order has been placed!</a>
+                        <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">2 hours ago</time>
+                    </li>
+                    <li>
+                        <a href="#!" class="grey-text text-darken-2">
+                            <span class="material-icons icon-bg-circle red small">stars</span> Completed the task</a>
+                        <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">3 days ago</time>
+                    </li>
+                    <li>
+                        <a href="#!" class="grey-text text-darken-2">
+                            <span class="material-icons icon-bg-circle teal small">settings</span> Settings updated</a>
+                        <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">4 days ago</time>
+                    </li>
+                    <li>
+                        <a href="#!" class="grey-text text-darken-2">
+                            <span class="material-icons icon-bg-circle deep-orange small">today</span> Director meeting started</a>
+                        <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">6 days ago</time>
+                    </li>
+                    <li>
+                        <a href="#!" class="grey-text text-darken-2">
+                            <span class="material-icons icon-bg-circle amber small">trending_up</span> Generate monthly report</a>
+                        <time class="media-meta" datetime="2015-06-12T20:50:48+08:00">1 week ago</time>
+                    </li>
+                </ul>
+                <!-- profile-dropdown -->
+                <ul id="profile-dropdown" class="dropdown-content">
+                    <li>
+                        <a href="#" class="grey-text text-darken-1">
+                            <i class="material-icons">face</i> Profile</a>
+                    </li>
+                    <li>
+                        <a href="#" class="grey-text text-darken-1">
+                            <i class="material-icons">settings</i> Settings</a>
+                    </li>
+                    <li>
+                        <a href="#" class="grey-text text-darken-1">
+                            <i class="material-icons">live_help</i> Help</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#" class="grey-text text-darken-1">
+                            <i class="material-icons">lock_outline</i> Lock</a>
+                    </li>
+                    <li>
+                        <a href="#" class="grey-text text-darken-1">
+                            <i class="material-icons">keyboard_tab</i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+<!-- END HEADER -->
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+<!-- START MAIN -->
+<div id="main">
+    <!-- START WRAPPER -->
+    <div class="wrapper">
+        <!-- START LEFT SIDEBAR NAV-->
+        <aside id="left-sidebar-nav" class="nav-expanded nav-lock nav-collapsible">
+            <div class="brand-sidebar">
+                <h1 class="logo-wrapper">
+                    <a href="index.html" class="brand-logo darken-1">
+                        <img src="" alt="">
+                        {#<span class="logo-text hide-on-med-and-down">Materialize</span>#}
+                    </a>
+                    <a href="#" class="navbar-toggler">
+                        <i class="material-icons">radio_button_checked</i>
+                    </a>
+                </h1>
+            </div>
+            <ul id="slide-out" class="side-nav fixed leftside-navigation">
+                {% block  menu%}
+                {% endblock %}
+
+
+            </ul>
+        </aside>
+        <!-- END LEFT SIDEBAR NAV-->
+        <!-- //////////////////////////////////////////////////////////////////////////// -->
+        <!-- START CONTENT -->
+        <section id="content">
+            <!--breadcrumbs start-->
+            <div id="breadcrumbs-wrapper">
+                {% for type, messages in app.session.flashbag.all() %}
+                    {% for message in messages %}
+                        <div id="card-alert" class="card {{ type }}">
+                            <div class="card-content white-text">
+                                <p> {{ message }}</p>
+                            </div>
+                            <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
+            <!--breadcrumbs end-->
+            <!--start container-->
+            <div class="container">
+                {% block contenuprincipal %}
+                {% endblock %}
+
+
+            </div>
+            <!--end container-->
+        </section>
+        <!-- END CONTENT -->
+        <!-- //////////////////////////////////////////////////////////////////////////// -->
+        <!-- START RIGHT SIDEBAR NAV-->
+        <aside id="right-sidebar-nav">
+        </aside>
+        <!-- END RIGHT SIDEBAR NAV-->
+    </div>
+    <!-- END WRAPPER -->
+</div>
+<!-- END MAIN -->
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+<!-- START FOOTER -->
+<footer class="page-footer">
+</footer>
+<!-- END FOOTER -->
+<!-- ================================================
+      Scripts
+================================================ -->
+<!-- jQuery Library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+{#{% javascripts '@ActeurBundle/Resources/views/public/Template/Materialize/vendors/jquery-3.2.1.min.js' %}#}
+    {#<script type="text/javascript" src="{{ asset_url }}"></script>#}
+{#{% endjavascripts %}#}
+<!--materialize js-->
+
+
+{% javascripts '@ActeurBundle/Resources/views/public/Template/Materialize/js/materialize.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+<!--scrollbar-->
+
+{% javascripts '@ActeurBundle/Resources/views/public/Template/Materialize/vendors/perfect-scrollbar/perfect-scrollbar.min.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+<!--plugins.js - Some Specific JS codes for Plugin Settings-->
+
+{% javascripts '@ActeurBundle/Resources/views/public/Template/Materialize/js/plugins.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+<!--custom-script.js - Add your own theme custom JS-->
+{#<script type="text/javascript" src="../../js/custom-script.js"></script>#}
+{#{% javascripts '@ActeurBundle/Resources/views/public/Template/Materialize/vendors/perfect-scrollbar/perfect-scrollbar.min.js' %}#}
+    {#<script type="text/javascript" src="{{ asset_url }}"></script>#}
+{#{% endjavascripts %}#}
+{% block javascript %}
+{% endblock %}
+</body>
+
+</html>

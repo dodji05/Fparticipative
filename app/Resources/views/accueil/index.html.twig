@@ -1,0 +1,183 @@
+<!doctype html>
+<!--[if  lt IE 7]>
+<html class="no-js ie6 fr" lang=fr><![endif]--> <!--[if IE 7 ]>
+<html class="no-js ie7 fr" lang=fr><![endif]--> <!--[if IE 8 ]>
+<html class="no-js ie8 fr" lang=fr><![endif]--> <!--[if IE 9 ]>
+<html class="no-js ie9 fr" lang=fr><![endif]--> <!--[if (gte IE 10)|!(IE)]><!-->
+<html class="no-js fr FRANCE" lang=fr charset=utf-8 prefix="og: http://ogp.me/ns#"> <!--<![endif]-->
+    <head>
+
+
+        <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+        {% stylesheets 'bundles/frontend/css/bootstrap-3.4.4.min9b81.css' %}
+            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
+        {% stylesheets 'bundles/frontend/css/structure.css' %}
+            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
+        {% stylesheets 'bundles/frontend/css/structure2.css' %}
+            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
+        {% stylesheets 'bundles/frontend/css/ion.css' %}
+            <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script><![endif]-->
+        {% block feuilleStyle %}
+        {% endblock %}
+
+        <title>
+            {% block titrePage %}
+            {% endblock %}
+
+        </title>
+    </head>
+    <body>
+{% include ':accueil:entete.html.twig' %}
+{% block contenu %}
+{% endblock %}
+
+    {#pied de page#}
+    <div class="footer-wrapper">
+        <div class="row-container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-8 col-xs-12 col-sm-8 col-md-9">
+                        <p class="social-links"> <a href="#" class="social facebook new-tab " title="Page Facebook"> <i class="ion ion-social-facebook"></i><span>Page Facebook</span></a>
+                            <a href="#" class="social twitter new-tab" title="Compte Twitter @ajdib2"> <i class="ion ion-social-twitter"></i><span>Compte Twitter</span></a>
+
+                            <a href="#" class="social googleplus new-tab" title="Page Google+"> <i class="ion ion-social-googleplus"></i><span>Page Google+</span></a>
+
+                        </p>
+                    </div>
+                    <div class="col-4 col-xs-12 col-sm-4 col-md-3 text-center">
+                        <p>Abonnez-vous à la newsletter &nbsp; <span class="glyphicon glyphicon-info-sign tooltip-show" data-toggle="tooltip" title="" data-original-title="Votre email n'est communiqué à personne et n'est utilisé que par WiSEED pour communiquer sur les startups. Vous pourrez à tout moment vous désabonner en cliquant sur le lien en bas de chaque newsletter."></span> </p>
+                        <div class="input-group" id="abonnement-newsletter"> <input id="emailAbonnement" type="email" name="emailAbonnement" class="form-control" placeholder="votre@email.fr"> <span class="input-group-btn"> <button class="btn btn-md btn-fl at btn-primary" type="button" data-loading-text="..." data-authenticity-token="7da47fc9a1a326add258ee82a7cf9142a275b5fa" data-url-post="/fr/public/front/a/abonnementnewsletterpost"> OK </button> </span>
+                        </div>
+                    </div>
+                    <div class="clearfix">
+
+                    </div>
+                </div>
+            </div>
+        </div> <br>
+        <div class="row-container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 col-xs-12 col-sm-4"> <h4 class="">Tous les projets</h4>
+                        <ul class="ion-ul ">
+                            <li> <a href="#" title="En Financement"> <i class="ion ion-li ion-ios-arrow-right"></i> En Financement </a> </li>
+                            <li> <a href="#" title="Projets Financés"> <i class="ion ion-li ion-ios-arrow-right"></i> Projets Financés </a> </li>
+                            <li> <a href="#" title=" Projets realise"> <i class="ion ion-li ion-ios-arrow-right"></i> Projets realisés </a> </li>
+                        </ul>
+                    </div>
+                    <div class="col-6 col-xs-12 col-sm-4">
+                        <h4 class="">Comment ça marche ?</h4>
+                        <ul class="ion-ul ">
+                            <li> <a href="#" title="Comment ça marche"> <i class="ion ion-li ion-ios-arrow-right"></i> Comment investir </a> </li>
+                            <li> <a href="/fr/lever-des-fonds/comment-ca-marche" title="Comment ça marche"> <i class="ion ion-li ion-ios-arrow-right"></i> Comment lever des fonds </a> </li>
+
+                            {#<li> <a href="/fr/investir/defiscalisation-ir-isf" title="Défiscalisation"> <i class="ion ion-li ion-ios-arrow-right"></i> Défiscalisation </a> </li>#}
+                            {#<li> <a href="/fr/investir/startups" title="Startups"> <i class="ion ion-li ion-ios-arrow-right"></i> Startups </a> </li>#}
+                            {#<li> <a href="/fr/investir/immobilier" title="Immobilier"> <i class="ion ion-li ion-ios-arrow-right"></i> Immobilier </a> </li>#}
+                            {#<li> <a href="/fr/investir/innovation-sociale" title="Innovation Sociale"> <i class="ion ion-li ion-ios-arrow-right"></i> Innovation Sociale </a> </li>#}
+                            {#<li> <a href="/fr/investir/energies-renouvelables" title="Energies Renouvelables"> <i class="ion ion-li ion-ios-arrow-right"></i> Energies Renouvelables </a> </li>#}
+                            {#<li> <a href="/fr/investir/agroforesterie" title="Agroforesterie"> <i class="ion ion-li ion-ios-arrow-right"></i> Agroforesterie </a> </li>#}
+                        </ul>
+                    </div>
+                    {#<div class="col-6 col-xs-12 col-sm-3">#}
+                        {#<h4 class="">Comment lever des fonds ?</h4>#}
+                        {#<ul class="ion-ul ">#}
+                            {#<li> <a href="/fr/lever-des-fonds/comment-ca-marche" title="Comment ça marche"> <i class="ion ion-li ion-ios-arrow-right"></i> Comment ça marche </a> </li>#}
+                            {#<li> <a href="/fr/lever-des-fonds/startups" title="Startups"> <i class="ion ion-li ion-ios-arrow-right"></i> Startups </a> </li>#}
+                            {#<li> <a href="/fr/lever-des-fonds/immobilier" title="Immobilier"> <i class="ion ion-li ion-ios-arrow-right"></i> Immobilier </a> </li>#}
+                            {#<li> <a href="/fr/lever-des-fonds/innovation-sociale" title="Innovation Sociale"> <i class="ion ion-li ion-ios-arrow-right"></i> Innovation Sociale </a> </li>#}
+                            {#<li> <a href="/fr/lever-des-fonds/energies-renouvelables" title="Energies Renouvelables"> <i class="ion ion-li ion-ios-arrow-right"></i> Energies Renouvelables </a> </li>#}
+                            {#<li> <a href="/fr/lever-des-fonds/agroforesterie" title="Agroforesterie"> <i class="ion ion-li ion-ios-arrow-right"></i> Agroforesterie </a> </li>#}
+                        {#</ul>#}
+                    {#</div>#}
+                    <div class="col-6 col-xs-12 col-sm-4">
+                        <h4 class="">Pratique</h4>
+                        <ul class="ion-ul">
+
+                            <li> <a href="#" title="Le Groupe WiSEED"> <i class="ion ion-li ion-ios-arrow-right"></i> Le Groupe  </a> </li>
+
+                            <li> <a href="#" title="Statistiques"> <i class="ion ion-li ion-ios-arrow-right"></i> Statistiques </a> </li>
+
+
+
+                            <li> <a href="#" title="Nous contacter"> <i class="ion ion-li ion-ios-arrow-right"></i> Nous contacter </a> </li>
+                            <li> <a href="#" class="new-tab" rel="nofollow" title="Quid du crowdfunding ?"> <i class="ion ion-li ion-ios-arrow-right"></i> Centre d'aide </a> </li>
+
+                            <li> <a href="#" title="Partenaires"> <i class="ion ion-li ion-ios-arrow-right"></i> Partenaires </a> </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div> <hr>
+        <div class="row-container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-xs-12 encart-crowdfunding">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-3">
+                                <p class="lead text-uppercase"> Le <a title="crowdfunding" href="#">Financement participatif </a>,
+                                    <br class="hidden-xs hidden-sm">c'est quoi ?
+                                    <br class="hidden-xs hidden-sm"><br class="hidden-xs hidden-sm">
+                                    <br class="hidden-xs hidden-sm"></p>
+                                <p class="lead text-uppercase text-center">
+								 <img src="{{ asset('bundles/frontend/img/FAEJ.png') }}" title="Soutenirprojet, solutions de financement participatif" alt="plateforme de crowdfunding" class="max-height max-height-100"/> </a>
+                         
+                                    <br class="hidden-xs hidden-sm">
+                                    <br class="hidden-xs hidden-sm"> </p>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
+                                <p class="lead text-justify" style="font-size: 16px"> SoutenirUnProjet <a href="#"> est une plateforme de financement participatif. </a>  Il a pour vocation d’accompagner l’autonomisation des femmes et l’entrepreneuriat des jeunes dans les domaines de la santé, de la <a href="#">transition écologique</a>, du numérique.
+                                </p>
+                             {#<p class="lead text-justify" style="font-size: 16px"><strong style="border-bottom: 1px solid">AVERTISSEMENT</strong> : Les investissements présentent un risque important de perte partielle ou totale du capital ainsi qu’un risque d’illiquidité.</p>#}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> <hr>
+        <div class="row-container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 text-center">
+                        <ul class="list-inline no-margin">
+                            <li>© 2018 Projets </li>
+                            <li>·</li>
+                            <li> <a href="#" class=" " title="Conditions d'utilisations">Conditions d'utilisations</a> </li>
+                            <li> <a href="#" class=" " title="Mentions Légales">Mentions Légales</a> </li>
+                            <li> <a href="#" class=" " title="Avertissements sur les risques">Avertissements sur les risques</a> </li>
+                            <li> <a href="#" class=" " title="Réclamations">Réclamations</a> </li>
+                            <li> <a href="#" class=" ">Nous contacter</a> </li>
+                            {#<li> Langue : #}
+                                {#<a href="/fr" class="lang active tooltip-show" data-toggle="tooltip" title="" data-original-title="Français"> #}
+                                    {#<span class="flag flag-francais"></span> #}
+                                {#</a> <a href="/en" class="lang tooltip-show" data-toggle="tooltip" title="" data-original-title="English"> #}
+                                    {#<span class="flag flag-english"></span> </a> #}
+                            {#</li>#}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#fin pied de page#}
+
+{% javascripts 'bundles/frontend/js/libs.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{% block javascript %}
+{% endblock %}
+{% javascripts 'bundles/frontend/js/frontoffice.min.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+    </body>
+</html>
+

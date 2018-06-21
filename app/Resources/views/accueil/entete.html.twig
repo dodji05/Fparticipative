@@ -1,0 +1,83 @@
+<nav class="navbar main-nav navbar-fixed-top nav-shadow-effect">
+    <div class="container-nav-black">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-toggle bt-menu-trigger collapsed withoutripple" data-toggle=collapse data-target="#navbar-main-menu"><span>Menu</span> Menu</a>
+                <a class="hidden-sm hidden-md hidden-lg collapsed navbar-toggle-user-menu withoutripple" data-toggle=collapse data-target="#navbar-compte">
+                    <span></span><i class="glyphicon glyphicon-user"></i></a>
+                <a class="navbar-brand withoutripple" href="{{ path('accueil') }}">
+                    <img width=75 height=75 src="{{ asset('bundles/frontend/img/logo.png') }}" title="paef" alt="plateforme de financement participatif"/> </a>
+            </div>
+            <div class="collapse hidden-sm hidden-md hidden-lg" id=navbar-main-menu>
+                <ul class="nav navbar-nav " id=accordion-navbar-main-menu>
+                    <li class="panel no-margin no-border ">
+                        <a role=button data-toggle=collapse data-parent="#accordion-navbar-main-menu" href="{{ path('aboutus') }}" aria-controls="paef-soutenir-un-projet" aria-expanded=true class=withoutripple> Qui sommes-nous? <i class="ion-chevron-down pull-right"></i> </a>
+                    </li>
+                    <li class="panel no-margin no-border ">
+                        <a role=button data-toggle=collapse data-parent="#accordion-navbar-main-menu" href="#" aria-controls=tous-les-projets-accordion aria-expanded=true class=withoutripple> Tous les projets <i class="ion-chevron-down pull-right"></i> </a>
+                        <ul class="nav subnav in" id=tous-les-projets-accordion>
+
+                            <li class=""><a href="#" class="withoutripple">En Financement <span class="badge pull-right">8</span></a></li>
+                            <li class=""><a href="#" class="withoutripple">Projets Financés <span class="badge pull-right">147</span></a></li>
+                            <li class=""><a href="#" class="withoutripple"> Projets Réalisés <span class="badge pull-right">62</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="panel no-margin no-border ">
+                        <a role=button aria-controls=comment-investir-accordion data-parent="#accordion-navbar-main-menu" data-toggle=collapse href="{{ path('comment_marche') }}" aria-expanded=false class="collapsed withoutripple"> Comment investir ? <i class="ion-chevron-right pull-right"></i> </a>
+
+                    </li>
+
+
+                </ul>
+            </div>
+            <div class="collapse hidden-sm hidden-md hidden-lg" id=navbar-compte>
+                <ul class="nav navbar-nav">
+
+                    <li class=text-right>
+                        <a href="#" class="withoutripple">Connexion</a> </li>
+
+                </ul>
+            </div>
+            <div class="navbar-main-menu hidden-xs">
+                <ul class="nav navbar-nav main-menu">
+                    <li class="has-sub-menu show-subnav ">
+                        <a href="{{ path('aboutus') }}" class="withoutripple">Qui sommes-nous?</a>
+
+                    </li>
+                    <li class="has-sub-menu show-subnav ">
+                        <a href="#" class=withoutripple>Tous les projets</a>
+                        <div class="container-nav-black container-sub-navbar sub-menu hidden">
+                            <div class=container>
+                                <ul class="nav navbar-nav sub-main-menu">
+                                    <li class=""><a href="{{ path('projets_en_cours') }}" class="withoutripple">En Financement <span class="badge">147</span></a></li>
+                                    <li class=""><a href="{{ path('projets_finances') }}" class="withoutripple">Projets Financés <span class="badge">147</span></a></li>
+                                    <li class=""><a href="{{ path('projets_realises') }}" class="withoutripple">Projets Réalisés <span class="badge">62</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="has-sub-menu show-subnav ">
+                        <a href="{{ path('comment_marche') }}" class=withoutripple>Comment investir ?</a>
+
+                    </li>
+
+                </ul>
+            </div>
+            <ul class="nav navbar-nav navbar-right hidden-xs">
+
+                <li class="withoutripple li-user-account-connexion">
+
+                    <a href="{{ path('fos_user_security_login') }}" class="btn withoutripple btn-user-account-connexion btn-primary btn-flat" title=Connexion> Se connecter </a>
+                </li>
+                <li class="withoutripple li-user-account-connexion">
+
+                    <a href="{{ path('fos_user_registration_register') }}" class="btn withoutripple btn-user-account-connexion btn-primary btn-flat" title=Connexion> S'inscrire </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="fix-navbar-fixed-top ">
+
+</div>

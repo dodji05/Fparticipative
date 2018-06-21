@@ -1,0 +1,102 @@
+<div class="row">
+    <div class="col s12 m6 l6">
+
+        <div class="card gradient-45deg-green-teal gradient-shadow min-height-100 white-text">
+            <div class="padding-4">
+                <div class="col s7 m7">
+                    <i class="material-icons background-round mt-5">attach_money</i>
+                    <p>Fonds investir</p>
+                </div>
+                <div class="col s5 m5 right-align">
+                    {% set total = 0 %}
+                    {% for fond in fonds %}
+                        {% set total = total + fond.montant %}
+                    {% endfor %}
+                    <p></p>
+                    <h5 class="mb-0">{{ total|number_format(0, ' ', ' ') }}</h5>
+
+                    <p>2</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m6 l6">
+        <div class="card gradient-45deg-red-pink gradient-shadow min-height-100 white-text">
+            <div class="padding-4">
+                <div class="col s7 m7">
+                    <i class="material-icons background-round mt-5">people_outline</i>
+                    <p>Nombre de projets</p>
+                </div>
+                <div class="col s5 m5 right-align">
+                    <h5 class="mb-0">1885</h5>
+
+                    <p>1,12,900</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div id="sales-chart">
+    <div class="row">
+        <div class="col s12 m12 l6">
+            <div class="card">
+                <div class="card-content">
+                    <h4 class="header mt-0"> Dix derniers investissements </h4>
+                    <table  class="striped responsive-table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                            <th>Projet</th>
+                            <th>Montant</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                       {% for fond in fonds %}
+                           <tr>
+                               <td>{{ loop.index }}</td>
+                               <td>{{ fond.dateDons|date('d-m-Y') }}</td>
+                               <td> {{ fond.projet.nomProjet }}</td>
+                               <td> {{ fond.montant|number_format(0, ' ', ' ')}}</td>
+                           </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m12 l6">
+            <div class="card">
+                <div class="card-content">
+                    <h4 class="header mt-0"> Dix derniers projets </h4>
+                    <table  class="striped responsive-table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Date</th>
+                            <th>Projet</th>
+                            <th>Objectif</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for projet in projets %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ projet.nomProjet }}</td>
+                                <td> {{ projet.nomProjet }}</td>
+                                <td> {{ projet.objectif|number_format(0, ' ', ' ')}}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

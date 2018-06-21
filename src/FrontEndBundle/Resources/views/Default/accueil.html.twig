@@ -1,0 +1,211 @@
+{% extends ":accueil:index.html.twig" %}
+    {% block contenu %}
+je te connais33333333
+        <div class="upon-carousel-fixed">
+            <a class="control-big-carousel left btn btn-link withoutripple hidden-xs" href="#big-carousel" data-slide=prev> <i class="ion ion-ios-arrow-left ion-2x"></i> </a>
+            <a class="control-big-carousel right btn btn-link withoutripple hidden-xs" href="#big-carousel" data-slide=next> <i class="ion ion-ios-arrow-right ion-2x"></i> </a>
+            <a id=big-carousel-pause-btn class="control-big-carousel btn btn-link withoutripple hidden-xs" href="#" data-paused=false> <i class="ion ion-ios-pause ion-5x"></i> </a>
+            <div class=container>
+                <div class="row row-carousel">
+                    <div class="col-xs-12 col-md-8">
+                        <div class=row>
+                            <div class="col-xs-12 col-md-6 text-center col-wiseed">
+							<img src="{{ asset('bundles/frontend/img/FAEJ.png') }}" title="Soutenirprojet, solutions de financement participatif" alt="plateforme de crowdfunding"/> </a>
+                                <h1 class="no-margin uppercase"><span class=hidden>Soutenir un projet, </span>&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-4 col-carousel-text">
+                        <div class=big-carousel-content>
+                            <div class=big-carousel-content-item>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel slide" id=big-carousel data-interval=10000>
+            <div class=carousel-inner>
+                {#{{ dump(projets) }}#}
+                {% for projet in projets %}
+                {% if loop.index == 1 %}
+                {% for media in projet.media|slice(0,1)%}
+                            <div class="slideCarousel active item" data-image-desktop="{{ asset ('uploads/admin/images/')}}{{ media.chemin  }}" data-image-mobile="http://localhost/fundme/web/uploads/admin/images/joshsommersbeach05.jpg">
+
+
+                        {% endfor %}
+                   {% else %}
+                   {% for media in projet.media|slice(0,1)%}
+                            <div class="slideCarousel  item" data-image-desktop="{{ asset ('uploads/admin/images/')}}{{ media.chemin  }}" data-image-mobile="http://localhost/fundme/web/uploads/admin/images/joshsommersbeach05.jpg">
+
+
+                        {% endfor %}
+                {% endif %}
+                                                 <div class=big-carousel-content>
+                                <div class=big-carousel-content-item>
+                                    <div class=big-carousel-subtitle>{{ projet.categorie.nomCategorie }}</div> <hr>
+                                    <div class=big-carousel-title>
+                                        <h2 class=no-margin>{{ projet.nomProjet }}  </h2>
+                                    </div> <hr>
+                                    <div class=big-carousel-text>
+                                        <p> {{ projet.descriptionCourteProjet|slice(0,550)|raw }} </p>
+                                        <a href="{{ path('le_projet',{'id': projet.id}) }}" class="btn btn-primary btn-block">Découvrir le projet <i class="ion ion-btn ion-ios-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                {% endfor %}
+               </div>
+        </div>
+
+        <div class="row-container odd">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-md-8"> <h3 class="h3 text-bold">Découvrez les projets entierement financés et realise </h3> </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4">
+                        <a href="#" class="btn btn-primary pull-right">Voir tous les projets réalisés<i class="ion ion-btn ion-ios-arrow-right"></i></a>
+                    </div>
+                </div> <br>
+                <div class="controls-carousel-absolute hidden-xs">
+                    <a class="left btn btn-link btn-sm withoutripple" href="#carousel-projects" data-slide="prev"> <i class="ion ion-lg ion-android-arrow-back"></i> </a>
+                    <a class="right btn btn-link btn-sm withoutripple" href="#carousel-projects" data-slide="next"> <i class="ion ion-lg ion-android-arrow-forward"></i> </a>
+                </div>
+                <div class="row">
+                    <div id="carousel-projects" class="carousel slide hidden-xs" data-ride="carousel" data-interval="false">
+                    <div class="carousel-inner">
+                        <div class="item active">
+                        {% set totaldon = 0 %}
+
+                         {% for projet in projets %}
+                         {% for don in projet.dons %}
+                            {% set totaldon =totaldon+ don.montant %}
+                        {% endfor %}
+                            <div class="col-xs-12 col-sm-6 col-md-4 col-project-card">
+    <div class="project-card enr" id="19370683">
+        <a href="" class="link">
+        {% for media in projet.media|slice(0,1)%}
+                        <div class="project-thumbnail text-right" style="background-image: url('{{ asset ('uploads/admin/images/')}}{{ media.chemin  }}')"> </div>
+
+
+                        {% endfor %}
+            <div class="bandeau"> {{ projet.categorie.nomCategorie }} &nbsp; · &nbsp;
+            </div>
+            <h3>
+                <span class="project-name" data-project-name="{{ projet.nomProjet }}">{{ projet.nomProjet }}</span>
+                {% set porteur ='' %}
+                 {#{% if projet.porteur.nature.id ==1 %}#}
+                 {#{% set porteur = projet.porteur.raisonSociale %}#}
+
+                                        {#{% else %}#}
+                                         {#{% set porteur = projet.porteur.nom ~ " " ~ projet.porteur.prenom %}#}
+
+
+                                    {#{% endif %}#}
+                &nbsp;<small title="{{ porteur }}">par {{ porteur }}</small>
+            </h3></a>
+        <a href="{{ path('le_projet',{'id': projet.id}) }}">
+            <p class="description-courte">{{ projet.descriptionCourteProjet|slice(0,300)|raw }}</p> <br/><br/><br/>
+        </a>
+        
+        {#<div class="call-to-action selection-tool ">#}
+            {#<form class="add-to-my-selection" action="/fr/public/front/a/ajouterselection" method="POST" accept-charset="utf-8">#}
+                {#<input type="hidden" name="id" value="19370683">#}
+                {#<div class="row">#}
+                    {#<div class="col-xs-10">#}
+                        {#<label class="text-center">Ajouter au panier : </label>#}
+                        {#<div class="slider-cool  noUi-target noUi-ltr noUi-horizontal noUi-connect" data-min="100" data-step="10" data-max="100000" data-selected="">#}
+                            {#<input type="hidden" name="montant" value="">#}
+                            {#<div class="noUi-base">#}
+                                {#<div class="noUi-origin noUi-background" style="left: 0%;">#}
+                                    {#<div class="noUi-handle noUi-handle-lower">#}
+                                        {#<div class="noUiSlider-tooltip top show">#}
+                                            {#<strong>100&nbsp;€</strong>#}
+                                        {#</div>#}
+                                    {#</div>#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<small> <span class="text-muted"> A partir de 100 € </span> </small>#}
+                    {#</div>#}
+                    {#<div class="col-xs-2"> <button type="submit" class="btn btn-primary no-margin call-to-action-btn">OK</button>#}
+                    {#</div>#}
+                {#</div>#}
+            {#</form>#}
+        {#</div>#}
+        {#<div class="call-to-action text-center hidden"> <h4 class="text-bold text-primary">Projet ajouté au panier !</h4>#}
+            {#<form style="display: inline;" class="add-to-my-selection form-inline" action="/fr/public/front/a/retirerselection" method="POST" accept-charset="utf-8">#}
+                {#<input type="hidden" name="id" value="19370683">#}
+                {#<button type="submit" class="btn btn-default btn-sm tooltip-show" title="" data-original-title="Retirer du panier, ne plus recevoir d'actualités">#}
+                    {#<i class="ion ion-android-close"></i> Retirer</button>#}
+            {#</form>#}
+            {#<a href="/fr/compte/ma-selection" class="btn btn-primary btn-sm">Mon panier</a>#}
+        {#</div>#}
+        <div class="key-data">
+            <ul class="list-inline col-4">
+                <li> <strong class="text-on-one-line">Collecte</strong><br>
+                    <strong class="text-on-one-line">terminée</strong>
+                </li>
+                <li> <strong>{{ projet.objectif|number_format(0, ' ', ' ') }}</strong> <br>recherchés </li>
+                <li> <strong>{{ totaldon }}</strong> <br>Contributeurs </li>
+                <li> <strong>{{ totaldon|number_format(0, ' ', ' ') }}</strong> <br>Récoltées </li>
+            </ul>
+        </div>
+    </div>
+</div>
+                          {% endfor %}
+                        </div>
+
+
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {# PIE#}
+        <div class="row-container row-pie-counters">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-xs-12 col-sm-6 col-md-4 text-center">
+                    <span class="pie-chart-counter" data-percent="100" data-value="214" data-format="integer" data-bar-color="#DCEDC8" data-duration="1500" style="background: #63A904">
+                        <span class="percent-counter">214</span>
+                        <span class="sep-counter"></span>
+                        <span class="text-counter">projets<br>financés</span>
+                        <canvas height="225" width="225"></canvas>
+                    </span>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 text-center">
+                    <span class="pie-chart-counter" data-percent="100" data-value="106" data-format="integer" data-bar-color="#C5E1A5" data-duration="3000" style="background: #558B2F"> +<span class="percent-counter">106</span>M€ <span class="sep-counter"></span>
+                        <span class="text-counter">de fonds<br>levés</span>
+                        <canvas height="225" width="225"></canvas></span>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 text-center">
+                    <span class="pie-chart-counter" data-percent="100" data-value="38100" data-format="integer" data-bar-color="#DCE7FB" data-duration="2300" style="background: #FFFFFF ">
+                        <img src="{{ asset('bundles/frontend/img/FAEJ.png') }}" title="Soutenirprojet, solutions de financement participatif" alt="plateforme de crowdfunding" width="170px"/> </a>
+                              
+						<canvas height="225" width="225"></canvas>
+                    </span>
+                    </div>
+                </div>
+                {#<div class="row">#}
+                {#<div class="col-xs-12 text-center" style="margin-top:70px">#}
+                {#<a href="/fr/statistiques" class="btn btn-primary no-margin call-to-action-btn">Les indicateurs de performance<br class="visible-xs hidden-sm"> de WiSEED#}
+                {#<div class="ripple-wrapper"></div></a>#}
+                {#</div>#}
+                {#</div>#}
+            </div>
+        </div>
+        {#END PIE#}
+    {% endblock %}
+
+    {% block javascript %}
+
+        {% javascripts 'bundles/frontend/js/jquery.easypiechart.min.js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+    {% endblock %}

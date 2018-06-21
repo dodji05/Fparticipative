@@ -1,0 +1,53 @@
+<div class="container">
+<div class="row">
+    {#{{ dump(projets) }}#}
+    {% for projet in projets %}
+    <div class="col-md-4">
+        <div class="card card-product">
+            <div class="card-header card-header-image" data-header-animation="true">
+                <a href="#pablo">
+                    <img class="img" src="{{ asset('uploads/admin/images/forests6.jpg') }}">
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="card-actions text-center">
+                    <button type="button" class="btn btn-danger btn-link fix-broken-card">
+                        <i class="material-icons">build</i> Fix Header!
+                    </button>
+                    <a href="{{ path('le_projet',{'id': projet.projet.id}) }}">
+                    <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Plus de details">
+                        <i class="material-icons">art_track</i>
+                    </button>
+                    </a>
+                    <button type="button" class="btn btn-success btn-link" rel="tooltip" data-placement="bottom" title="Financer">
+                        <i class="material-icons">edit</i>
+                    </button>
+                    {#<button type="button" class="btn btn-danger btn-link" rel="tooltip" data-placement="bottom" title="Remove">#}
+                        {#<i class="material-icons">close</i>#}
+                    {#</button>#}
+                </div>
+                <h4 class="card-title">
+                    <a href="#pablo">{{ projet.projet.nomProjet }}</a>
+                </h4>
+                <div class="card-description">
+                    {{ projet.projet.descriptionCourteProjet }}
+                     </div>
+            </div>
+            <div class="card-footer">
+                <div class="price">
+                    <h4>Objectif : {{ projet.projet.objectif|number_format(0, ' ', ' ') }}</h4>
+                    <div class="progress" style="margin:10px;">
+                       <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{ ( 1150000 / projet.projet.objectif)*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ ( 1150000 / projet.projet.objectif)*100 }}%;"></div>
+                    </div>
+
+
+                </div>
+                <div class="stats">
+                    <p class="card-category"><i class="material-icons">place</i> Montant investit : {{ projet.montant|number_format(0, ' ', ' ') }} </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+</div>
