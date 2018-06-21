@@ -92,8 +92,8 @@ class RegistrationListener implements EventSubscriberInterface
      //   $form = $this->createForm(new DonateursType(), $user, ['role' => $this->getUser()->getRoles()]);
 
         $orign = $this->router->getRouteCollection();
-        var_dump($orign);
-        die();
+        /*var_dump($orign);
+        die();*/
       //  if ($orign === '/register/porteur')
 
         $session = new Session();
