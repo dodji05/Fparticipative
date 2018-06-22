@@ -80,23 +80,29 @@ class RegistrationListener implements EventSubscriberInterface
     }
     public function onRegistrationInitialize(GetResponseUserEvent $event)
     {
-       /* if (!$this->securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return;
-        }*/
-       //$user = $event->
-     //   $form = $this->createForm(new DonateursType(), $user, ['role' => $this->getUser()->getRoles()]);
 
-        $orign = $this->router->getRouteCollection();
-        /*var_dump($orign);
-        die();*/
-      //  if ($orign === '/register/porteur')
+       // $orign = $this->router->getRouteCollection()->get("porteur_register")->getPath() ;//  match('/register/porteur');
+//        var_dump($orign);
+//        die();
 
-        $session = new Session();
-       $code = $session->get('codeInscription');
-        if ($code === null){
-            $url = $this->router->generate('code-validation');
-            $response = new RedirectResponse($url);
-            $event->setResponse($response);
+       $orign = $event->getRequest()->getPathInfo();
+//        var_dump($orign);
+//     die();
+        if ($orign/*["_route"] */== "/register/porteur")
+        {
+            $session = new Session();
+            $code = $session->get('codeInscription');
+            if ($code === null){
+                $url = $this->router->generate('code-validation');
+                $response = new RedirectResponse($url);
+                $event->setResponse($response);
+               // $event->;
+        }
+        else {
+                exit();
+        }
+
+
         }
        // return $redirection;
     }
