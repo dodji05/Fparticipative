@@ -1,0 +1,66 @@
+
+    <div class="donateur-details-content" style="">
+
+        {{ form_start(form, {'method': 'post', 'action': path('porteur_register'), 'attr': {'class': 'fos_user_registration_register form-horizontal'}}) }}
+
+        <div class="form-group">
+
+            <label for="full_name" class="col-sm-3 control-label">Nom : </label>
+            <div class="col-sm-8">
+                {{ form_widget(form.nom,{'attr':{'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="full_name" class="col-sm-3 control-label">prenom(s) : </label>
+            <div class="col-sm-8">
+                {{ form_widget(form.prenom,{'attr':{'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="full_name" class="col-sm-3 control-label"> Nom utilisateur : </label>
+
+            <div class="col-sm-8">
+                {{ form_widget(form.username,{'attr':{'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="full_name" class="col-sm-3 control-label">E-mail: </label>
+
+            <div class="col-sm-8">
+                {{ form_widget(form.email,{'attr':{'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="full_name" class="col-sm-3 control-label">Mot de passe: </label>
+            <div class="col-sm-8">
+                {{ form_widget(form.plainPassword.first,{'attr':{'class': 'form-control'}}) }}
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="full_name" class="col-sm-3 control-label">Répéter le mot de passe</label>
+            <div class="col-sm-8">
+                {{ form_widget(form.plainPassword.second,{'attr':{'class': 'form-control'}}) }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="card-element">
+                Credit or Debit Card
+            </label>
+            <div id="card-element" class="form-control"></div>
+            <div id="card-errors" class="help-block" role="alert"></div>
+        </div>
+        <div class="form-group text-center">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn  btn-success">{{ 'registration.submit'|trans }}</button>
+            </div>
+        </div>
+
+
+        {{ form_end(form) }}
+    </div>
+

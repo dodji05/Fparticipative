@@ -43,7 +43,7 @@ class CodeVerificationController extends Controller
                 $session->set('codeInscription', $code);
 
                 //puis on fait une redirection vers le formulaire d'inscripttion
-               return  $this->redirectToRoute('fos_user_registration_register');
+               return  $this->redirectToRoute('fos_user_security_login');
             }
             else {
                 //Dans le cas contraire on le maintient sur cette page

@@ -1,0 +1,98 @@
+
+{#{% extends "@FOSUser/layout_user_form.html.twig" %}#}
+{% extends ":accueil:index.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+     {% block contenu %}
+         <div class="container" style="margin-top: 25px; margin-bottom: 30px">
+             <div class="row">
+                 <div class="col-lg-4 col-lg-push-8 col-md-4 col-md-push-8 col-xs-12 col-xs-pull-0 col-sm-12 col-sm-pull-0">
+                     <div class="donateur-details-content" style="">
+                         <h3>Veuillez vous connecter à votre compte.</h3> <hr/>
+
+                     </div>
+                 </div>
+                 <div class="col-lg-8 col-lg-pull-4 col-md-8 col-md-pull-4 col-xs-12 col-xs-push-0 col-sm-12 col-sm-push-0">
+
+                     <div class="donateur-details-content" style="">
+                         <h3>Inscription.</h3> <hr/>
+
+                             Avez deja recu le code d'inscription a la plateforme <br/>
+                             <input type="radio" value="Oui" name="insc" onclick="choix(this.value)"> oui
+                             <input type="radio" value="Non" name="insc" onclick="choix(this.value)"> non
+                             <div id="codeOui">
+                                 {{ include('@Acteur/Promotteurs/Partials/code_verification2.htm.twig') }}
+                             </div>
+                             <div id="codeNon">
+                                 {{ include('@Acteur/Registration/user_one.form.html.twig') }}
+                                 {{ form_start(form_inscription) }}
+                                 {{ form_end(form_inscription) }}
+                             </div>
+                         </form>
+                 </div>
+             </div>
+             </div>
+         </div>
+     {% endblock %}
+{% block javascript %}
+<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+<script src="https://js.stripe.com/v3"></script>
+<script>
+
+$(document).ready(function(){
+    $('#codeOui').hide();
+    $('#codeNon').hide();
+
+});
+function choix(choi) {
+        //  alert(e)
+        if ( choi == "Oui"){
+            $('#codeOui').show();
+            $('#codeNon').hide();
+
+        }
+        else if( choi == "Non") {
+            $('#codeNon').show();
+            $('#codeOui').hide();
+
+
+
+var form = document.getElementById('{{ form_inscription.vars.id }}');
+  var errors = document.getElementById('card-errors');
+  var stripe = Stripe('{{ stripe_public_key }}');
+  var elements = stripe.elements();
+  var card = elements.create('card');
+  card.mount('#card-element');
+  card.addEventListener('change', function(event) {
+    if (event.error) {
+      errors.textContent = event.error.message;
+      form.classList.add('has-error');
+    } else {
+      errors.textContent = '';
+      form.classList.remove('has-error');
+    }
+  });
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+    stripe.createToken(card).then(function(result) {
+      if (result.error) {
+        errors.textContent = result.error.message;
+        form_inscription.classList.add('has-error');
+      } else {
+        document.getElementById('{{ form_inscription.children.token.vars.id }}').setAttribute('value', result.token.id);
+        form.submit();
+      }
+    });
+  });
+
+
+        }
+        else{
+            $('#codeOui').hide();
+            $('#codeNon').hide();
+        }
+
+}
+</script>
+
+{% endblock %}

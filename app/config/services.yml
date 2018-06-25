@@ -19,7 +19,7 @@ services:
 #            - { name: "form.type", alias: "app_user_registration" }
     app.registrationlistener:
         class: ActeurBundle\EventListner\RegistrationListener
-        arguments: ['@router']
+        arguments: ['@router','%payment%']
         tags:
             - { name: kernel.event_subscriber }
     redirect.after.login:

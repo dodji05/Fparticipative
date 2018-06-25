@@ -117,6 +117,7 @@ class PromotteurController extends Controller
 
     }
     public function preInscriptionAction (Request $request){
+        return $this->renderView('@Acteur/Promotteurs/pre-inscription.form.html.twig');
 
     }
 }

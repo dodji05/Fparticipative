@@ -30,7 +30,38 @@ class PorteurType extends AbstractType
 
                 ]
             ])
-                   ->add('telephone',null, [
+            ->add('dateNaissance',null,[
+                'attr' => [
+                    'placeholder'  => 'Saissez votre date de naissance ',
+
+                ]
+            ])
+            ->add('lieuNaissance',null,[
+                'attr' => [
+                    'placeholder'  => 'Saissez votre lieu de naissance ',
+
+                ]
+            ])
+            ->add('pays',null,[
+                'attr' => [
+                    'placeholder'  => 'Selectionnez votre pays',
+
+                ]
+            ])
+            ->add('ville',null,[
+                'attr' => [
+                    'placeholder'  => 'Selectionnez votre ville',
+
+                ]
+            ])
+            ->add('adresse',null,[
+                'attr' => [
+                    'placeholder'  => 'Saissez votre adresse ',
+
+                ]
+            ])
+
+            ->add('telephone',null, [
                 'attr' => [
                     'placeholder'  => 'Saissez le numero de telephone',
 
@@ -42,7 +73,8 @@ class PorteurType extends AbstractType
 
                 ]
             ])
-
+            ->add('imageFile',VichImageType::class)
+            ->add('imageFileCni',VichImageType::class)
             ->add('nature',EntityType::class, [
                 'class' => 'AdminBundle\Entity\Nature',
                 'choice_label'=>'type',

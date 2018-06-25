@@ -29,12 +29,14 @@ class RegistrationListener implements EventSubscriberInterface
     private $em;
     private  $userManager;
     private  $request;
+    private $config;
 
-    public function __construct(RouterInterface $router,/*RequestContext $request */EntityManagerInterface $em, /*UserManagerInterface*/  UserDiscriminator $userManager)
+    public function __construct(RouterInterface $router,array $config,/*RequestContext $request */EntityManagerInterface $em, /*UserManagerInterface*/  UserDiscriminator $userManager)
     {
         $this->router = $router;
         $this->em = $em;
         $this->userManager = $userManager;
+        $this->config = $config;
       //  $this->request = $request;
 
 
@@ -45,6 +47,7 @@ class RegistrationListener implements EventSubscriberInterface
         return array(
             FOSUserEvents::REGISTRATION_SUCCESS => 'onRegistrationSuccess',
             FOSUserEvents::REGISTRATION_INITIALIZE => 'onRegistrationInitialize'
+
         );
     }
 
@@ -92,6 +95,33 @@ class RegistrationListener implements EventSubscriberInterface
         {
             $session = new Session();
             $code = $session->get('codeInscription');
+
+                \Stripe\Stripe::setApiKey($this->config['stripe_secret_key']);
+                // $config = array();
+               // $config = $this->getParameter('payment');
+                try {
+                    $charge = \Stripe\Charge::create([
+                        'amount' => 5000/*20000$config['decimal'] ? $config['premium_amount'] * 100 : $config['premium_amount']*/,
+                        'currency' => $this->config['currency'],
+                        'description' => "frais",
+                        'customer'=> '11111111',
+                       // 'source' => $InscriptionForm->get('token')->getData(),
+                        //'receipt_email' => 'gildas31@gmail.com'/*$user->getEmail()*/,
+                    ]);
+                } catch (\Stripe\Error\Base $e) {
+                    //  $logger->error(sprintf('%s exception encountered when creating a premium payment: "%s"', get_class($e), $e->getMessage()), ['exception' => $e]);
+
+                    throw $e;
+                }
+                // Sauvegades du dons qui vient d'etre effectuee
+
+
+//            $user->setChargeId($charge->id);
+//            // $user->setPremium($charge->paid);
+//            $em->persist($user);
+//            $em->flush();
+
+
             if ($code === null){
                 $url = $this->router->generate('code-validation');
                 $response = new RedirectResponse($url);
@@ -99,7 +129,7 @@ class RegistrationListener implements EventSubscriberInterface
                // $event->;
         }
         else {
-                exit();
+              //  exit();
         }
 
 
