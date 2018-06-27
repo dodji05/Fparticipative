@@ -44,23 +44,16 @@ class RegistrationPromoteurController extends Controller
                 ]
             ])
             ->getForm();
-        $InscriptionForm = $this->get('form.factory')
-            ->createNamedBuilder('payment-form')
-            ->add('token', HiddenType::class, [
-                'constraints' => [new NotBlank()],
-            ])
-            ->add('montant',IntegerType::class)
 
-            ->getForm();
         $formFactory = $this->get('fos_user.registration.form.factory');
         /** @var $userManager UserManagerInterface */
         //$userManager = $this->get('fos_user.user_manager');
         $form = $formFactory->createForm()
+            //->
             ->add('token', HiddenType::class, [
                 'constraints' => [new NotBlank()],
             ])
-            ->add('montant',IntegerType::class)
-            ->add('submit', SubmitType::class);
+            ;
 
 
         if ($codeForm->isSubmitted() && $codeForm->isValid()) {
@@ -86,43 +79,13 @@ class RegistrationPromoteurController extends Controller
             }
         }
 
-        $InscriptionForm->handleRequest($request);
+        $form->handleRequest($request);
         // $logger = new LoggerInterface();
 
-        if ($InscriptionForm->isValid()) {
-            \Stripe\Stripe::setApiKey($this->getParameter('stripe_secret_key'));
-            // $config = array();
-            $config = $this->getParameter('payment');
 
-            try {
-
-
-                $charge = \Stripe\Charge::create([
-                    'amount' => $InscriptionForm->get('montant')->getData()/*20000$config['decimal'] ? $config['premium_amount'] * 100 : $config['premium_amount']*/,
-                    'currency' => $config['currency'],
-                    'description' => "frais d\inscription",
-                    //'customer'=> $user->getNom(),
-                    'source' => $InscriptionForm->get('token')->getData(),
-                    //'receipt_email' => 'gildas31@gmail.com'/*$user->getEmail()*/,
-                ]);
-            } catch (\Stripe\Error\Base $e) {
-                //  $logger->error(sprintf('%s exception encountered when creating a premium payment: "%s"', get_class($e), $e->getMessage()), ['exception' => $e]);
-
-                throw $e;
-            }
-            // Sauvegades du dons qui vient d'etre effectuee
-
-
-//            $user->setChargeId($charge->id);
-//            // $user->setPremium($charge->paid);
-//            $em->persist($user);
-//            $em->flush();
-
-
-        }
         return $this->render('@Acteur/Promotteurs/pre-inscription.form.html.twig',[
             'form_code' => $codeForm->createView(),
-            'form_inscription' => $InscriptionForm->createView(),
+           // 'form_inscription' => $InscriptionForm->createView(),
             'stripe_public_key' => $this->getParameter('stripe_public_key'),
             'form'=>$form->createView()
         ]);

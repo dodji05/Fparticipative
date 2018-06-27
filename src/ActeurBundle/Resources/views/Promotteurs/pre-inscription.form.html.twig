@@ -24,8 +24,7 @@
                              </div>
                              <div id="codeNon">
                                  {{ include('@Acteur/Registration/user_one.form.html.twig') }}
-                                 {{ form_start(form_inscription) }}
-                                 {{ form_end(form_inscription) }}
+
                              </div>
                          </form>
                  </div>
@@ -57,7 +56,7 @@ function choix(choi) {
 
 
 
-var form = document.getElementById('{{ form_inscription.vars.id }}');
+var form = document.getElementById('{{ form.vars.id }}');
   var errors = document.getElementById('card-errors');
   var stripe = Stripe('{{ stripe_public_key }}');
   var elements = stripe.elements();
@@ -77,9 +76,11 @@ var form = document.getElementById('{{ form_inscription.vars.id }}');
     stripe.createToken(card).then(function(result) {
       if (result.error) {
         errors.textContent = result.error.message;
-        form_inscription.classList.add('has-error');
+        form.classList.add('has-error');
       } else {
-        document.getElementById('{{ form_inscription.children.token.vars.id }}').setAttribute('value', result.token.id);
+       document.getElementById('{{ form.children.token.vars.id }}').setAttribute('value', result.token.id);
+        //$('#fos_user_registration_form_token').setAttribute('value', result.token.id);
+        console.log(result.token.id);
         form.submit();
       }
     });

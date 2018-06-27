@@ -2,6 +2,7 @@
 
 
 namespace ActeurBundle\EventListner;
+use ActeurBundle\Event\StripeEvent;
 use AdminBundle\Form\DonateursType;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Event\GetResponseUserEvent;
@@ -15,6 +16,7 @@ use PUGX\MultiUserBundle\Model\UserDiscriminator;
 use PUGX\MultiUserBundle\PUGXMultiUserBundle;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouterInterface;
@@ -31,10 +33,11 @@ class RegistrationListener implements EventSubscriberInterface
     private  $request;
     private $config;
 
-    public function __construct(RouterInterface $router,array $config,/*RequestContext $request */EntityManagerInterface $em, /*UserManagerInterface*/  UserDiscriminator $userManager)
+    public function __construct(RouterInterface $router,array $config,RequestStack $request, EntityManagerInterface $em, /*UserManagerInterface*/  UserDiscriminator $userManager)
     {
         $this->router = $router;
         $this->em = $em;
+        $this->request = $request;
         $this->userManager = $userManager;
         $this->config = $config;
       //  $this->request = $request;
@@ -46,7 +49,9 @@ class RegistrationListener implements EventSubscriberInterface
     {
         return array(
             FOSUserEvents::REGISTRATION_SUCCESS => 'onRegistrationSuccess',
-            FOSUserEvents::REGISTRATION_INITIALIZE => 'onRegistrationInitialize'
+            FOSUserEvents::REGISTRATION_INITIALIZE => 'onRegistrationInitialize',
+            FOSUserEvents::USER_CREATED =>'onUserCreated',
+         //   StripeEvent::CHARGE_SUCCEEDED
 
         );
     }
@@ -75,7 +80,6 @@ class RegistrationListener implements EventSubscriberInterface
             $codeInscription->setUtilise(true);
             $this->em->persist($codeInscription);
             $this->em->flush();
-
             // on supprime la session codeInscription
             $session->remove('codeInscription');
 
@@ -88,6 +92,7 @@ class RegistrationListener implements EventSubscriberInterface
 //        var_dump($orign);
 //        die();
 
+
        $orign = $event->getRequest()->getPathInfo();
 //        var_dump($orign);
 //     die();
@@ -98,14 +103,16 @@ class RegistrationListener implements EventSubscriberInterface
 
                 \Stripe\Stripe::setApiKey($this->config['stripe_secret_key']);
                 // $config = array();
-               // $config = $this->getParameter('payment');
+               // $config = $this->getParameter('payment');"parameters
+//            var_dump( $this->request->getCurrentRequest()->request->all()[1]);
+//            die();
                 try {
                     $charge = \Stripe\Charge::create([
-                        'amount' => 5000/*20000$config['decimal'] ? $config['premium_amount'] * 100 : $config['premium_amount']*/,
+                        'amount' => $this->config['frais']/*20000$config['decimal'] ? $config['premium_amount'] * 100 : $config['premium_amount']*/,
                         'currency' => $this->config['currency'],
                         'description' => "frais",
-                        'customer'=> '11111111',
-                       // 'source' => $InscriptionForm->get('token')->getData(),
+                        //'customer'=> 'gildas',
+                       'source' => 'tok_1ChOQ4CYE9VoSKNMbMxGDuUQ'//$event->getRequest()->get('token'),  //$this->request->getParentRequest()->get('token'),// Arsen@l-1987
                         //'receipt_email' => 'gildas31@gmail.com'/*$user->getEmail()*/,
                     ]);
                 } catch (\Stripe\Error\Base $e) {
@@ -113,25 +120,7 @@ class RegistrationListener implements EventSubscriberInterface
 
                     throw $e;
                 }
-                // Sauvegades du dons qui vient d'etre effectuee
-
-
-//            $user->setChargeId($charge->id);
-//            // $user->setPremium($charge->paid);
-//            $em->persist($user);
-//            $em->flush();
-
-
-            if ($code === null){
-                $url = $this->router->generate('code-validation');
-                $response = new RedirectResponse($url);
-                $event->setResponse($response);
-               // $event->;
-        }
-        else {
-              //  exit();
-        }
-
+               $this->userManager->createUser();
 
         }
        // return $redirection;

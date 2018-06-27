@@ -1,8 +1,6 @@
 <?php
 
 namespace ActeurBundle\Controller;
-
-use AdminBundle\Entity\Donateurs;
 use AdminBundle\Entity\Dons;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -13,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use ActeurBundle\Client\StripeClient;
-use Psr\Log\LoggerInterface;
+
 /**
  * Porteur controller.
  *

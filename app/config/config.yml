@@ -11,6 +11,7 @@ parameters:
     payment:
         currency: XOF
         decimal: false
+        frais: 10000
         stripe_public_key: pk_test_hYWAV5dvpQ6w0qq81ayRQuXQ
         stripe_secret_key: sk_test_ZkFGZwpPh4dleQVRYNWSOEAj
 
