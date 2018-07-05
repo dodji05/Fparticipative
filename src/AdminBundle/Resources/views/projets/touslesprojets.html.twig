@@ -8,9 +8,6 @@
                         <h4 class="card-title pull-left">Les projets</h4>
                         <a href="{{ path('projet_new') }}">
 
-                            <button type="button" class="btn btn-default pull-right">
-                                Ajouter un projet
-                            </button>
                         </a>
                     </div>
                     <div class="card-body collapse show">
@@ -38,7 +35,7 @@
                                     </td>
                                     <td>{{ projet.nomProjet }}</td>
                                     <td>
-                                        {% if projet.porteur.type.id == 1 %}
+                                        {% if projet.porteur.nature.id == 1 %}
                                             {{ projet.porteur.nom }} {{ projet.porteur.prenom }}
                                         {% else %}
                                             {{ projet.porteur.raisonSociale }}
@@ -73,7 +70,7 @@
                                         <div class="form-group">
                                             <!-- Outline Icon Button group -->
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <button type="button" class="btn btn-raised btn-icon btn-outline-secondary"><i class="fa fa-pencil-square-o"></i></button>
+
                                                <button type="button" class="btn btn-raised btn-icon btn-outline-success">
                                                    <a href="{{ path('projet_validation', { 'id': projet.id }) }}"
                                                       onclick="validerProjet(event, this)"

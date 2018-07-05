@@ -148,4 +148,19 @@ class ProjetsController extends Controller
         return $this->render('@Admin/projets/projets_en_financement.html.twig', ['projets'=>$projets]);
 
     }
+    /**
+     * liste tous les projets en instace de validation.
+     *
+     * @Route("/projet_instance", name="projet_instance")
+     * @Method({"GET", "POST"})
+     */
+    public function projetsEnInstanceAction(Request $request){
+
+        $em = $this->getDoctrine()->getManager();
+
+        $projets = $em->getRepository('AdminBundle:Projets')->findBy(array('selectionne'=> false));
+
+        return $this->render('@Admin/projets/touslesprojets.html.twig', ['projets'=>$projets]);
+
+    }
 }
