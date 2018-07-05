@@ -48,4 +48,15 @@ class DonsRepository extends \Doctrine\ORM\EntityRepository
        return $qb->getQuery()->getResult();
 
    }
+   public function NombreProjetsSoutenu($donateur){
+       $qb = $this->createQueryBuilder('d')
+          ->select('SUM(d.montant)')
+           ->innerJoin('d.projet','p')
+           ->innerJoin('d.donateur','dn')
+           ->where('d.donateur = :donateur')
+           ->groupBy('d.projet')
+           ->setParameter('donateur',$donateur)
+       ;
+       return $qb->getQuery()->getResult();
+   }
 }

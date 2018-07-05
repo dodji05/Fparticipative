@@ -1,0 +1,102 @@
+{% extends '@Admin/Default/index.html.twig' %}
+{% block contenuprincipal %}
+    <section id="base-style">
+        <div class="row">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title pull-left">Infornations donateurs </h4>
+
+
+                    </div>
+                    <div class="card-body collapse show">
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title pull-left">Liste des projets soutenus</h4>
+
+
+                    </div>
+                    <div class="card-body collapse show">
+                        <table class="table table-striped" valign="middle">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+
+                                <th>logo </th>
+                                <th>Nom du projet </th>
+
+                                <th>Montant </th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{ dump(projets) }}
+                            {% for projet in projets %}
+                                <tr>
+                                    {#<td>{{ loop.index }}</td>#}
+                                    {#<td><img src="{{ asset('uploads/admin/images/') }}{{ projet.projet.logo }}"#}
+                                         {#class="img-thumbnail" style="height: 60px;"></td>#}
+                                    {#<td>{{ projet.projet.nomProjet }}</td>#}
+
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title pull-left">Details des dons </h4>
+
+
+                    </div>
+                    <div class="card-body collapse show">
+                        <table class="table table-striped" valign="middle">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th> Date</th>
+                                <th>logo </th>
+                                <th>Nom du projet </th>
+
+                                <th>Montant </th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for donateu in donateur.dons %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ donateu.dateDons|date('d-m-Y')}}</td>
+
+                                <td><img src="{{ asset('uploads/admin/images/') }}{{ donateu.projet.logo }}"
+                                           class="img-thumbnail" style="height: 60px;"></td>
+
+                                <td>{{ donateu.projet.nomProjet}}</td>
+                                <td>{{ donateu.montant|number_format(0, ' ', ' ')}}</td>
+                            </tr>
+                            {% else %}
+                                <li><em>no user found</em></li>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+{% endblock %}
