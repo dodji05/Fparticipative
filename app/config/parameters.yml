@@ -1,11 +1,11 @@
 # This file is auto-generated during the composer install
 parameters:
     database_driver  : pdo_mysql
-    database_host: 127.0.0.1
-    database_port: 3306
+    database_host: localhost
+    database_port:
     database_name: fundme
     database_user: root
-    database_password:
+    database_password: root
     mailer_transport: smtp
     mailer_host: mail.kaaloo.net
     mailer_user: infos@kaaloo.net
