@@ -27,6 +27,9 @@ class RegistrationController extends BaseController
 
         $user = $userManager->createUser();
         $user->setEnabled(true);
+        $user_active =  $user->getClass();
+        var_dump($user_active);
+        die();
 
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
@@ -42,6 +45,7 @@ class RegistrationController extends BaseController
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
+
                 $event = new FormEvent($form, $request);
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
 

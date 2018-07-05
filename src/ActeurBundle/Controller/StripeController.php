@@ -15,27 +15,25 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class StripeController extends Controller
 {
     /**
-     * @Route("/wh", name="stripe_webhook")
+     * @Route("/webhooks/stripe", name="stripe_webhook")
      */
     public function webhookAction(Request $request)
     {
-        $header = 'Stripe-Signature';
-        $signature = $request->headers->get($header);
-
-        if (is_null($signature)) {
-            throw new BadRequestHttpException(sprintf('Missing header %s', $header));
+        $data = json_decode($request->getContent(), true);
+        if ($data === null) {
+            throw new \Exception('Bad JSON body from Stripe!');
         }
-
-        try {
-            $event = new StripeEvent(Webhook::constructEvent($request->getContent(), $signature, $this->getParameter('stripe_signing_secret')));
-        } catch (\UnexpectedValueException $e) {
-            throw new BadRequestHttpException('Invalid Stripe payload');
-        } catch (SignatureVerification $e) {
-            throw new BadRequestHttpException('Invalid Stripe signature');
+        $eventId = $data['id'];
+        $stripeEvent = $this->get('stripe_client')
+            ->findEvent($eventId);
+        switch ($stripeEvent->type) {
+            case 'charge.succeeded':
+                // todo - fully cancel the user's subscription
+                break;
+            default:
+                throw new \Exception('Unexpected webhook type form Stripe! '.$stripeEvent->type);
         }
-
-        $this->get('event_dispatcher')->dispatch($event->getName(), $event);
-
-        return new Response();
+        return new Response('Event Handled: '.$stripeEvent->type);
     }
+
 }

@@ -47,4 +47,13 @@ class StripeClient
        // $user->setPremium($charge->paid);
         $this->em->flush();
     }
+
+    /**
+     * @param $eventId
+     * @return \Stripe\Event
+     */
+    public function findEvent($eventId)
+    {
+        return \Stripe\Event::retrieve($eventId);
+    }
 }
