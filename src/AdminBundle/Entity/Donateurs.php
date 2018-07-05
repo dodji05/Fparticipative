@@ -53,12 +53,6 @@ class Donateurs extends User
      */
     private $telephone;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mail", type="string", length=255, nullable=true)
-     */
-    private $mail;
 
     /**
      * @ORM\OneToMany(targetEntity="AdminBundle\Entity\Dons", mappedBy="donateur")
