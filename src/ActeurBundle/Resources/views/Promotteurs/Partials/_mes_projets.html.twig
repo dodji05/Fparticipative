@@ -41,7 +41,14 @@
                                     </td>
 
                                     <td> <small> 15</small></td>
-                                    <td> 15 000</td>
+                                    <td>
+                                        {% set total_don = 0 %}
+                                        {% for don in projet.dons%}
+                                            {% set total_don = total_don + don.montant %}
+
+                                        {% endfor %}
+                                        {{ total_don|number_format(0, ' ', ' ')}}
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>

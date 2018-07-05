@@ -58,7 +58,37 @@ class RegistrationListener implements EventSubscriberInterface
 
     public function onRegistrationSuccess(FormEvent $event)
     {
-       // $this->request->get;
+
+        $orign = $event->getRequest()->getPathInfo();
+//        var_dump($orign);
+//     die();
+        if ($orign/*["_route"] */== "/register/porteur")
+        {
+            $session = new Session();
+            $code = $session->get('codeInscription');
+
+            \Stripe\Stripe::setApiKey($this->config['stripe_secret_key']);
+            // $config = array();
+            // $config = $this->getParameter('payment');"parameters
+//            var_dump( $this->request->getCurrentRequest()->request->all()[1]);
+//            die();
+            try {
+                $charge = \Stripe\Charge::create([
+                    'amount' => $this->config['frais']/*20000$config['decimal'] ? $config['premium_amount'] * 100 : $config['premium_amount']*/,
+                    'currency' => $this->config['currency'],
+                    'description' => "frais",
+                    //'customer'=> 'gildas',
+                    'source' => 'tok_1ChOQ4CYE9VoSKNMbMxGDuUQ'//$event->getRequest()->get('token'),  //$this->request->getParentRequest()->get('token'),// Arsen@l-1987
+                    //'receipt_email' => 'gildas31@gmail.com'/*$user->getEmail()*/,
+                ]);
+            } catch (\Stripe\Error\Base $e) {
+                //  $logger->error(sprintf('%s exception encountered when creating a premium payment: "%s"', get_class($e), $e->getMessage()), ['exception' => $e]);
+
+                throw $e;
+            }
+            $this->userManager->createUser();
+
+        }
 
         $this->userManager->getUserFactory();
         $rolesArr = array('ROLE_PORTEUR_PROJET');
@@ -96,35 +126,34 @@ class RegistrationListener implements EventSubscriberInterface
        $orign = $event->getRequest()->getPathInfo();
 //        var_dump($orign);
 //     die();
-        if ($orign/*["_route"] */== "/register/porteur")
-        {
-            $session = new Session();
-            $code = $session->get('codeInscription');
-
-                \Stripe\Stripe::setApiKey($this->config['stripe_secret_key']);
-                // $config = array();
-               // $config = $this->getParameter('payment');"parameters
-            $stripe_token = $this->request->getCurrentRequest()->request->get('fos_user_registration_form')['token'];
-//            var_dump($stripe_token);
-//           die();
-                try {
-                    $charge = \Stripe\Charge::create([
-                        'amount' => $this->config['frais']/*20000$config['decimal'] ? $config['premium_amount'] * 100 : $config['premium_amount']*/,
-                        'currency' => $this->config['currency'],
-                        'description' => "frais",
-                        //'customer'=> 'gildas',
-                       'source' => $stripe_token , //$event->getRequest()->get('token'),  //$this->request->getParentRequest()->get('token'),// Arsen@l-1987
-                        //'receipt_email' => 'gildas31@gmail.com'/*$user->getEmail()*/,
-                    ]);
-                } catch (\Stripe\Error\Base $e) {
-                    //  $logger->error(sprintf('%s exception encountered when creating a premium payment: "%s"', get_class($e), $e->getMessage()), ['exception' => $e]);
-
-                    throw $e;
+//        if ($orign/*["_route"] */== "/register/porteur")
+//        {
+//            $session = new Session();
+//            $code = $session->get('codeInscription');
+//
+//                \Stripe\Stripe::setApiKey($this->config['stripe_secret_key']);
+//                // $config = array();
+//               // $config = $this->getParameter('payment');"parameters
+////            var_dump( $this->request->getCurrentRequest()->request->all()[1]);
+////            die();
+//                try {
+//                    $charge = \Stripe\Charge::create([
+//                        'amount' => $this->config['frais']/*20000$config['decimal'] ? $config['premium_amount'] * 100 : $config['premium_amount']*/,
+//                        'currency' => $this->config['currency'],
+//                        'description' => "frais",
+//                        //'customer'=> 'gildas',
+//                       'source' => 'tok_1ChOQ4CYE9VoSKNMbMxGDuUQ'//$event->getRequest()->get('token'),  //$this->request->getParentRequest()->get('token'),// Arsen@l-1987
+//                        //'receipt_email' => 'gildas31@gmail.com'/*$user->getEmail()*/,
+//                    ]);
+//                } catch (\Stripe\Error\Base $e) {
+//                    //  $logger->error(sprintf('%s exception encountered when creating a premium payment: "%s"', get_class($e), $e->getMessage()), ['exception' => $e]);
+//
+//                    throw $e;
 //                }
-               $this->userManager->createUser();
-
-        }
+//               $this->userManager->createUser();
+//
+//        }
        // return $redirection;
+
     }
-}
 }

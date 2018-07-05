@@ -44,7 +44,7 @@ class PromotteurController extends Controller
         $projet = new Projets();
         $originalMedia = new ArrayCollection();
 
-        for ($i=0;$i<3;$i++){
+        for ($i=0;$i<2;$i++){
             $media = new media();
             $media->setProjetsMedia($projet);
             $originalMedia->add($media);
