@@ -5,7 +5,7 @@ parameters:
     database_port: 3306
     database_name: fundme
     database_user: root
-    database_password:
+    database_password: root
     mailer_transport: smtp
     mailer_host: mail.kaaloo.net
     mailer_user: infos@kaaloo.net
