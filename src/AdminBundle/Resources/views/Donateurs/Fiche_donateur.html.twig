@@ -2,25 +2,19 @@
 {% block contenuprincipal %}
     <section id="base-style">
         <div class="row">
-            <div class="col-4">
+            <div class="col-xl-12 col-lg-4">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title pull-left">Infornations donateurs </h4>
-
-
                     </div>
                     <div class="card-body collapse show">
-
-
                     </div>
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col-xl-12 col-lg-8">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title pull-left">Liste des projets soutenus</h4>
-
-
                     </div>
                     <div class="card-body collapse show">
                         <table class="table table-striped" valign="middle">
@@ -36,14 +30,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {{ dump(projets) }}
-                            {% for projet in projets %}
-                                <tr>
-                                    {#<td>{{ loop.index }}</td>#}
-                                    {#<td><img src="{{ asset('uploads/admin/images/') }}{{ projet.projet.logo }}"#}
-                                         {#class="img-thumbnail" style="height: 60px;"></td>#}
-                                    {#<td>{{ projet.projet.nomProjet }}</td>#}
 
+                            {% for projet in projets  %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td><img src="{{ asset('uploads/admin/images/') }}{{ projet.projet.logo }}"
+                                         class="img-thumbnail" style="height: 60px;"></td>
+                                    <td>{{ projet.projet.nomProjet }}</td>
+                                    {% set totaldons = 0 %}
+                                    <td>{% for total in projet.projet.dons %}
+                                            {% set totaldons = totaldons + total.montant  %}
+                                    {% endfor %}
+                                    {{ totaldons|number_format(0, ' ', ' ') }}</td>
                                 </tr>
 
                             {% endfor %}
