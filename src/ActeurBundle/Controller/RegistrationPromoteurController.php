@@ -2,10 +2,12 @@
 
 namespace ActeurBundle\Controller;
 
+use ActeurBundle\Entity\InscriptionAttente;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -45,15 +47,6 @@ class RegistrationPromoteurController extends Controller
             ])
             ->getForm();
 
-        $formFactory = $this->get('fos_user.registration.form.factory');
-        /** @var $userManager UserManagerInterface */
-        //$userManager = $this->get('fos_user.user_manager');
-        $form = $formFactory->createForm()
-            //->
-            ->add('token', HiddenType::class, [
-                'constraints' => [new NotBlank()],
-            ])
-            ;
 
 
         if ($codeForm->isSubmitted() && $codeForm->isValid()) {
@@ -78,9 +71,54 @@ class RegistrationPromoteurController extends Controller
 
             }
         }
+        $inscription =  new  InscriptionAttente();
 
+        $form = $this->createForm('ActeurBundle\Form\Type\InscriptionAttenteType', $inscription);
+        /** @var $userManager UserManagerInterface */
         $form->handleRequest($request);
         // $logger = new LoggerInterface();
+        $em = $this->getDoctrine()->getManager();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $code_validation = md5(uniqid(mt_rand(), true));
+            $inscription->setCodeInscription($code_validation);
+
+            \Stripe\Stripe::setApiKey($this->getParameter('stripe_secret_key'));
+            // $config = array();
+            $config = $this->getParameter('payment');
+
+            try {
+
+                $charge = \Stripe\Charge::create([
+                    'amount' => "10000"/*20000$config['decimal'] ? $config['premium_amount'] * 100 : $config['premium_amount']*/,
+                    'currency' => $config['currency'],
+                    'description' => 'frais d\'inscription au projet',
+                    //'customer'=> $user->getNom(),
+                    'source' => $form->get('token')->getData(),
+                    //'receipt_email' => 'gildas31@gmail.com'/*$user->getEmail()*/,
+                ]);
+            } catch (\Stripe\Error\Base $e) {
+                //  $logger->error(sprintf('%s exception encountered when creating a premium payment: "%s"', get_class($e), $e->getMessage()), ['exception' => $e]);
+
+                throw $e;
+            }
+            // Sauvegades du dons qui vient d'etre effectuee
+
+
+            $inscription->setChargeId($charge->id);
+            // $user->setPremium($charge->paid);
+            $em->persist($inscription);
+            $em->flush();
+
+            return  $this->redirectToRoute('code-validation');
+
+
+        }
+        else {
+//            dump($form->getErrors(true));
+//            die();
+        }
 
 
         return $this->render('@Acteur/Promotteurs/pre-inscription.form.html.twig',[

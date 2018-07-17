@@ -13,7 +13,7 @@ class CodeVerificationController extends Controller
 /**
 * Porteur controller.
 *
-* @Route("/register/code-validation",name="code-validation")
+* @Route("/register/porteur/code-validation",name="code-validation")
 */
     public function indexAction(Request $request)
     {
@@ -33,7 +33,7 @@ class CodeVerificationController extends Controller
             $code = $data['code'];
             $doctrine = $this->getDoctrine();
             // $code_section = $doctrine->getRepository('ScomBundle:Sections')->
-            $repository2 = $doctrine->getRepository('AdminBundle:CodeValidation');
+            $repository2 = $doctrine->getRepository('ActeurBundle:InscriptionAttente');
             $codeInscription = $repository2->VerifieCode($code);
             if($codeInscription ){
 
@@ -50,7 +50,7 @@ class CodeVerificationController extends Controller
 
             }
         }
-        return $this->render('@Acteur/Promotteurs/Partials/code_verification.htm.twig', array(
+        return $this->render('@Acteur/Promotteurs/inscription-code.form.html.twig', array(
             'form' => $form->createView(),
         ));
     }

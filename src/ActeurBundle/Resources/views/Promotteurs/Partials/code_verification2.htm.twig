@@ -1,12 +1,12 @@
 
-{{ form_start(form_code) }}
+{{ form_start(form) }}
         <p style="color: darkcyan">Veuillez le code d'incrisption fournie par </p>
     {#{{ form_widget(form) }}#}
     <div class="row">
             <div class="input-field col s12">
-                <label> {{ form_label(form_code.code) }}</label>
+                <label> {{ form_label(form.code) }}</label>
                 {#<input id="icon_prefix" type="text" class="validate">#}
-                {{ form_widget(form_code.code) }}
+                {{ form_widget(form.code) }}
             </div>
     </div>
 
@@ -31,7 +31,7 @@
 
         </button>
     </div>
-{{ form_end(form_code) }}
+{{ form_end(form) }}
 
 {% block javascript %}
 
