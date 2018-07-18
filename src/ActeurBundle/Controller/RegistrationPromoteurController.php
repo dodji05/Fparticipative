@@ -36,41 +36,7 @@ class RegistrationPromoteurController extends Controller
      *
      */
     public function preInscriptionAction (Request $request){
-        $defaultData = array('message' => 'Entre le code de validation');
-        $codeForm = $this->createFormBuilder($defaultData)
-            ->add('code', TextType::class,[
-                'attr' => [
-                    'class' => 'code_inscription',
-                    'placehoder'=>'code d\'inscription'
-//                    'onblur'=> 'remplissage(event)'
-                ]
-            ])
-            ->getForm();
 
-
-
-        if ($codeForm->isSubmitted() && $codeForm->isValid()) {
-            $data = $codeForm->getData();
-            $code = $data['code'];
-            $doctrine = $this->getDoctrine();
-            // $code_section = $doctrine->getRepository('ScomBundle:Sections')->
-            $repository2 = $doctrine->getRepository('AdminBundle:CodeValidation');
-            $codeInscription = $repository2->VerifieCode($code);
-            if($codeInscription ){
-
-                //Si le code d'inscription est valable , on enregistre dans la session
-                $session = new Session();
-                $session->remove('codeInscription');
-                $session->set('codeInscription', $code);
-
-                //puis on fait une redirection vers le formulaire d'inscripttion
-                return  $this->redirectToRoute('fos_user_security_login');
-            }
-            else {
-                //Dans le cas contraire on le maintient sur cette page
-
-            }
-        }
         $inscription =  new  InscriptionAttente();
 
         $form = $this->createForm('ActeurBundle\Form\Type\InscriptionAttenteType', $inscription);
@@ -122,7 +88,7 @@ class RegistrationPromoteurController extends Controller
 
 
         return $this->render('@Acteur/Promotteurs/pre-inscription.form.html.twig',[
-            'form_code' => $codeForm->createView(),
+
            // 'form_inscription' => $InscriptionForm->createView(),
             'stripe_public_key' => $this->getParameter('stripe_public_key'),
             'form'=>$form->createView()

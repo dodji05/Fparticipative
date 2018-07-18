@@ -140,7 +140,7 @@ pugx_multi_user:
                 class: AdminBundle\Entity\Porteur
             registration:
                 form:
-                    type: ActeurBundle\Form\Type\PorteurType
+                    type: ActeurBundle\Form\Type\PorteurModifieType
                     name: fos_user_registration_form
                     validation_groups:  [Registration, Default]
 #                template: ActeurBundle:Registration:user_one_form.html.twig

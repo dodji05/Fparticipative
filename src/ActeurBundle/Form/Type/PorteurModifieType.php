@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use FOS\UserBundle\Form\Type\RegistrationFormType as  BaseRegistrationFormType;
 
-class PorteurType extends AbstractType
+class PorteurModifieType extends AbstractType
 {
     /**
      * {@inheritdoc}
