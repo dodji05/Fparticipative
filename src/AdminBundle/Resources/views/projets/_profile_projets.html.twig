@@ -1,0 +1,58 @@
+{%  for projet in  porteur.projetPorteur  %}
+<div class="row">
+    <div class="col-lg-4 col-xlg-3 col-md-5">
+        {% if projet.logo %}
+            <img src="{{ asset ('uploads/admin/images/')}}{{ projet.logo  }}" width="200px" class="img-responsive">
+        {% endif %}
+    </div>
+    <div class="col-lg-8 col-xlg-9 col-md-7">
+        <p class="font-medium-1" >{{ projet.nomProjet }}</p>
+        <p class="font-small-1">{{ projet.categorie.nomCategorie }}</p>
+        <p class="font-medium-1" >{{ projet.descriptionCourteProjet }}</p>
+        <p class="font-medium-1 pull-right" >En savoir plus</p>
+    </div>
+
+</div>
+    <div class="row">
+        <div class="col-lg-4 col-xlg-4 col-md-4">
+          <span class="font-small-1">  {{ projet.objectif |number_format(0, ' ', ' ') }}</span>
+        </div>
+        <div class="col-lg-4 col-xlg-4 col-md-4">
+            <span class="font-small-1">  10 000 000</span>
+
+        </div>
+        <div class="col-lg-4 col-xlg-4 col-md-4">
+            {% set dons = 0 %}
+            {% for don in   projet.dons %}
+                {% set dons = dons + don.montant %}
+            {% endfor %}
+            <span class="font-small-1"> {{ dons|number_format(0, ' ', ' ')}}</span>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-xlg-4 col-md-4">
+            <span class="font-small-1"> recherchés</span>
+        </div>
+        <div class="col-lg-4 col-xlg-4 col-md-4">
+            <span class="font-small-1">   Contributeurs</span>
+
+        </div>
+        <div class="col-lg-4 col-xlg-4 col-md-4">
+            <span class="font-small-1"> Récoltées</span>
+        </div>
+
+    </div>
+    <div class="row">
+        {% if dons > 0 %}
+        <div class="progress" style="margin:10px;">
+            <div class="progress progress-striped active" role="progressbar" aria-valuenow="{{ ( dons / projet.objectif)*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ ( dons / projet.objectif)*100 }}%;"></div>
+        </div>
+            <div class="progress mb-2">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="40" aria-valuemin="40" aria-valuemax="100" style="width:40%"></div>
+            </div>
+        {% endif %}
+
+    </div>
+    <hr>
+{% endfor  %}

@@ -68,7 +68,7 @@ class PorteurController extends Controller
     {
         $deleteForm = $this->createDeleteForm($porteur);
 
-        return $this->render('porteur/show.html.twig', array(
+        return $this->render('@Admin/porteurs/Fiche_porteur.html.twig', array(
             'porteur' => $porteur,
             'delete_form' => $deleteForm->createView(),
         ));

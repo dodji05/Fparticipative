@@ -1,0 +1,78 @@
+{% extends '@Admin/Default/index.html.twig' %}
+{% block contenuprincipal %}
+    {% block css %}
+        <style>
+            .social-profile {
+                text-align: center;
+                background: rgba(43, 14, 22, 0.8);
+            }
+            .d-flex {
+                display: flex !important;
+            }
+            .img-circle {
+                border-radius: 100%;
+            }
+            .small, small {
+                font-size: 80%;
+                font-weight: 400;
+            }
+        </style>
+    {% endblock %}
+    <section id="base-style">
+        <div class="row">
+            <div class="col-12 mt-3 mb-1">
+                <div class="content-header">fiche porteur </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class ="col-lg-4 col-xlg-3 col-md-5">
+                <div class="card">
+                    <img class="card-img" src="../assets/images/background/socialbg.jpg" alt="Card image" height="456">
+                    <div class="card-img-overlay card-inverse text-white social-profile d-flex justify-content-center">
+                        <div class="align-self-center"> <img src="{{ asset('uploads/admin/images/') }}{{ porteur.img }}" class="img-circle" width="45%">
+                            <h4 class="card-title">{{ porteur.nom ~ " " ~ porteur.prenom}}</h4>
+
+                            <p class="text-white">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body" style="margin: 20px; padding-bottom: 15px"> <small class="text-muted">Email </small>
+                        <h6>{{ porteur.email }}</h6> <small class="text-muted p-t-30 db">Telephone</small>
+                        <h6>{{ porteur.telephone }}</h6> <small class="text-muted p-t-30 db">Adresse</small>
+                        <h6>{{ porteur.adresse }}</h6>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-xlg-9 col-md-7">
+                <div class="card">
+<div class="card-body">
+          <div class="card-block">
+
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" id="base-tab1" data-toggle="tab" aria-controls="tab1" href="#tab1" aria-expanded="true">Profil</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="base-tab2" data-toggle="tab" aria-controls="tab2" href="#tab2" aria-expanded="false">Projet</a>
+              </li>
+
+            </ul>
+            <div class="tab-content px-1 pt-1">
+              <div role="tabpanel" class="tab-pane active" id="tab1" aria-expanded="true" aria-labelledby="base-tab1">
+                <p>Oat cake marzipan cake lollipop caramels wafer pie jelly beans. Icing halvah chocolate cake carrot cake. Jelly beans carrot cake marshmallow gingerbread chocolate cake. Gummies cupcake croissant.</p>
+              </div>
+              <div class="tab-pane" id="tab2" aria-labelledby="base-tab2" aria-expanded="false">
+                {{ include('@Admin/projets/_profile_projets.html.twig') }}
+                  {#{% for porteur.projetPorteur %}#}
+              </div>
+
+            </div>
+          </div>
+        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

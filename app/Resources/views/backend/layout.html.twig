@@ -22,10 +22,6 @@
     <!-- font icons-->
 
 
-
-
-
-
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     {% stylesheets   '@AdminBundle/Resources/public/app-assets/fonts/feather/style.css' %}
         <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
@@ -54,6 +50,8 @@
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
     <!-- END Custom CSS-->
+    {% block css %}
+    {% endblock %}
 </head>
 <body data-col="2-columns" class=" 2-columns ">
     <div class="wrapper">

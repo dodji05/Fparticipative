@@ -1,56 +1,75 @@
 {% extends '@Admin/Default/index.html.twig' %}
 {% block contenuprincipal %}
+
     <section id="base-style">
         <div class="row">
-            <div class="col-xl-12 col-lg-4">
+        <div class="col-xl-12 col-lg-4">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title pull-left">Infornations donateurs </h4>
                     </div>
-                    <div class="card-body collapse show">
+                    <div class="card-body" style="margin: 20px; padding-bottom: 15px">
+                        <div class="row" >
+                            <div class="col s6 m4 l4">NOM :</div>
+                            <div class="col s6 m8 l8"> {{ donateur.nom }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col s6 m4 l4">PRENOM(s) :</div>
+                            <div class="col s6 m8 l8">{{ donateur.prenom }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col s6 m4 l4">ADRESSE</div>
+                            <div class="col s6 m8 l8">{{ donateur.adresse }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col s6 m4 l4">TELEPHONE</div>
+                            <div class="col s6 m8 l8">{{ donateur.telephone }}</div>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            <div class="col-xl-12 col-lg-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title pull-left">Liste des projets soutenus</h4>
-                    </div>
-                    <div class="card-body collapse show">
-                        <table class="table table-striped" valign="middle">
-                            <thead>
+        <div class="col-xl-12 col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title pull-left">Liste des projets soutenus</h4>
+                </div>
+                <div class="card-body collapse show">
+                    <table class="table table-striped" valign="middle">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+
+                            <th>logo</th>
+                            <th>Nom du projet</th>
+
+                            <th>Montant</th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for projet in projets %}
                             <tr>
-                                <th>#</th>
-
-                                <th>logo </th>
-                                <th>Nom du projet </th>
-
-                                <th>Montant </th>
-
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            {% for projet in projets  %}
-                                <tr>
-                                    <td>{{ loop.index }}</td>
-                                    <td><img src="{{ asset('uploads/admin/images/') }}{{ projet.projet.logo }}"
+                                <td>{{ loop.index }}</td>
+                                <td><img src="{{ asset('uploads/admin/images/') }}{{ projet.projet.logo }}"
                                          class="img-thumbnail" style="height: 60px;"></td>
-                                    <td>{{ projet.projet.nomProjet }}</td>
-                                    {% set totaldons = 0 %}
-                                    <td>{% for total in projet.projet.dons %}
-                                            {% set totaldons = totaldons + total.montant  %}
+                                <td>{{ projet.projet.nomProjet }}</td>
+                                {% set totaldons = 0 %}
+                                <td>{% for total in projet.projet.dons %}
+                                        {% set totaldons = totaldons + total.montant %}
                                     {% endfor %}
                                     {{ totaldons|number_format(0, ' ', ' ') }}</td>
-                                </tr>
+                            </tr>
 
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        </div>
+
         <div class="row">
             <div class="col-12">
                 <div class="card">
@@ -65,25 +84,25 @@
                             <tr>
                                 <th>#</th>
                                 <th> Date</th>
-                                <th>logo </th>
-                                <th>Nom du projet </th>
+                                <th>logo</th>
+                                <th>Nom du projet</th>
 
-                                <th>Montant </th>
+                                <th>Montant</th>
 
                             </tr>
                             </thead>
                             <tbody>
                             {% for donateu in donateur.dons %}
-                            <tr>
-                                <td>{{ loop.index }}</td>
-                                <td>{{ donateu.dateDons|date('d-m-Y')}}</td>
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ donateu.dateDons|date('d-m-Y') }}</td>
 
-                                <td><img src="{{ asset('uploads/admin/images/') }}{{ donateu.projet.logo }}"
-                                           class="img-thumbnail" style="height: 60px;"></td>
+                                    <td><img src="{{ asset('uploads/admin/images/') }}{{ donateu.projet.logo }}"
+                                             class="img-thumbnail" style="height: 60px;"></td>
 
-                                <td>{{ donateu.projet.nomProjet}}</td>
-                                <td>{{ donateu.montant|number_format(0, ' ', ' ')}}</td>
-                            </tr>
+                                    <td>{{ donateu.projet.nomProjet }}</td>
+                                    <td>{{ donateu.montant|number_format(0, ' ', ' ') }}</td>
+                                </tr>
                             {% else %}
                                 <li><em>no user found</em></li>
                             {% endfor %}
@@ -92,9 +111,7 @@
                     </div>
                 </div>
             </div>
-                </div>
-            </div>
-
         </div>
+
     </section>
 {% endblock %}

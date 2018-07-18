@@ -5,8 +5,7 @@
         <div class="row">
             <div class="col-12 mt-3 mb-1">
                 <div class="content-header">LISTE DES PORTEURS DE PROJETS</div>
-                <p class="content-sub-header"> PORTEURS DE PROJETES
-                    </p>
+
             </div>
         </div>
 
@@ -19,7 +18,7 @@
                                 <img src="{{ asset('uploads/admin/images/') }}{{ porteur.img }}" class="card-img-top img-fluid" alt="{{ porteur.nom }} {{ porteur.prenom }}" style="
     height: 195px;">
 
-                                <a class="btn btn-floating halfway-fab bg-warning"><i class="ft-plus"></i></a>
+                                <a class="btn btn-floating halfway-fab bg-warning" href="{{ path('porteur_show',{'id':porteur.id}) }}" title="Voir la fiche complete"><i class="ft-plus"></i></a>
                             </div>
                             <div class="card-block">
                                 <h4 class="card-title">{{ porteur.nom }} {{ porteur.prenom }}</h4>
