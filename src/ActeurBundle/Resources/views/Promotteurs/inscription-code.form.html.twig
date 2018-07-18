@@ -1,46 +1,37 @@
 
-{{ form_start(form) }}
-        <p style="color: darkcyan">Veuillez le code d'incrisption fournie par </p>
-    {#{{ form_widget(form) }}#}
-    <div class="row">
-            <div class="input-field col s12">
-                <label> {{ form_label(form.code) }}</label>
-                {#<input id="icon_prefix" type="text" class="validate">#}
-                {{ form_widget(form.code) }}
-            </div>
-    </div>
+{#{% extends "@FOSUser/layout_user_form.html.twig" %}#}
+{% extends ":accueil:index.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+     {% block contenu %}
+         <div class="container" style="margin-top: 25px; margin-bottom: 30px">
+             <div class="row">
+                 <div class="col-lg-4 col-lg-push-8 col-md-4 col-md-push-8 col-xs-12 col-xs-pull-0 col-sm-12 col-sm-pull-0">
+                     <div class="donateur-details-content" style="">
+                         <h3>logo</h3> <hr/>
+
+                     </div>
+                 </div>
+                 <div class="col-lg-8 col-lg-pull-4 col-md-8 col-md-pull-4 col-xs-12 col-xs-push-0 col-sm-12 col-sm-push-0">
+
+                     <div class="donateur-details-content" style="">
+                         <h3>Inscription.</h3> <hr/>
+
+                         <h1> Code d'activation recu par SMS ou par email </h1> <br/>
+                         <h3>
+                         S'il vous plaît entrer le code reçu par SMS ou par email, une seule méthode d'activation serait suffisante
+                         </h3>
+                         {{ include('@Acteur/Promotteurs/Partials/code_verification2.htm.twig') }}
 
 
-    <div id="card-alert-error" class="card red">
-        <div class="card-content white-text">
-            <small>ERREUR: Code erronee reverifier le code</small>
-            <small>Veuillez contacter l'equipe ...</small>
-        </div>
-
-    </div>
-    <div id="card-alert-succes" class="card green">
-        <div class="card-content white-text">
-            <small>FELICITATION : votre code est valide passe a l'etape suivante.</small>
-        </div>
-
-    </div>
-    <div id="btn_validation"style="margin: 10px">
-        <a href="{{ path('porteur_register') }}">Etape suivante</a>
-        <button class="btn waves-effect waves-light" type="button">
-
-
-        </button>
-    </div>
-{{ form_end(form) }}
-
+                 </div>
+             </div>
+             </div>
+         </div>
+     {% endblock %}
 {% block javascript %}
-
-{% javascripts 'bundles/admin/app-assets/js/core/libraries/jquery.min.js' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-{% endjavascripts %}
-    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-    <script>
+<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+  <script>
         function remplissage(e, elem){
             e.preventDefault();
             var code = $('.code_inscription').val();

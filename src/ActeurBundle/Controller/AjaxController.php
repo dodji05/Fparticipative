@@ -16,7 +16,7 @@ class AjaxController extends Controller
     {
         $doctrine = $this->getDoctrine();
         // $code_section = $doctrine->getRepository('ScomBundle:Sections')->
-        $repository2 = $doctrine->getRepository('AdminBundle:CodeValidation');
+        $repository2 = $doctrine->getRepository('ActeurBundle:InscriptionAttente');
         $codeInscription = $repository2->VerifieCode($code);
         if($codeInscription ){$response = array("success" => true,
 
