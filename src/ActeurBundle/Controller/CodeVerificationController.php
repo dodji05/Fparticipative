@@ -22,8 +22,8 @@ class CodeVerificationController extends Controller
             ->add('code', TextType::class,[
                 'attr' => [
                     'class' => 'code_inscription',
-                    'placehoder'=>'code d\'inscription'
-//                    'onblur'=> 'remplissage(event)'
+                    'placehoder'=>'code d\'inscription',
+                    'onblur'=> 'remplissage(event)',
                 ]
             ])
             ->getForm();
@@ -35,6 +35,7 @@ class CodeVerificationController extends Controller
             // $code_section = $doctrine->getRepository('ScomBundle:Sections')->
             $repository2 = $doctrine->getRepository('ActeurBundle:InscriptionAttente');
             $codeInscription = $repository2->VerifieCode($code);
+
             if($codeInscription ){
 
                 //Si le code d'inscription est valable , on enregistre dans la session

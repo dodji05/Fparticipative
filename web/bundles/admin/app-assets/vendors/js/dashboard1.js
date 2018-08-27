@@ -309,7 +309,7 @@ $(window).on("load", function () {
         }
         else if (data.type === 'label') {
             // adjust label position for rotation
-            const dX = data.width / 2 + (30 - data.width);
+            const dX = data.width / 2 + (30 - data.width)
             data.element.attr({ x: data.element.attr('x') - dX })
         }
     });
@@ -351,7 +351,7 @@ $(window).on("load", function () {
         }
         else if (data.type === 'label') {
             // adjust label position for rotation
-            const dX = data.width / 2 + (30 - data.width);
+            const dX = data.width / 2 + (30 - data.width)
             data.element.attr({ x: data.element.attr('x') - dX })
         }
     });

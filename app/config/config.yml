@@ -83,6 +83,10 @@ vich_uploader:
         admin_images:
             uri_prefix: '%app.path.admin_images%'
             upload_destination: '%kernel.root_dir%/../web/uploads/admin/images/'
+        porteur_plan_affaires:
+            uri_prefix: '%app.path.porteur_plan_affaires%'
+            upload_destination: '%kernel.root_dir%/../web/uploads/porteur/pdf/'
+
 
 # Assetic Configuration
 assetic:

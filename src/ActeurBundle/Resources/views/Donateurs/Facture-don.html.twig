@@ -8,11 +8,11 @@
 {% block contenuprincipal %}
     <div class="row" style="margin-top: 42px">
 
-            <div class="col s8 m8 l8 offset-s2 offset-l2 offset-m2">
+            <div class="col s8 m8 l8 offset-s2 offset-l2 offset-m1">
                 <div class="card-panel">
                 <div class="row">
                     <div class="col s12 m6 l8 ">
-                        <p> Vous venez d'investir {{ Montant }} FCA sur le projet {{ projet }}
+                        <p> Vous venez d'investir {{ Montant|number_format(0, ' ', ' ') }} FCA sur le projet {{ projet }}
                         </p>
                         <p> Soutenir un projet et le promoteur du projet vous remercient infinement.
                         </p>
@@ -41,7 +41,7 @@
                             </tr>
                             <tr>
                                 <td>MONTANT</td>
-                                <td> {{ Montant }} FCA </td>
+                                <td> {{ Montant |number_format(0, ' ', ' ')}} FCA </td>
                             </tr>
                             <tr>
                                 <td>TYPE:</td>

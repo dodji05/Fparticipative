@@ -1,7 +1,7 @@
 <li class="no-padding">
     <ul class="collapsible" data-collapsible="accordion">
         <li class="bold">
-            <a href="{{ path('donateur_admin') }}" class="waves-effect waves-cyan">
+            <a href="{{ path('donateur_admin_TB') }}" class="waves-effect waves-cyan">
                 <i class="material-icons">dashboard</i>
                 <span class="nav-text">Tableau de bord</span>
             </a>
@@ -14,12 +14,12 @@
             </a>
             <div class="collapsible-body">
                 <ul>
-                    <li>
-                        <a href="{{ path('porteur_projet_new') }}">
-                            <i class="material-icons">keyboard_arrow_right</i>
-                            <span> Projets en cours </span>
-                        </a>
-                    </li>
+                    {#<li>#}
+                        {#<a href="{{ path('porteur_projet_new') }}">#}
+                            {#<i class="material-icons">keyboard_arrow_right</i>#}
+                            {#<span> Projets en cours </span>#}
+                        {#</a>#}
+                    {#</li>#}
                     <li>
                         <a href="{{ path('donateur_projets_finances') }}">
                             <i class="material-icons">keyboard_arrow_right</i>

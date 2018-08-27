@@ -21,7 +21,7 @@ use ActeurBundle\Client\StripeClient;
 class DonateursController extends Controller
 {
     /**
-     * @Route("/",name="donateur_admin")
+     * @Route("/",name="donateur_admin_TB")
      */
     public function indexAction()
     {
@@ -80,11 +80,11 @@ class DonateursController extends Controller
     public function VoteProjetAction(Request $request,$id)
     {
         $em = $this->getDoctrine()->getManager();
-       // $logger = new LoggerInterface();
-      //  $redirect = $this->generateUrl('donateur_admin');;
+
         $repos = $em->getRepository('AdminBundle:Projets');
         $projet = $repos->findOneBy(array('id'=>$id));
-        $user = $em->getRepository('AdminBundle:Donateurs')->findOneBy(array('id'=>4));
+     //   $user = $em->getRepository('AdminBundle:Donateurs')->findOneBy(array('id'=>4));
+        $user = $this->getUser();
 
 
         $form = $this->get('form.factory')

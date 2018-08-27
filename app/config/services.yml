@@ -19,7 +19,7 @@ services:
 #            - { name: "form.type", alias: "app_user_registration" }
     app.registrationlistener:
         class: ActeurBundle\EventListner\RegistrationListener
-        arguments: ['@router','%payment%']
+        arguments: ['@router','@doctrine.orm.entity_manager']
         tags:
             - { name: kernel.event_subscriber }
     redirect.after.login:
