@@ -1,4 +1,9 @@
 <div class="container">
+    <div class="row" style="margin: 15px">
+        <div class="col-md-12">
+            <h2> LISTE DES PROJETS FINANCES </h2>
+        </div>
+    </div>
 <div class="row">
     {#{{ dump(projets) }}#}
     {% for projet in projets %}
@@ -6,7 +11,7 @@
         <div class="card card-product">
             <div class="card-header card-header-image" data-header-animation="true">
                 <a href="#pablo">
-                    <img class="img" src="{{ asset('uploads/admin/images/forests6.jpg') }}">
+                    <img class="img" src="{{  asset ('uploads/admin/images/')}}{{ projet.projet.logo }}">
                 </a>
             </div>
             <div class="card-body">
@@ -34,17 +39,20 @@
                      </div>
             </div>
             <div class="card-footer">
-                <div class="price">
-                    <h4>Objectif : {{ projet.projet.objectif|number_format(0, ' ', ' ') }}</h4>
-                    <div class="progress" style="margin:10px;">
-                       <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{ ( 1150000 / projet.projet.objectif)*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ ( 1150000 / projet.projet.objectif)*100 }}%;"></div>
+                <div class='row'>
+                    <h5>Objectif : {{ projet.projet.objectif|number_format(0, ' ', ' ') }} F CFA</h5>
+                </div>
+                <div class='row'>
+                    <div class="progress" style="margin:15px;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{ ( 1150000 / projet.projet.objectif)*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ ( 1150000 / projet.projet.objectif)*100 }}%;"></div>
                     </div>
-
+                </div>
+                <div class='row'>
+                    <p class="card-category"><i class="material-icons">place</i> Montant investi : {{ projet.montant|number_format(0, ' ', ' ') }} </p>
 
                 </div>
-                <div class="stats">
-                    <p class="card-category"><i class="material-icons">place</i> Montant investit : {{ projet.montant|number_format(0, ' ', ' ') }} </p>
-                </div>
+
+                    </div>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 <li class="no-padding">
     <ul class="collapsible" data-collapsible="accordion">
         <li class="bold">
-            <a href="{{ path('donateur_admin') }}" class="waves-effect waves-cyan">
+            <a href="{{ path('donateur_admin_TB') }}" class="waves-effect waves-cyan">
                 <i class="material-icons">dashboard</i>
                 <span class="nav-text">Tableau de bord</span>
             </a>
@@ -15,9 +15,9 @@
             <div class="collapsible-body">
                 <ul>
                     <li>
-                        <a href="{{ path('porteur_projet_new') }}">
+                        <a href="{{ path('donateur_les_projets') }}">
                             <i class="material-icons">keyboard_arrow_right</i>
-                            <span> Projets en cours </span>
+                            <span> Tous les Projets</span>
                         </a>
                     </li>
                     <li>
@@ -71,6 +71,13 @@
 
                 </ul>
             </div>
+        </li>
+        <li class="bold">
+            <a href="{{ path('fos_user_security_logout') }}" class="waves-effect waves-cyan">
+                <i class="material-icons">keyboard_tab</i>
+                <span class="nav-text">Deconnexion</span>
+            </a>
+
         </li>
 
 

@@ -94,7 +94,7 @@
                     <div class="div-title col-sm-12">
                         <h3 class="text-primary">Vous avez oublié votre mot de passe?</h3>
                     </div>
-                    <form action="https://sma.tecdiary.com/admin/auth/forgot_password" class="login" data-toggle="validator" method="post" accept-charset="utf-8">
+                    <form action="{{ path('fos_user_resetting_request') }}" class="login" data-toggle="validator" method="post" accept-charset="utf-8">
                         <input type="hidden" name="token" value="1a5f886b41b346632e47e12d7b0713b7">
                         <div class="col-sm-12">
                             <p>

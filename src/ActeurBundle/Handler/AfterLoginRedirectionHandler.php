@@ -71,13 +71,13 @@ class AfterLoginRedirectionHandler implements AuthenticationSuccessHandlerInterf
 
         }elseif(in_array('ROLE_ADMIN', $rolesTab, true)){
             $msg = "Vous êtes connecté en tant administrateur";
-            $redirection  = new RedirectResponse($this->router->generate('boss_admin'));
+            $redirection  = new RedirectResponse($this->router->generate('homepage_admin'));
 
         }elseif(in_array('ROLE_INVESTISSEUR', $rolesTab, true)){
 
 
             $msg = "Vous êtes connecté en tant qu'investisseur";
-            $redirection  = new RedirectResponse($this->router->generate('donateur_admin'));
+            $redirection  = new RedirectResponse($this->router->generate('donateur_admin_TB'));
 
 
         }

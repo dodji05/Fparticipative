@@ -10412,7 +10412,7 @@ fieldset[disabled] .form-check .form-check-input {
 }
 
 .card .card-footer {
-    display: flex;
+    /*display: flex;*/
     align-items: center;
     background-color: transparent;
     border: 0

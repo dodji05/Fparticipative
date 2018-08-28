@@ -18,18 +18,24 @@ class ProjetType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nomProjet')
+        $builder->add('nomProjet',null, array(
+            'required'=>'true',
+            'invalid_message'=>'error'
+
+        ))
             ->add('descriptionProjet')
             ->add('descriptionCourteProjet')
             ->add('categorie', EntityType::class, [
                 'class' => 'AdminBundle\Entity\Categories',
                 'choice_label' => 'nomCategorie',
                 'placeholder'=>'Selectionnez la catégorie',
-                'label'=>'Categorie'
+                'label'=>'Categorie',
+                'required'=>'true',
             ])
 
             ->add('planFile', VichFileType::class,[
-                'label'=>'Le plan d affaire'
+                'label'=>'Le plan d affaire',
+                 'invalid_message'=>'fichier au format pdf',
             ])
             ->add('imageFile', VichImageType::class,[
                 'label'=>'logo du projet'

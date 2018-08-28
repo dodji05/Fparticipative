@@ -21,7 +21,7 @@ use ActeurBundle\Client\StripeClient;
 class DonateursController extends Controller
 {
     /**
-     * @Route("/",name="donateur_admin")
+     * @Route("/",name="donateur_admin_TB")
      */
     public function indexAction()
     {
@@ -40,16 +40,30 @@ class DonateursController extends Controller
         ));
     }
     /**
-     * @Route("/projets-finances",name="donateur_projets_finances")
+     * @Route("/mes-projets-finances",name="donateur_projets_finances")
      */
     public function mesProjetsFinanacesAction() {
         $em = $this->getDoctrine()->getManager();
         $projets =  $em->getRepository('AdminBundle:Dons')->projetsFinances($this->getUser());
 
-       // var_dump($projets);die();
+       // var_dump($projets);die();$projets = $em->getRepository('AdminBundle:Projets')->tousLesProjetsValides();
 
         return $this->render('@Acteur/Donateurs/projets_finances.html.twig' ,array(
-            //'fonds'=>$fond,
+            'type'=>'FINANCE',
+            'projets'=>$projets,
+        ));
+    }
+    /**
+     * @Route("/les-projets-encours",name="donateur_les_projets")
+     */
+    public function mesProjetsEncoursAction() {
+        $em = $this->getDoctrine()->getManager();
+        $projets =   $em->getRepository('AdminBundle:Projets')->tousLesProjetsValides();
+
+        // var_dump($projets);die();$projets =;
+
+        return $this->render('@Acteur/Donateurs/projets_finances.html.twig' ,array(
+            'type'=>'TOUS',
             'projets'=>$projets,
         ));
     }
@@ -80,11 +94,11 @@ class DonateursController extends Controller
     public function VoteProjetAction(Request $request,$id)
     {
         $em = $this->getDoctrine()->getManager();
-       // $logger = new LoggerInterface();
-      //  $redirect = $this->generateUrl('donateur_admin');;
+
         $repos = $em->getRepository('AdminBundle:Projets');
         $projet = $repos->findOneBy(array('id'=>$id));
-        $user = $em->getRepository('AdminBundle:Donateurs')->findOneBy(array('id'=>4));
+     //   $user = $em->getRepository('AdminBundle:Donateurs')->findOneBy(array('id'=>4));
+        $user = $this->getUser();
 
 
         $form = $this->get('form.factory')

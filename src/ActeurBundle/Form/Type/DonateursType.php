@@ -13,10 +13,18 @@ class DonateursType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom')
-            ->add('prenom')
-            ->add('adresse')
-            ->add('telephone');
+        $builder->add('nom',null, [
+            'required'=>'true'
+        ])
+            ->add('prenom',null, [
+                'required'=>'true'
+            ])
+            ->add('adresse',null, [
+                'required'=>'true'
+            ])
+            ->add('telephone',null, [
+                'required'=>'true'
+            ]);
 
     }/**
      * {@inheritdoc}

@@ -81,7 +81,7 @@ function initTinyMCE(options) {
                                 } else {
                                     alert('You have to create callback function: "tinymce_button_' + id + '"');
                                 }
-                            };
+                            }
                             editor.addButton(id, opts);
 
                         })(buttonId, clone(options.tinymce_buttons[buttonId]));

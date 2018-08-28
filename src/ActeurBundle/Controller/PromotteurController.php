@@ -5,6 +5,7 @@ namespace ActeurBundle\Controller;
 use AdminBundle\Entity\media;
 use AdminBundle\Entity\Projets;
 use Doctrine\Common\Collections\ArrayCollection;
+use Swift_Attachment;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -68,7 +69,38 @@ class PromotteurController extends Controller
             $projet->setPorteur($this->getUser());
             $em->persist($projet);
             $em->flush();
-            $this->addFlash('success','Feliciation !!! Votre projet soumis avec succes');
+            $this->addFlash('success','Felicitation !!! Votre projet soumis avec succes');
+
+            //envoi de mail
+
+            $message = (new \Swift_Message('[ACCUSE DE RECEPTION]Nous avons bien recu votre projet'))
+                ->setFrom($this->getParameter('mailer_user'))
+                ->setTo($this->getUser()->getEmail())
+            //    ->attach(Swift_Attachment::fromPath('../web/uploads/porteur/pdf'.$form->getData('planFile')))
+                ->setBody(
+                    $this->renderView(
+                    // app/Resources/views/Emails/registration.html.twig
+                        'Email/accuse_reception.html.twig',
+                        array('projet' => $projet)
+                    ),
+                    'text/html'
+                );
+           $this->get('mailer')->send($message);
+
+            $messages = (new \Swift_Message('[ACCUSE DE RECEPTION]Nous avons bien recu votre projet'))
+                ->setFrom($this->getParameter('mailer_user'))
+                ->setTo($this->getParameter('mailer_user'))
+            //    ->attach(Swift_Attachment::fromPath('../web/uploads/porteur/pdf'.$form->getData()->getPlanFile()))
+                ->setBody(
+                    $this->renderView(
+                    // app/Resources/views/Emails/registration.html.twig
+                        'Email/nouvelle_soumission_projet.html.twig',
+                        array('projet' => $projet)
+                    ),
+                    'text/html'
+                );
+            $this->get('mailer')->send($messages);
+
 
             return $this->redirectToRoute('porteur_projet_new_confirm', array('id' => $projet->getId()));
         }

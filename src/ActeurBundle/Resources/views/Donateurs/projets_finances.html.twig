@@ -529,7 +529,11 @@
         {% include'@Acteur/Donateurs/Partials/_nemu.html.twig' %}
     {% endblock %}
     {% block contenuprincipal %}
+        {% if type =='FINANCE' %}
         {% include '@Acteur/Donateurs/Partials/_projets_finances.html.twig' %}
+        {% elseif type =="TOUS" %}
+            {% include '@Acteur/Donateurs/Partials/_projets_donateurs_encours.html.twig' %}
+        {% endif %}
 
     {% endblock %}
 {% block javascript %}

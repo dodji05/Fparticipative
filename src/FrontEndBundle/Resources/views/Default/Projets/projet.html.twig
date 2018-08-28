@@ -101,16 +101,21 @@
                                                     {#<button type="submit" class="btn btn-primary no-margin call-to-action-btn">OK</button>#}
                                                 {#</div>#}
                                             {#</div>#}
-                                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                            {% if is_granted("ROLE_INVESTISSEUR") %}
+
                                                 <div class="row defisc-tool text-center text-primary">
-                                                    <div class="col-xs-12 text-center border-left">
-                                                        <p class="no-margin"> je fais un don</p>
-                                                    </div>
+                                                    <a href="{{ path('payement_admin',{'id': projet.id}) }}" class="btn btn-link">
+                                                        <i class="ion ion-ios-locked"></i> JE SOUTIENS LE PROJET</a>
+
+                                                    {#<div class="col-xs-12 text-center border-left">#}
+                                                        {#<p class="no-margin"> je fais un don</p>#}
+                                                    {#</div>#}
                                                 </div>
                                             {% else %}
                                                 <div class="row defisc-tool text-center text-primary">
                                                     <div class="col-xs-12 text-center border-left">
-                                                        <a href="{{ path('fos_user_security_login') }}" class="btn btn-link"><i class="ion ion-ios-locked"></i> &nbsp; Connectez-vous</a>
+                                                        <a href="{{ path('donateur_register') }}" class="btn btn-link">
+                                                            <i class="ion ion-ios-locked"></i> &nbsp; Connectez-vous</a>
                                                         <p class="no-margin">pour accéder à l'offre complète</p>
                                                     </div>
                                                 </div>
@@ -199,8 +204,7 @@
                         <div class="project-side-others">
                             <h4 class="text-bold"><i class="ion ion-lg ion-ios-upload-outline"></i> Partagez ce projet </h4>
                             <p> <a class="share-btn share-popup share-facebook tooltip-show btn btn-sm btn-primary btn-flat no-margin" href="" title="" data-original-title="Partager sur Facebook"> <i class="ion ion-2x ion-social-facebook"></i></a>
-                                <a class="share-btn share-popup share-twitter tooltip-show btn btn-sm btn-primary btn-flat no-margin" href="https://twitter.com/share?url=https://www.wiseed.com/fr/startups/levels3d&amp;text=WiSEED+Startups+%7C+LEVELS3D+est+en+financement" title="" data-original-title="Partager sur Twitter"> <i class="ion ion-2x ion-social-twitter"></i></a>
-                                <a class="share-btn share-popup share-linkedin tooltip-show btn btn-sm btn-primary btn-flat no-margin" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=https://www.wiseed.com/fr/startups/levels3d&amp;title=WiSEED+Startups+%7C+LEVELS3D+est+en+financement&amp;summary=D%C3%A9couvrez+le+projet+Startups+LEVELS3D+en+financement+sur+WiSEED.com&amp;source=www.wiseed.com" title="" data-original-title="Partager sur LinkedIn"> <i class="ion ion-2x ion-social-linkedin-outline"></i></a> <a class="share-btn share-popup share-google-plus tooltip-show btn btn-sm btn-primary btn-flat no-margin" href="https://plus.google.com/share?url=https://www.wiseed.com/fr/startups/levels3d" title="" data-original-title="frontoffice.widget.partagerSurPlus"> <i class="ion ion-2x ion-social-googleplus"></i></a> </p>
+                                <a class="share-btn share-popup share-twitter tooltip-show btn btn-sm btn-primary btn-flat no-margin" href="https://twitter.com/share?{{ path('le_projet',{'id': projet.id}) }}" title="{{ projet.nomProjet }}" data-original-title="Partager sur Twitter"> <i class="ion ion-2x ion-social-twitter"></i></a>
 
                         </div>
                     </div>

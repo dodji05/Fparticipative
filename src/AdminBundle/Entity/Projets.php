@@ -5,6 +5,7 @@ namespace AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Naming\UniqidNamer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -54,8 +55,9 @@ class Projets
     private $logo;
 
     /**
-     * @Vich\UploadableField(mapping="admin_images", fileNameProperty="docPlanAffaire")
-     * @Assert\File(mimeTypes = {"application/pdf"})
+     * @Vich\UploadableField(mapping="porteur_plan_affaires", fileNameProperty="docPlanAffaire")
+     * @Assert\File(mimeTypes = {"application/pdf"}  )
+     *
      * @var File
      */
     private $planFile;
@@ -228,6 +230,7 @@ class Projets
         $this->media = new \Doctrine\Common\Collections\ArrayCollection();
         $this->dons = new \Doctrine\Common\Collections\ArrayCollection();
         $this->selectionne = false;
+        $this->logo =   md5(uniqid()).$this->logo;
     }
 
     /**
