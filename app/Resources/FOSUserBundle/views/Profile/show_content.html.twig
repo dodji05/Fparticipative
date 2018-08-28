@@ -95,5 +95,11 @@
     {% include'@Acteur/Promotteurs/Partials/_nemu.html.twig' %}
 {% endblock %}
 {% block contenuprincipal %}
-    {% include ':Partials:_view_profil.html.twig' %}
+
+    {% if is_granted("ROLE_INVESTISSEUR") %}
+        {% include ':Partials:_view_profil_donateur.html.twig' %}
+        {% else %}
+            {% include ':Partials:_view_profil.html.twig' %}
+    {% endif %}
+
 {% endblock %}

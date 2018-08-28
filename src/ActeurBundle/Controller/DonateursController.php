@@ -40,16 +40,30 @@ class DonateursController extends Controller
         ));
     }
     /**
-     * @Route("/projets-finances",name="donateur_projets_finances")
+     * @Route("/mes-projets-finances",name="donateur_projets_finances")
      */
     public function mesProjetsFinanacesAction() {
         $em = $this->getDoctrine()->getManager();
         $projets =  $em->getRepository('AdminBundle:Dons')->projetsFinances($this->getUser());
 
-       // var_dump($projets);die();
+       // var_dump($projets);die();$projets = $em->getRepository('AdminBundle:Projets')->tousLesProjetsValides();
 
         return $this->render('@Acteur/Donateurs/projets_finances.html.twig' ,array(
-            //'fonds'=>$fond,
+            'type'=>'FINANCE',
+            'projets'=>$projets,
+        ));
+    }
+    /**
+     * @Route("/les-projets-encours",name="donateur_les_projets")
+     */
+    public function mesProjetsEncoursAction() {
+        $em = $this->getDoctrine()->getManager();
+        $projets =   $em->getRepository('AdminBundle:Projets')->tousLesProjetsValides();
+
+        // var_dump($projets);die();$projets =;
+
+        return $this->render('@Acteur/Donateurs/projets_finances.html.twig' ,array(
+            'type'=>'TOUS',
             'projets'=>$projets,
         ));
     }

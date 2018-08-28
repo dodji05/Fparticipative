@@ -1,0 +1,73 @@
+<div class="container">
+    <div class="row" style="margin: 15px">
+        <div class="col-md-12">
+            <h2> LISTE DES PROJETS EN RECHERCHE DE FINANCEMENT </h2>
+        </div>
+    </div>
+<div class="row">
+    {#{{ dump(projets) }}#}
+    {% for projet in projets %}
+    <div class="col-md-4">
+        <div class="card card-product">
+            <div class="card-header card-header-image" data-header-animation="true">
+                <a href="#pablo">
+                    <img class="img" src="{{  asset ('uploads/admin/images/')}}{{ projet.logo }}">
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="card-actions text-center">
+                    <button type="button" class="btn btn-danger btn-link fix-broken-card">
+                        <i class="material-icons">build</i> Fix Header!
+                    </button>
+                    <a href="{{ path('le_projet',{'id': projet.id}) }}">
+                    <button type="button" class="btn btn-default btn-link" rel="tooltip" data-placement="bottom" title="Plus de details">
+                        <i class="material-icons">art_track</i>
+                    </button>
+                    </a>
+                    <a href="{{ path('payement_admin',{'id': projet.id}) }}">
+                    <button type="button" class="btn btn-success btn-link" rel="tooltip" data-placement="bottom" title="Financer">
+                        <i class="material-icons">edit</i>
+                    </button>
+                    </a>
+                    {#<button type="button" class="btn btn-danger btn-link" rel="tooltip" data-placement="bottom" title="Remove">#}
+                        {#<i class="material-icons">close</i>#}
+                    {#</button>#}
+                </div>
+                <h4 class="card-title">
+                    <a href="#pablo">{{ projet.nomProjet }}</a>
+                </h4>
+                <div class="card-description">
+                    {{ projet.descriptionCourteProjet }}
+                     </div>
+            </div>
+            <div class="card-footer">
+                <div class='row'>
+                    <h5>Objectif : {{ projet.objectif|number_format(0, ' ', ' ') }} F CFA</h5>
+                </div>
+                {% set somme = 0 %}
+                {% for don in projet.dons %}
+                    {% set somme = don.montant %}
+                {% endfor %}
+                <div class='row'>
+                    <div class="progress" style="margin:15px;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{ ( somme / projet.objectif)*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ ( somme / projet.objectif)*100 }}%;"></div>
+                    </div>
+                </div>
+                <div class='row'>
+                    <p class="card-category"><i class="material-icons">place</i> Montant recus : {{somme|number_format(0, ' ', ' ') }} </p>
+
+                </div>
+                <div class="price">
+
+
+
+
+                </div>
+                <div >
+                    </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>
+</div>

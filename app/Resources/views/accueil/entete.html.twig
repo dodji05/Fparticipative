@@ -64,16 +64,22 @@
                 </ul>
             </div>
             <ul class="nav navbar-nav navbar-right hidden-xs">
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li class="withoutripple li-user-account-connexion">
+
+                        <a href="{{ path('fos_user_security_logout') }}" class="btn withoutripple btn-user-account-connexion btn-primary btn-flat" title=deConnexion> Se deconnecter </a>
+                    </li>
+                    {% else %}
 
                 <li class="withoutripple li-user-account-connexion">
 
-                    <a href="{{ path('first_inscription') }}" class="btn withoutripple btn-user-account-connexion btn-primary btn-flat" title=Connexion> Se connecter </a>
+                    <a href="{{ path('fos_user_security_login') }}" class="btn withoutripple btn-user-account-connexion btn-primary btn-flat" title=Connexion> Se connecter </a>
                 </li>
                 <li class="withoutripple li-user-account-connexion">
 
-                    <a href="{{ path('fos_user_registration_register') }}" class="btn withoutripple btn-user-account-connexion btn-primary btn-flat" title=Connexion> S'inscrire </a>
+                    <a href="{{ path('first_inscription') }}" class="btn withoutripple btn-user-account-connexion btn-primary btn-flat" title=Connexion> S'inscrire </a>
                 </li>
-
+                {% endif %}
             </ul>
         </div>
     </div>

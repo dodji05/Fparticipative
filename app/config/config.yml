@@ -116,7 +116,7 @@ stfalcon_tinymce:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: AdminBundle\Entity\User
+    user_class: ActeurBundle\Entity\User
 #    profile:
 #        form:
 #            type: ActeurBundle\Form\Type\PorteurType
@@ -166,6 +166,3 @@ pugx_multi_user:
             profile:
                 form:
                     type: ActeurBundle\Form\Type\DonateursType
-
-
-
