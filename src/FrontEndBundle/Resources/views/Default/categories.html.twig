@@ -87,7 +87,7 @@ boules
                                      <h3>
                                          <span class="project-name" data-project-name="{{ projet.nomProjet }}">{{ projet.nomProjet }}</span>
                                          {% set porteur ='' %}
-                                         {% if projet.porteur.type.id ==1 %}
+                                         {% if projet.porteur.nature.id ==1 %}
                                              {% set porteur = projet.porteur.raisonSociale %}
 
                                          {% else %}

@@ -31,4 +31,38 @@ class ProjetsRepository extends \Doctrine\ORM\EntityRepository
         return $qb->getQuery()
             ->getResult();
     }
+    public function projetsEnFinancement(){
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin('p.porteur','t')
+            //  ->innerJoin('p.media','m')
+            ->where('p.selectionne = true')
+            ->andWhere('DATE_DIFF(p.dateLimite, CURRENT_DATE()) < 0')
+            ->orderBy('p.id','DESC');
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+    public function projetsFinancementBoucle(){
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin('p.porteur','t')
+            //  ->innerJoin('p.media','m')
+            ->where('p.selectionne = true')
+            ->andWhere('DATE_DIFF(p.dateLimite, CURRENT_DATE()) < 0')
+            ->orderBy('p.id','DESC');
+
+        return $qb->getQuery()
+            ->getResult();
+    }
+
+    public function projetsRealise(){
+        $qb = $this->createQueryBuilder('p')
+            ->leftJoin('p.porteur','t')
+            //  ->innerJoin('p.media','m')
+            ->where('p.selectionne = true')
+            ->andWhere('DATE_DIFF(p.dateLimite, CURRENT_DATE()) < 0')
+            ->orderBy('p.id','DESC');
+
+        return $qb->getQuery()
+            ->getResult();
+    }
 }

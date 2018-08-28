@@ -67,15 +67,15 @@
                 <div class="row">
                     <div class="col-6 col-xs-12 col-sm-4"> <h4 class="">Tous les projets</h4>
                         <ul class="ion-ul ">
-                            <li> <a href="#" title="En Financement"> <i class="ion ion-li ion-ios-arrow-right"></i> En Financement </a> </li>
-                            <li> <a href="#" title="Projets Financés"> <i class="ion ion-li ion-ios-arrow-right"></i> Projets Financés </a> </li>
-                            <li> <a href="#" title=" Projets realisés"> <i class="ion ion-li ion-ios-arrow-right"></i> Projets realisés </a> </li>
+                            <li> <a href="{{ path('projets_en_cours') }}" title="En Financement"> <i class="ion ion-li ion-ios-arrow-right"></i> En Financement </a> </li>
+                            <li> <a href="{{ path('projets_finances') }}" title="Projets Financés"> <i class="ion ion-li ion-ios-arrow-right"></i> Projets Financés </a> </li>
+                            <li> <a href="{{ path('projets_realises') }" title=" Projets realisés"> <i class="ion ion-li ion-ios-arrow-right"></i> Projets realisés </a> </li>
                         </ul>
                     </div>
                     <div class="col-6 col-xs-12 col-sm-4">
                         <h4 class="">Comment ça marche ?</h4>
                         <ul class="ion-ul ">
-                            <li> <a href="#" title="Comment ça marche"> <i class="ion ion-li ion-ios-arrow-right"></i> Comment investir </a> </li>
+                            <li> <a href="{{ path('comment_marche') }}" title="Comment ça marche"> <i class="ion ion-li ion-ios-arrow-right"></i> Comment investir </a> </li>
                             <li> <a href="{{ path('comment_marche') }}" title="Comment ça marche"> <i class="ion ion-li ion-ios-arrow-right"></i> Comment lever des fonds </a> </li>
 
                             {#<li> <a href="/fr/investir/defiscalisation-ir-isf" title="Défiscalisation"> <i class="ion ion-li ion-ios-arrow-right"></i> Défiscalisation </a> </li>#}
