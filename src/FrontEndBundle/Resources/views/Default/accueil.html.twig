@@ -64,7 +64,7 @@
         <div class="row-container odd">
             <div class="container">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-8 col-md-8"> <h3 class="h3 text-bold">Découvrez les projets entierement financés et realise </h3> </div>
+                    <div class="col-xs-12 col-sm-8 col-md-8"> <h3 class="h3 text-bold">Découvrez les projets entierement financés</h3> </div>
                     <div class="col-xs-12 col-sm-4 col-md-4">
                         <a href="#" class="btn btn-primary pull-right">Voir tous les projets réalisés<i class="ion ion-btn ion-ios-arrow-right"></i></a>
                     </div>
@@ -79,7 +79,7 @@
                         <div class="item active">
                         {% set totaldon = 0 %}
 
-                         {% for projet in projets %}
+                         {% for projet in projetsBoucles %}
                          {% for don in projet.dons %}
                             {% set totaldon =totaldon+ don.montant %}
                         {% endfor %}

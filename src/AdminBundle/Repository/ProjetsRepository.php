@@ -10,11 +10,13 @@ namespace AdminBundle\Repository;
  */
 class ProjetsRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function projetsValides($limite){
+    public function projetsValides($limite,$etat){
         $qb = $this->createQueryBuilder('p')
             ->leftJoin('p.porteur','t')
           //  ->innerJoin('p.media','m')
             ->where('p.selectionne = true')
+            ->andWhere('p.etat = :etat')
+            ->setParameter('etat',$etat)
             ->orderBy('p.id','DESC')
             ->setMaxResults($limite);
            return $qb->getQuery()
@@ -26,6 +28,7 @@ class ProjetsRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('p.porteur','t')
             //  ->innerJoin('p.media','m')
             ->where('p.selectionne = true')
+            ->andWhere("p.etat = 'enFinancement'")
             ->orderBy('p.id','DESC');
 
         return $qb->getQuery()
