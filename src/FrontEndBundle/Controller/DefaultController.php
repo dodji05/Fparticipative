@@ -13,6 +13,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
+   // $nbfinance = $em->getRepository('')
 
         $projets = $em->getRepository('AdminBundle:Projets')->projetsValides(5);
         return $this->render('FrontEndBundle:Default:accueil.html.twig',['projets'=>$projets]);
