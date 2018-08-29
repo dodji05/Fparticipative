@@ -49,9 +49,9 @@
                         <div class="container-nav-black container-sub-navbar sub-menu hidden">
                             <div class=container>
                                 <ul class="nav navbar-nav sub-main-menu">
-                                    <li class=""><a href="{{ path('projets_en_cours') }}" class="withoutripple">En Financement <span class="badge">{{ projets|length }}</span></a></li>
-                                    <li class=""><a href="{{ path('projets_finances') }}" class="withoutripple">Projets Financés <span class="badge">{{ projetsBoucles|length }}</span></a></li>
-                                    <li class=""><a href="{{ path('projets_realises') }}" class="withoutripple">Projets Réalisés <span class="badge">62</span></a></li>
+                                    <li class=""><a href="{{ path('projets_en_cours') }}" class="withoutripple">En Financement <span class="badge">{{ nbprojet.nbProjetsEncours }}</span></a></li>
+                                    <li class=""><a href="{{ path('projets_finances') }}" class="withoutripple">Projets Financés <span class="badge">{{ nbprojet.nbProjetsBoucle }}</span></a></li>
+                                    <li class=""><a href="{{ path('projets_realises') }}" class="withoutripple">Projets Réalisés <span class="badge">{{ nbprojet.nbProjetsBoucle }}</span></a></li>
                                 </ul>
                             </div>
                         </div>

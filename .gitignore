@@ -14,3 +14,4 @@ gen
 .idea/modules.xml
 .idea/symfony2.xml
 .idea/workspace.xml
+.app/config/parameters.yml
