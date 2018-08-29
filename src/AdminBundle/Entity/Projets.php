@@ -97,6 +97,13 @@ class Projets
      */
     private $docPlanAffaire;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="etat", type="string",length=255,nullable=true)
+     */
+    private $etat;
+
 
 
     /**
@@ -200,6 +207,24 @@ class Projets
     }
 
     /**
+     * @return string
+     */
+    public function getEtat()
+    {
+        return $this->etat;
+    }
+
+    /**
+     * @param string $etat
+     */
+    public function setEtat($etat)
+    {
+        $this->etat = $etat;
+    }
+
+
+
+    /**
      * Set logo
      *
      * @param string $logo
@@ -231,6 +256,7 @@ class Projets
         $this->dons = new \Doctrine\Common\Collections\ArrayCollection();
         $this->selectionne = false;
         $this->logo =   md5(uniqid()).$this->logo;
+        $this->etat = "validationEncors";
     }
 
     /**
