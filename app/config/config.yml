@@ -132,7 +132,7 @@ fos_user:
     #    form:
      #       type: ScomBundle\Form\Type\ProfileFormType
     from_email:
-        address: "infos@kaaloo.net"
+        address: '%mailer_user%'
         sender_name: "soutenir"
     service:
         user_manager: pugx_user_manager

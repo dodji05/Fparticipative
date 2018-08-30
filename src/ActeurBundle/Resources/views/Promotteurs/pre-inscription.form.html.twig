@@ -7,8 +7,15 @@
              <div class="row">
                  <div class="col-lg-4 col-lg-push-8 col-md-4 col-md-push-8 col-xs-12 col-xs-pull-0 col-sm-12 col-sm-pull-0">
                      <div class="donateur-details-content" style="">
-                         <h3>Veuillez vous connecter à votre compte.</h3> <hr/>
-
+                         <h3>Informations </h3> <hr/>
+                            Inscrivez-vous pour beneficier de nombreux avantages comme: des formations, des conferences, et
+                         des leves de fonds pour vos projets.<br/>
+                         L'adhesion a la plateforme coute 10 mille (payement par flooz/ moov ou carte de credit )
+                         <ol>
+                             <li> Remplissez le formulaire une fois remplie et valide vous recevrer le code de validaion par mail/telephone </li>
+                             <li> Ensuite entrez le code validation </li>
+                             <li> Pour terminer votre inscription entrez les informations complementaires </li>
+                         </ol>
                      </div>
                  </div>
                  <div class="col-lg-8 col-lg-pull-4 col-md-8 col-md-pull-4 col-xs-12 col-xs-push-0 col-sm-12 col-sm-push-0">
@@ -16,9 +23,9 @@
                      <div class="donateur-details-content" style="">
                          <h3>Inscription.</h3> <hr/>
 
-                         <h3>Avez deja recu le code d'inscription a la plateforme</h3> <hr/> <br/>
-                             <input type="radio" value="Oui" name="insc" onclick="choix(this.value)"> oui, vous serez rediger automatique vers la page de verication du code
-                             <input type="radio" value="Non" name="insc" onclick="choix(this.value)"> non,
+                         <h3>Avez-vous déjà reçu le code d'inscription a la plateforme</h3> <hr/> <br/>
+                         <h4><input type="radio" value="Oui" name="insc" onclick="choix(this.value)"> Oui, vous serez rédiger automatiquement vers la page de vérification du code</h4>
+                         <h4> <input type="radio" value="Non" name="insc" onclick="choix(this.value)">  Non, remplissez le formulaire ci-dessous pour vous inscrire</h4>
                              <div id="codeOui">
                                  {#{{ include('@Acteur/Promotteurs/Partials/code_verification2.htm.twig') }}#}
                              </div>
@@ -34,7 +41,6 @@
                                              {{ form_widget(form.nom,{'attr':{'class': 'form-control'}}) }}
                                          </div>
                                      </div>
-
                                      <div class="form-group">
                                          <label for="full_name" class="col-sm-3 control-label">prenom(s) : </label>
                                          <div class="col-sm-8">
@@ -63,12 +69,10 @@
                                          <div id="card-errors" class="help-block" role="alert"></div>
                                      </div>
                                      <div class="form-group text-center">
-                                         <div class="col-sm-offset-2 col-sm-10">
-                                             <button type="submit" class="btn  btn-success">{{ 'registration.submit'|trans }}</button>
+                                         <div class="before col-sm-offset-2 col-sm-10">
+                                                                                          <button type="submit" class="btn  btn-success">{{ 'registration.submit'|trans }}</button>
                                          </div>
                                      </div>
-
-
                                      {{ form_end(form) }}
                                  </div>
 
@@ -95,7 +99,7 @@ function choix(choi) {
         if ( choi == "Oui"){
             $('#codeOui').show();
             $('#codeNon').hide();
-            document.location.href= Routing.generate("code-validation")
+            document.location.href= Routing.Route("code-validation")
 
         }
         else if( choi == "Non") {

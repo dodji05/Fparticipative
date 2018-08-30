@@ -77,6 +77,26 @@ class RegistrationPromoteurController extends Controller
             $em->persist($inscription);
             $em->flush();
 
+            // envoie de mail de notification pour connection a son espace
+            $smtpkalo  = new \Swift_SmtpTransport('mail.soutenirunprojet.yo.fr',25);
+            $smtpkalo->setUsername('infos@soutenirunprojet.yo.fr')
+                ->setPassword('henry@1024');
+            $mailer = new \Swift_Mailer($smtpkalo);
+            //$ip = $this->container->get('request')->getClientIp();
+
+            $user = $this->getUser();
+            //  $user1 =
+            $user_mail = $form->get('email');
+
+            $message = ( new \Swift_Message('Votre code de validation pour la plateforme'))
+                ->setFrom("infos@soutenirunprojet.yo.fr","SOUTENIR UN PROJET")
+                ->setTo('gildas31@gmail.com')
+                ->setBody($this->renderView('Email/code_validation.html.twig',[
+                    'code'=>$code_validation,
+                ]));
+            $mailer->send($message);
+
+
             return  $this->redirectToRoute('code-validation');
 
 
