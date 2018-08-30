@@ -16,10 +16,12 @@ class DefaultController extends Controller
    // $nbfinance = $em->getRepository('')
 
         $projets = $em->getRepository('AdminBundle:Projets')->projetsValides(5,"enFinancement");
-        $projetsBoucle = $em->getRepository('AdminBundle:Projets')->projetsValides(5,"FinacementBoucle");
+        $projetsBoucles = $em->getRepository('AdminBundle:Projets')->projetsValides(5,"FinacementBoucle");
+
         return $this->render('FrontEndBundle:Default:accueil.html.twig',[
             'projets'=>$projets,
-            'projetsBoucles'=>$projetsBoucle
+            'projetsBoucles'=>$projetsBoucles
+
         ]);
     }
     /**
@@ -27,9 +29,12 @@ class DefaultController extends Controller
      */
     public function projetsRealiseAction()
     {
+        $em = $this->getDoctrine()->getManager();
+        $projets = $em->getRepository('AdminBundle:Projets')->projetsValides(5,"FinacementBoucle");
         return $this->render('FrontEndBundle:Default:categories.html.twig',
             ["titreCategorie"=>"Projets realises",
-            "descriptionCategoire"=>"Projets entierment par les dons sur la plateforme. Ces differeents ont ete complement realise"]);    }
+            "descriptionCategoire"=>"Projets entièrement finances et realise par les dons sur la plateforme. Ces différents ont été complément finalisés et realises",
+                'projets'=>$projets,]);    }
     /**
      * @Route("/projets-en-cours",name="projets_en_cours")
      */
@@ -38,14 +43,12 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $projets = $em->getRepository('AdminBundle:Projets')->tousLesProjetsValides();
-      //  $projets = $em->getRepository('AdminBundle:Projets')->projetsValides(5,"enFinancement");
-        $projetsBoucle = $em->getRepository('AdminBundle:Projets')->projetsValides(5,"FinacementBoucle");
 
         return $this->render('FrontEndBundle:Default:categories.html.twig',
             ["titreCategorie"=>"Projets en cours de financement",
                 "descriptionCategoire"=>"Évaluez les projets et contribuez à leur financement",
                 'projets'=>$projets,
-                'projetsBoucles'=>$projetsBoucle]
+                ]
 
             );
     }
@@ -54,8 +57,11 @@ class DefaultController extends Controller
      */
     public function projetsFinanceAction()
     {
+        $em = $this->getDoctrine()->getManager();
+        $projets = $em->getRepository('AdminBundle:Projets')->projetsValides(5,"FinacementBoucle");
         return $this->render('FrontEndBundle:Default:categories.html.twig',
-            ["titreCategorie"=>"projets deja finances",
-                "descriptionCategoire"=>"projets entierment par les dons sur la plateforme. Ces differeents ont ete complement realise"]);
+            ["titreCategorie"=>"Projets déjà financés",
+                "descriptionCategoire"=>"Projets entièrement finance par les dons sur la plateforme. Ces différents ont été complément finalisés",
+                'projets'=>$projets,]);
     }
 }

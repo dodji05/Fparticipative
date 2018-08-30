@@ -17,9 +17,9 @@
                         <a role=button data-toggle=collapse data-parent="#accordion-navbar-main-menu" href="#" aria-controls=tous-les-projets-accordion aria-expanded=true class=withoutripple> Tous les projets <i class="ion-chevron-down pull-right"></i> </a>
                         <ul class="nav subnav in" id=tous-les-projets-accordion>
 
-                            <li class=""><a href="{{ path('projets_en_cours') }}" class="withoutripple">En Financement <span class="badge pull-right">8</span></a></li>
-                            <li class=""><a href="{{ path('projets_finances') }}" class="withoutripple">Projets Financés <span class="badge pull-right">147</span></a></li>
-                            <li class=""><a href="{{ path('projets_realises') }}" class="withoutripple"> Projets Réalisés <span class="badge pull-right">62</span></a></li>
+                            <li class=""><a href="{{ path('projets_en_cours') }}" class="withoutripple">En Financement <span class="badge pull-right">{{ nbprojet.nbProjetsEncours }}</span></a></li>
+                            <li class=""><a href="{{ path('projets_finances') }}" class="withoutripple">Projets Financés <span class="badge pull-right">{{ nbprojet.nbProjetsBoucle }}</span></a></li>
+                            <li class=""><a href="{{ path('projets_realises') }}" class="withoutripple"> Projets Réalisés <span class="badge pull-right">{{ nbprojet.nbProjetsBoucle }}</span></a></li>
                         </ul>
                     </li>
                     <li class="panel no-margin no-border ">
