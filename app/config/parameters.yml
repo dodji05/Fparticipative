@@ -7,8 +7,8 @@ parameters:
     database_password: root
     mailer_transport: smtp
     mailer_host: mail.soutenirunprojet.yo.fr
-    mailer_user: infos@soutenirunprojet.yo.fr
-    mailer_password: henry@1024
+    mailer_user: infostest@yolandadiva.com
+    mailer_password: Henry_1024
     secret: ThisTokenIsNotSoSecretChangeIt
     app.path.admin_images: admin_images
     app.path.porteur_plan_affaires: porteur_plan_affaires

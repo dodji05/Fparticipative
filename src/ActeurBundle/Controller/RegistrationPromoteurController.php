@@ -72,15 +72,12 @@ class RegistrationPromoteurController extends Controller
             // Sauvegades du dons qui vient d'etre effectuee
 
 
-            $inscription->setChargeId($charge->id);
-            // $user->setPremium($charge->paid);
-            $em->persist($inscription);
-            $em->flush();
+
 
             // envoie de mail de notification pour connection a son espace
-            $smtpkalo  = new \Swift_SmtpTransport('mail.soutenirunprojet.yo.fr',25);
-            $smtpkalo->setUsername('infos@soutenirunprojet.yo.fr')
-                ->setPassword('henry@1024');
+            $smtpkalo  = new \Swift_SmtpTransport('mail07.lwspanel.com',25);
+            $smtpkalo->setUsername('infostest@yolandadiva.com')
+                ->setPassword('Henry_1024');
             $mailer = new \Swift_Mailer($smtpkalo);
             //$ip = $this->container->get('request')->getClientIp();
 
@@ -88,14 +85,22 @@ class RegistrationPromoteurController extends Controller
             //  $user1 =
             $user_mail = $form->get('email');
 
+
             $message = ( new \Swift_Message('Votre code de validation pour la plateforme'))
-                ->setFrom("infos@soutenirunprojet.yo.fr","SOUTENIR UN PROJET")
+                ->setFrom("infostest@yolandadiva.com","SOUTENIR UN PROJET")
                 ->setTo('gildas31@gmail.com')
                 ->setBody($this->renderView('Email/code_validation.html.twig',[
                     'code'=>$code_validation,
+                    'porteur_nom'=>$form->get('nom'),
+                    'porteur_prenom'=>$form->get('prenom'),
                 ]));
             $mailer->send($message);
-
+//            dump($mailer);
+//            die();
+            $inscription->setChargeId($charge->id);
+            // $user->setPremium($charge->paid);
+            $em->persist($inscription);
+            $em->flush();
 
             return  $this->redirectToRoute('code-validation');
 
