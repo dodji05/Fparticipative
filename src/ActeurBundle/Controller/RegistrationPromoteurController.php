@@ -93,7 +93,9 @@ class RegistrationPromoteurController extends Controller
                     'code'=>$code_validation,
                     'porteur_nom'=>$form->get('nom'),
                     'porteur_prenom'=>$form->get('prenom'),
-                ]));
+                ]))
+                ->setContentType('text/html')
+            ;
             $mailer->send($message);
 //            dump($mailer);
 //            die();

@@ -1,12 +1,16 @@
 
 {{ form_start(form) }}
-        <p style="color: darkcyan">Veuillez le code d'incrisption fournie par </p>
-    {#{{ form_widget(form) }}#}
+
     <div class="row">
+
             <div class="input-field col s12">
-                <label> {{ form_label(form.code) }}</label>
-                {#<input id="icon_prefix" type="text" class="validate">#}
-                {{ form_widget(form.code) }}
+
+                <div class="form-group">
+                    <label for="full_name" class="col-sm-3 control-label">Code de validation : </label>
+                    <div class="col-sm-8">
+                        {{ form_widget(form.code,{'attr':{'class': 'form-control'}}) }}
+                    </div>
+                </div>
             </div>
     </div>
 
@@ -25,11 +29,10 @@
 
     </div>
     <div id="btn_validation"style="margin: 10px">
-        <a href="{{ path('porteur_register') }}">Etape suivante</a>
-        <button class="btn waves-effect waves-light" type="submit">
+        <a href="{{ path('porteur_register') }}">Etape suivante
 
+            <button type="submit" class="btn  btn-success">{{ Etape suivante }}</button></a>
 
-        </button>
     </div>
 {{ form_end(form) }}
 

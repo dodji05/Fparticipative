@@ -17,8 +17,8 @@ class CodeVerificationController extends Controller
 */
     public function indexAction(Request $request)
     {
-        $defaultData = array('message' => 'Entre le code de validation');
-        $form = $this->createFormBuilder($defaultData)
+       // $defaultData = array('message' => 'Entre le code de validation');
+        $form = $this->createFormBuilder()
             ->add('code', TextType::class,[
                 'attr' => [
                     'class' => 'code_inscription',
