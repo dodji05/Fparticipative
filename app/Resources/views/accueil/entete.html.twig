@@ -6,7 +6,7 @@
                 <a class="hidden-sm hidden-md hidden-lg collapsed navbar-toggle-user-menu withoutripple" data-toggle=collapse data-target="#navbar-compte">
                     <span></span><i class="glyphicon glyphicon-user"></i></a>
                 <a class="navbar-brand withoutripple" href="{{ path('accueil') }}">
-                    <img width=75 height=75 src="{{ asset('bundles/frontend/img/logo.png') }}" title="paef" alt="plateforme de financement participatif"/> </a>
+                    <img width=80 height=80 src="{{ asset('bundles/frontend/img/logo.png') }}" title="paef" alt="plateforme de financement participatif"/> </a>
             </div>
             <div class="collapse hidden-sm hidden-md hidden-lg" id=navbar-main-menu>
                 <ul class="nav navbar-nav " id=accordion-navbar-main-menu>
@@ -17,9 +17,9 @@
                         <a role=button data-toggle=collapse data-parent="#accordion-navbar-main-menu" href="#" aria-controls=tous-les-projets-accordion aria-expanded=true class=withoutripple> Tous les projets <i class="ion-chevron-down pull-right"></i> </a>
                         <ul class="nav subnav in" id=tous-les-projets-accordion>
 
-                            <li class=""><a href="{{ path('projets_en_cours') }}" class="withoutripple">En Financement <span class="badge pull-right">8</span></a></li>
-                            <li class=""><a href="{{ path('projets_finances') }}" class="withoutripple">Projets Financés <span class="badge pull-right">147</span></a></li>
-                            <li class=""><a href="{{ path('projets_realises') }}" class="withoutripple"> Projets Réalisés <span class="badge pull-right">62</span></a></li>
+                            <li class=""><a href="{{ path('projets_en_cours') }}" class="withoutripple">En Financement <span class="badge pull-right">{{ nbprojet.nbProjetsEncours }}</span></a></li>
+                            <li class=""><a href="{{ path('projets_finances') }}" class="withoutripple">Projets Financés <span class="badge pull-right">{{ nbprojet.nbProjetsBoucle }}</span></a></li>
+                            <li class=""><a href="{{ path('projets_realises') }}" class="withoutripple"> Projets Réalisés <span class="badge pull-right">{{ nbprojet.nbProjetsBoucle }}</span></a></li>
                         </ul>
                     </li>
                     <li class="panel no-margin no-border ">
@@ -49,9 +49,9 @@
                         <div class="container-nav-black container-sub-navbar sub-menu hidden">
                             <div class=container>
                                 <ul class="nav navbar-nav sub-main-menu">
-                                    <li class=""><a href="{{ path('projets_en_cours') }}" class="withoutripple">En Financement <span class="badge">{{ projets|length }}</span></a></li>
-                                    <li class=""><a href="{{ path('projets_finances') }}" class="withoutripple">Projets Financés <span class="badge">{{ projetsBoucles|length }}</span></a></li>
-                                    <li class=""><a href="{{ path('projets_realises') }}" class="withoutripple">Projets Réalisés <span class="badge">62</span></a></li>
+                                    <li class=""><a href="{{ path('projets_en_cours') }}" class="withoutripple">En Financement <span class="badge">{{ nbprojet.nbProjetsEncours }}</span></a></li>
+                                    <li class=""><a href="{{ path('projets_finances') }}" class="withoutripple">Projets Financés <span class="badge">{{ nbprojet.nbProjetsBoucle }}</span></a></li>
+                                    <li class=""><a href="{{ path('projets_realises') }}" class="withoutripple">Projets Réalisés <span class="badge">{{ nbprojet.nbProjetsBoucle }}</span></a></li>
                                 </ul>
                             </div>
                         </div>

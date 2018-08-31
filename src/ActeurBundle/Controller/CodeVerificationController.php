@@ -17,8 +17,8 @@ class CodeVerificationController extends Controller
 */
     public function indexAction(Request $request)
     {
-        $defaultData = array('message' => 'Entre le code de validation');
-        $form = $this->createFormBuilder($defaultData)
+       // $defaultData = array('message' => 'Entre le code de validation');
+        $form = $this->createFormBuilder()
             ->add('code', TextType::class,[
                 'attr' => [
                     'class' => 'code_inscription',
@@ -44,7 +44,7 @@ class CodeVerificationController extends Controller
                 $session->set('codeInscription', $code);
 
                 //puis on fait une redirection vers le formulaire d'inscripttion
-               return  $this->redirectToRoute('fos_user_security_login');
+               return  $this->redirectToRoute('porteur_register');
             }
             else {
                 //Dans le cas contraire on le maintient sur cette page
