@@ -72,11 +72,15 @@ class PromotteurController extends Controller
             $this->addFlash('success','Felicitation !!! Votre projet soumis avec succes');
 
             //envoi de mail
+            $smtpkalo  = new \Swift_SmtpTransport('mail07.lwspanel.com',25);
+            $smtpkalo->setUsername('infostest@yolandadiva.com')
+                ->setPassword('Henry_1024');
+            $mailer = new \Swift_Mailer($smtpkalo);
 
             $message = (new \Swift_Message('[ACCUSE DE RECEPTION]Nous avons bien recu votre projet'))
                 ->setFrom($this->getParameter('mailer_user'))
                 ->setTo($this->getUser()->getEmail())
-            //    ->attach(Swift_Attachment::fromPath('../web/uploads/porteur/pdf'.$form->getData('planFile')))
+                ->attach(Swift_Attachment::fromPath('../web/uploads/porteur/pdf'.$form->getData('planFile')))
                 ->setBody(
                     $this->renderView(
                     // app/Resources/views/Emails/registration.html.twig
@@ -85,12 +89,12 @@ class PromotteurController extends Controller
                     ),
                     'text/html'
                 );
-           $this->get('mailer')->send($message);
+            $mailer->send($message);
 
             $messages = (new \Swift_Message('[ACCUSE DE RECEPTION]Nous avons bien recu votre projet'))
                 ->setFrom($this->getParameter('mailer_user'))
                 ->setTo($this->getParameter('mailer_user'))
-            //    ->attach(Swift_Attachment::fromPath('../web/uploads/porteur/pdf'.$form->getData()->getPlanFile()))
+               ->attach(Swift_Attachment::fromPath('../web/uploads/porteur/pdf'.$form->getData()->getPlanFile()))
                 ->setBody(
                     $this->renderView(
                     // app/Resources/views/Emails/registration.html.twig
@@ -99,7 +103,7 @@ class PromotteurController extends Controller
                     ),
                     'text/html'
                 );
-            $this->get('mailer')->send($messages);
+            $mailer->send($messages);
 
 
             return $this->redirectToRoute('porteur_projet_new_confirm', array('id' => $projet->getId()));

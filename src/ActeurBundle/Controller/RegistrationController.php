@@ -28,8 +28,8 @@ class RegistrationController extends BaseController
         $user = $userManager->createUser();
         $user->setEnabled(true);
         $user_active =  $user->getClass();
-        var_dump($user_active);
-        die();
+//        var_dump($user_active);
+//        die();
 
         $event = new GetResponseUserEvent($user, $request);
         $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
