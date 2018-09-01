@@ -145,11 +145,11 @@
         {#</div>#}
         <div class="key-data">
             <ul class="list-inline col-4">
-                <li> <strong class="text-on-one-line">Collecte</strong><br>
+                <li>   <strong class="text-on-one-line success">Collecte</strong><br>
                     <strong class="text-on-one-line">terminée</strong>
                 </li>
                 <li> <strong>{{ projet.objectif|number_format(0, ' ', ' ') }}</strong> <br>recherchés </li>
-                <li> <strong>{{ totaldon }}</strong> <br>Contributeurs </li>
+                <li> <strong>{{ projet.dons|length }}</strong> <br>Contributeurs </li>
                 <li> <strong>{{ totaldon|number_format(0, ' ', ' ') }}</strong> <br>Récoltées </li>
             </ul>
         </div>

@@ -2,7 +2,7 @@
    Nouveau projet
 </h3>
 <h3>
-    un nouveau projet viens d"etre soumettre
+    un nouveau projet viens d"etre soumis
 <div class="row">
     <div class="col m12">
         <h2 align="center">   {{ projet.nomProjet }} </h2>
@@ -10,7 +10,7 @@
 </div>
 <div class="row">
     <div class="col m5">
-        <center>  <img src="{{ asset ('uploads/admin/images/')}}{{ projet.logo  }}" align="center" width="60%"></center>
+        <center>  <img src="{{ app.request.getSchemeAndHttpHost() ~ asset ('uploads/admin/images/')}}{{ projet.logo  }}" align="center" width="60%"></center>
     </div>
     <div class="col m7">
         <p> {{ projet.descriptionCourteProjet  }} </p>

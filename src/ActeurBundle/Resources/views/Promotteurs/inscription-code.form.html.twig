@@ -8,15 +8,15 @@
                  <div class="col-lg-4 col-lg-push-8 col-md-4 col-md-push-8 col-xs-12 col-xs-pull-0 col-sm-12 col-sm-pull-0">
                      <div class="donateur-details-content" style="">
                          <h3>logo</h3> <hr/>
+                         <img width=300 height=300 src="{{ asset('bundles/frontend/img/logo.png') }}" title="paef" alt="plateforme de financement participatif"/> </a>
+
 
                      </div>
                  </div>
                  <div class="col-lg-8 col-lg-pull-4 col-md-8 col-md-pull-4 col-xs-12 col-xs-push-0 col-sm-12 col-sm-push-0">
 
                      <div class="donateur-details-content" style="">
-                         <h3>Inscription.</h3> <hr/>
-
-                         <h1> Code d'activation recu par SMS ou par email </h1> <br/>
+                         <h3>Code d'activation recu par SMS ou par email</h3> <hr/>
                          <h3>
                          S'il vous plaît entrer le code reçu par SMS ou par email, une seule méthode d'activation serait suffisante
                          </h3>
@@ -34,7 +34,7 @@
   <script>
         function remplissage(e, elem){
             e.preventDefault();
-            var code = $('.code_inscription').val();
+            var code = $('#form_code).val();
             // alert(parent.html());
 
                 $.ajax({
@@ -62,7 +62,7 @@
         }
         function aButtonPressed(){
 
-            var code = $('.code_inscription').val();
+            var code = $('#form_code').val();
 
             $.post(
                 Routing.generate('codeverification', {code: code}),

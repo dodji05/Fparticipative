@@ -4,9 +4,9 @@ parameters:
     database_port: null
     database_name: fundme
     database_user: root
-    database_password: root
+    database_password:
     mailer_transport: smtp
-    mailer_host: mail.soutenirunprojet.yo.fr
+    mailer_host: mail07.lwspanel.com
     mailer_user: infostest@yolandadiva.com
     mailer_password: Henry_1024
     secret: ThisTokenIsNotSoSecretChangeIt

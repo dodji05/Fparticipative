@@ -15,23 +15,23 @@
     </div>
 
 
-    <div id="card-alert-error" class="card red">
+    <div id="card-alert-error" class="card red text-center" style="margin-top: 15px">
         <div class="card-content white-text">
-            <small>ERREUR: Code erronee reverifier le code</small>
-            <small>Veuillez contacter l'equipe ...</small>
+            <h3 class="label label-danger">ERREUR: Code erronee reverifier le code</h3> <br/>
+            <h3 class="label label-info">Veuillez contacter l'equipe ...</h3>
         </div>
 
     </div>
-    <div id="card-alert-succes" class="card green">
+    <div id="card-alert-succes" class="card green text-center" style="margin-top:  15px">
         <div class="card-content white-text">
-            <small>FELICITATION : votre code est valide passe a l'etape suivante.</small>
+            <h4 class="label label-success">FELICITATION : votre code est valide passe a l'etape suivante.</h4>
         </div>
 
     </div>
-    <div id="btn_validation"style="margin: 10px">
-        <a href="{{ path('porteur_register') }}">Etape suivante
+    <div id="btn_validation"style="margin: 10px" class="text-center">
+        <a href="{{ path('porteur_register') }}">
 
-            <button type="submit" class="btn  btn-success"> Etape suivante </button></a>
+            <button type="submit" class="btn  btn-success">Etape suivante </button></a>
 
     </div>
 {{ form_end(form) }}
@@ -46,7 +46,7 @@
     <script>
         function remplissage(e, elem){
             e.preventDefault();
-            var code = $('.code_inscription').val();
+            var code = $('#form_code').val();
             // alert(parent.html());
 
                 $.ajax({
@@ -74,7 +74,7 @@
         }
         function aButtonPressed(){
 
-            var code = $('.code_inscription').val();
+            var code = $('#form_code').val();
 
             $.post(
                 Routing.generate('codeverification', {code: code}),
@@ -101,8 +101,8 @@
             $("#card-alert-succes").hide()
             $("#btn_validation").hide()
             $("#card-alert-error").hide()
-            $('.code_inscription').on('blur', function(){aButtonPressed();});
-            $('.code_inscription').on('focus', function(){
+            $('#form_code').on('blur', function(){aButtonPressed();});
+            $('#form_code').on('focus', function(){
                 $("#card-alert-succes").hide()
                 $("#card-alert-error").hide()
                 $("#btn_validation").hide()
