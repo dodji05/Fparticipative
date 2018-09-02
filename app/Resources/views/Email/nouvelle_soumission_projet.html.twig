@@ -1,13 +1,35 @@
+
 <h3>
-   Nouveau projet
-</h3>
-<h3>
-    un nouveau projet viens d"etre soumis
+    Un nouveau projet viens d"etre soumis
 <div class="row">
     <div class="col m12">
         <h2 align="center">   {{ projet.nomProjet }} </h2>
     </div>
 </div>
+    <div class="row">
+        <div class="col m5">
+            <h2 align="center">   Identité du porteur : </h2>
+        </div>
+        <div class="col m7">
+            <h2 align="center">   {{ projet.porteur.nom }} </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col m5">
+            <h2 align="center">   Contacts  : </h2>
+        </div>
+        <div class="col m7">
+            <h2 align="center">   {{ projet.porteur.telephone }}  /  {{ projet.porteur.adresse }} </h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col m5">
+            <h2 align="center">   Bubget demande : </h2>
+        </div>
+        <div class="col m7">
+            <h2 align="center">   {{ projet.budgetPropose }} </h2>
+        </div>
+    </div>
 <div class="row">
     <div class="col m5">
         <center>  <img src="{{ app.request.getSchemeAndHttpHost() ~ asset ('uploads/admin/images/')}}{{ projet.logo  }}" align="center" width="60%"></center>

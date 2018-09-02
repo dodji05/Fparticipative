@@ -15,45 +15,48 @@ use Stripe\Error\Base;
 use Stripe\Stripe;
 class StripeClient
 {
-    private $config;
     private $em;
-    private $logger;
-
-    public function __construct($secretKey, array $config, EntityManagerInterface $em, LoggerInterface $logger)
+    public function __construct($secretKey,EntityManager $em)
     {
-        \Stripe\Stripe::setApiKey($secretKey);
-        $this->config = $config;
         $this->em = $em;
-        $this->logger = $logger;
+        \Stripe\Stripe::setApiKey($secretKey);
+    }
+    public function createCustomer(User $user, $paymentToken){
+        $customer = \Stripe\Customer::create([
+            'email' => $user->getEmail(),
+            'source' => $paymentToken,
+        ]);
+        $user->setStripeCustomerId($customer->id);
+        $this->em->persist($user);
+        $this->em->flush($user);
+        return $customer;
+
     }
 
-    public function createPremiumCharge(Donateurs $user, $token)
-    {
-        try {
-            $charge = \Stripe\Charge::create([
-                'amount' => $this->config['decimal'] ? $this->config['premium_amount'] * 100 : $this->config['premium_amount'],
-                'currency' => $this->config['currency'],
-                'description' => 'Premium blog access',
-                'source' => $token,
-                'receipt_email' => $user->getEmail(),
-            ]);
-        } catch (\Stripe\Error\Base $e) {
-            $this->logger->error(sprintf('%s exception encountered when creating a premium payment: "%s"', get_class($e), $e->getMessage()), ['exception' => $e]);
+    public function updateCustomerCard(User $user, $paymentToken) {
 
-            throw $e;
+        $customer = \Stripe\Customer::retrieve($user->getStripeCustomerId());
+        $customer->source = $paymentToken;
+        $customer->save();
+    }
+
+    public function createInvoiceItem($amount, User $user, $description) {
+        return \Stripe\InvoiceItem::create(array(
+            "amount" => $amount,
+            "currency" => "usd",
+            "customer" => $user->getStripeCustomerId(),
+            "description" => $description
+        ));
+    }
+    public function createInvoice(User $user, $payImmediately = true)
+    {
+        $invoice = \Stripe\Invoice::create(array(
+            "customer" => $user->getStripeCustomerId()
+        ));
+        if ($payImmediately) {
+            // guarantee it charges *right* now
+            $invoice->pay();
         }
-
-        $user->setChargeId($charge->id);
-       // $user->setPremium($charge->paid);
-        $this->em->flush();
-    }
-
-    /**
-     * @param $eventId
-     * @return \Stripe\Event
-     */
-    public function findEvent($eventId)
-    {
-        return \Stripe\Event::retrieve($eventId);
+        return $invoice;
     }
 }

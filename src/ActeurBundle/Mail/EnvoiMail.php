@@ -11,16 +11,36 @@ namespace ActeurBundle\Mail;
 
 class EnvoiMail
 {
-//    public function envoi (\Swift_Mailer $mailer) {
-//        ->setFrom('send@example.com')
-//            ->setTo('recipient@example.com')
+
+    private $host;
+    private $mailer;
+    /**
+     * EnvoiMail constructor.
+     */
+    public function __construct($host , $username, $pwd)
+    {
+        $smtpkalo  = new \Swift_SmtpTransport($host,25);
+        $smtpkalo->setUsername($username)
+            ->setPassword($pwd);
+        $this->mailer = new \Swift_Mailer($smtpkalo);
+    }
+//    public function  envoiMsg ($sujet,$from,$to,$template,$file=null){
+//        $message = (new \Swift_Message('[NOUVEAU PROJET] Un nouveau projet a été soumis'))
+//            ->setFrom($this->getParameter('mailer_user'))
+//            ->setTo($this->getUser()->getEmail());
+//            if($file !=null){
+//                $message ->attach(Swift_Attachment::fromPath($file);
+//            };
+//
 //            ->setBody(
 //                $this->renderView(
 //                // app/Resources/views/Emails/registration.html.twig
-//                    'Emails/registration.html.twig',
-//                    array('name' => $name)
+//                    'Email/accuse_reception.html.twig',
+//                    array('projet' => $projet)
 //                ),
 //                'text/html'
-//            )
+//            );
+//        $mailer->send($message);
+//
 //    }
 }

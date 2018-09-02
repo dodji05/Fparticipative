@@ -77,10 +77,10 @@ class PromotteurController extends Controller
                 ->setPassword('Henry_1024');
             $mailer = new \Swift_Mailer($smtpkalo);
 
-            $message = (new \Swift_Message('[ACCUSE DE RECEPTION]Nous avons bien recu votre projet'))
+            $message = (new \Swift_Message('[NOUVEAU PROJET] Un nouveau projet a été soumis'))
                 ->setFrom($this->getParameter('mailer_user'))
                 ->setTo($this->getUser()->getEmail())
-                ->attach(Swift_Attachment::fromPath('../web/uploads/porteur/pdf'.$form->getData('planFile')))
+                ->attach(Swift_Attachment::fromPath($form->getData()->getPlanFile()))
                 ->setBody(
                     $this->renderView(
                     // app/Resources/views/Emails/registration.html.twig
@@ -94,7 +94,7 @@ class PromotteurController extends Controller
             $messages = (new \Swift_Message('[ACCUSE DE RECEPTION]Nous avons bien recu votre projet'))
                 ->setFrom($this->getParameter('mailer_user'))
                 ->setTo($this->getParameter('mailer_user'))
-               ->attach(Swift_Attachment::fromPath('../web/uploads/porteur/pdf'.$form->getData()->getPlanFile()))
+               ->attach(Swift_Attachment::fromPath($form->getData()->getPlanFile()))
                 ->setBody(
                     $this->renderView(
                     // app/Resources/views/Emails/registration.html.twig
