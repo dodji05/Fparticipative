@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use ActeurBundle\Client\StripeClient;
 
 /**
- * Porteur controller.
+ * Donateur controller.
  *
  * @Route("/espace-donateur")
  */
@@ -31,7 +31,7 @@ class DonateursController extends Controller
         $fond = $em->getRepository('AdminBundle:Dons');
         $fond = $fond->findBy(array('donateur'=>$this->getUser()));
 
-        $projets =  $em->getRepository('AdminBundle:Projets')->projetsValides(10);
+        $projets =  $em->getRepository('AdminBundle:Projets')->projetsValides(10,"enFinancement");
        // $user = $em->getRepository('AdminBundle:Donateurs')->findOneBy(array('id'=>4));
 
         return $this->render('@Acteur/Donateurs/index.html.twig', array(
@@ -112,39 +112,37 @@ class DonateursController extends Controller
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
            // $logger = new LoggerInterface();
-
             if ($form->isValid()) {
+
+                $token = $request->request->get('stripeToken');
                 \Stripe\Stripe::setApiKey($this->getParameter('stripe_secret_key'));
-               // $config = array();
-                $config = $this->getParameter('payment');
+                $stripeClient = $this->get('app.stripe.client');
 
-                try {
-
-
-                    $charge = \Stripe\Charge::create([
-                        'amount' => $form->get('montant')->getData()/*20000$config['decimal'] ? $config['premium_amount'] * 100 : $config['premium_amount']*/,
-                        'currency' => $config['currency'],
-                        'description' => $projet->getNomProjet(),
-                        //'customer'=> $user->getNom(),
-                        'source' => $form->get('token')->getData(),
-                        //'receipt_email' => 'gildas31@gmail.com'/*$user->getEmail()*/,
-                    ]);
-                } catch (\Stripe\Error\Base $e) {
-                  //  $logger->error(sprintf('%s exception encountered when creating a premium payment: "%s"', get_class($e), $e->getMessage()), ['exception' => $e]);
-
-                    throw $e;
+                /** @var User $user */
+                $user = $this->getUser();
+                if (!$user->getStripeCustomerId()) {
+                    $stripeClient->createCustomer($user, $token);
+                } else {
+                    $stripeClient->updateCustomerCard($user, $token);
                 }
-                // Sauvegades du dons qui vient d'etre effectuee
+                $stripeClient->createInvoiceItem(
+                    $form->get('montant')->getData(),
+                    $user,
+                    $projet->getNomProjet()
+                );
+                // guarantee it charges *right* now
+                $stripeClient->createInvoice($user, true);
+
                 $dons =  new Dons();
                 $dateDons = new \DateTime();
                 $dons->setDonateur($user);
                 $dons->setDateDons($dateDons);
                 $dons->setMontant($form->get('montant')->getData());
                 $dons->setProjet($projet);
-               // $dons->setDonateur($this->getUser());
+                // $dons->setDonateur($this->getUser());
                 $em->persist($dons);
 
-                $user->setChargeId($charge->id);
+                // $user->setChargeId($charge->id);
                 // $user->setPremium($charge->paid);
                 $em->persist($user);
                 $em->flush();
@@ -155,7 +153,33 @@ class DonateursController extends Controller
                     'DateD'=>$dateDons
                 ));
             }
-        }
+
+
+//            if ($form->isValid()) {
+//                \Stripe\Stripe::setApiKey($this->getParameter('stripe_secret_key'));
+//               // $config = array();
+//                $config = $this->getParameter('payment');
+//
+//                try {
+//
+//
+//                    $charge = \Stripe\Charge::create([
+//                        'amount' => $form->get('montant')->getData()/*20000$config['decimal'] ? $config['premium_amount'] * 100 : $config['premium_amount']*/,
+//                        'currency' => $config['currency'],
+//                        'description' => $projet->getNomProjet(),
+//                        //'customer'=> $user->getNom(),
+//                        'source' => $form->get('token')->getData(),
+//                        //'receipt_email' => 'gildas31@gmail.com'/*$user->getEmail()*/,
+//                    ]);
+//                } catch (\Stripe\Error\Base $e) {
+//                  //  $logger->error(sprintf('%s exception encountered when creating a premium payment: "%s"', get_class($e), $e->getMessage()), ['exception' => $e]);
+//
+//                    throw $e;
+//                }
+//                // Sauvegades du dons qui vient d'etre effectuee
+
+//            }
+        };
 
         $projet = $em->getRepository('AdminBundle:Projets')->findOneBy(array('id'=>$id, 'selectionne'=>1));
         return $this->render('@Acteur/Donateurs/soutenir.html.twig', array(

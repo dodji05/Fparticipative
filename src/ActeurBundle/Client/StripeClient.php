@@ -7,12 +7,9 @@
  */
 namespace ActeurBundle\Client;
 
-use AdminBundle\Entity\Donateurs;
-use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
-use Stripe\Charge;
-use Stripe\Error\Base;
-use Stripe\Stripe;
+use Doctrine\ORM\EntityManager;
+use ActeurBundle\Entity\User;
+
 class StripeClient
 {
     private $em;
