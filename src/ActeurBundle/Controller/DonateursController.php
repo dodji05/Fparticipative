@@ -97,8 +97,6 @@ class DonateursController extends Controller
 
         $repos = $em->getRepository('AdminBundle:Projets');
         $projet = $repos->findOneBy(array('id'=>$id));
-     //   $user = $em->getRepository('AdminBundle:Donateurs')->findOneBy(array('id'=>4));
-        $user = $this->getUser();
 
 
         $form = $this->get('form.factory')
@@ -114,11 +112,12 @@ class DonateursController extends Controller
            // $logger = new LoggerInterface();
             if ($form->isValid()) {
 
-                $token = $request->request->get('stripeToken');
+                $token =  $form->get('token')->getData();
                 \Stripe\Stripe::setApiKey($this->getParameter('stripe_secret_key'));
                 $stripeClient = $this->get('app.stripe.client');
-
+                $config = $this->getParameter('payment');
                 /** @var User $user */
+
                 $user = $this->getUser();
                 if (!$user->getStripeCustomerId()) {
                     $stripeClient->createCustomer($user, $token);
@@ -128,7 +127,8 @@ class DonateursController extends Controller
                 $stripeClient->createInvoiceItem(
                     $form->get('montant')->getData(),
                     $user,
-                    $projet->getNomProjet()
+                    "SOUTIENT AU PROJET ".$projet->getNomProjet(),
+                    $config['currency']
                 );
                 // guarantee it charges *right* now
                 $stripeClient->createInvoice($user, true);
@@ -146,6 +146,11 @@ class DonateursController extends Controller
                 // $user->setPremium($charge->paid);
                 $em->persist($user);
                 $em->flush();
+
+                //Envoi de mail
+                // 1- au donateur
+                // 2- au porteur de projet
+                // 3- A l'association
 
                 return $this->render('ActeurBundle:Donateurs:Facture-don.html.twig', array(
                     'projet' => $projet->getNomProjet(),

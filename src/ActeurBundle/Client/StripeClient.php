@@ -37,10 +37,10 @@ class StripeClient
         $customer->save();
     }
 
-    public function createInvoiceItem($amount, User $user, $description) {
+    public function createInvoiceItem($amount, User $user, $description,$currency) {
         return \Stripe\InvoiceItem::create(array(
             "amount" => $amount,
-            "currency" => "usd",
+            "currency" => $currency,
             "customer" => $user->getStripeCustomerId(),
             "description" => $description
         ));
