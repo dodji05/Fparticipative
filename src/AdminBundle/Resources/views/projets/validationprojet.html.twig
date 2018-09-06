@@ -4,12 +4,14 @@
         <div class="col-12 pr-0">
             <div class="card px-1">
                 <div class="text-center py-3">
-                    Validation du projet : {{ projet.nomProjet }} sourmis par :
-                    {% if projet.porteur.type.id == 1 %}
+                    Validation du projet : {{ projet.nomProjet }} soumis par :
+                    {% if projet.porteur.nature.id == 1 %}
                         {{ projet.porteur.nom }} {{ projet.porteur.prenom }}
                     {% else %}
                         {{ projet.porteur.raisonSociale }}
                     {% endif %}
+
+                    <br/> <br/> Budget Propose : {{ projet.budgetPropose }}
                 </div>
             </div>
         </div>

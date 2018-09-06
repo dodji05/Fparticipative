@@ -102,7 +102,7 @@ class ProjetsController extends Controller
             $em = $this->getDoctrine()->getManager();
             $projet->setSelectionne(true);
             $projet->setDateValidation(new \DateTime());
-
+            $projet->setEtat('enFinancement');
 
             $em->persist($projet);
             $em->flush();
