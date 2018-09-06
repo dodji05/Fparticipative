@@ -11,8 +11,8 @@
             <div class="col s8 m8 l8 offset-s2 offset-l2 offset-m1">
                 <div class="card-panel">
                 <div class="row">
-                    <div class="col s12 m6 l8 ">
-                        <p> Vous venez d'investir {{ Montant|number_format(0, ' ', ' ') }} FCA sur le projet {{ projet }}
+                    <div class="col s12 m12 l12 ">
+                        <p> Vous venez d'investir {{ projet.montant|number_format(0, ' ', ' ') }} FCA sur le projet {{ projet.projet.nomProjet }}
                         </p>
                         <p> Soutenir un projet et le promoteur du projet vous remercient infinement.
                         </p>
@@ -21,34 +21,7 @@
                         <p> Une fois encore merci merci pour votre soutien.
                         </p>
                     </div>
-                    <div class="col s12 m8 l4">
-                        <table class="table-responsive">
-                            <tr>
-                                <td> DATE/HEURE:</td>
-                                <td>{{ DateD | date('D-m-Y') }}</td>
-                            </tr>
-                            <tr>
-                                <td> MOYEN DE PAIEMENT:</td>
-                                <td>CARTE BANCAIRE</td>
-                            </tr>
-                            <tr>
-                                <td>NUMERO DE LA CARTE:</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>N° TRANSACTION CB</td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>MONTANT</td>
-                                <td> {{ Montant |number_format(0, ' ', ' ')}} FCA </td>
-                            </tr>
-                            <tr>
-                                <td>TYPE:</td>
-                                <td>DEBIT </td>
-                            </tr>
-                        </table>
-                    </div>
+
                 </div>
 
             </div>

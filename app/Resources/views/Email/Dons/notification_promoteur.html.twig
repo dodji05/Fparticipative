@@ -1,0 +1,10 @@
+
+<img width=100 height=100 src="{{ asset('bundles/frontend/img/logo.png') }}">
+<h2 align="center"> Felicitation {{ don.projet.porteur.nom  }}{{ don.projet.porteur.prenom }}</h2>
+
+<p>Vous venez de recevoir une participation de {{ don.montant|number_format(0, ' ', ' ') }} pour votre projet {{ don.projet.nomProjet }}</p>
+{% set total =0  %}
+{% for tt in  don.projet.dons %}
+    {% set total =total + tt.montant  %}
+{% endfor %}
+<p>Au total vous avez reçu  {{ tt|number_format(0, ' ', ' ') }} sur {{ don.projet.objectif|number_format(0, ' ', ' ') }}</p>

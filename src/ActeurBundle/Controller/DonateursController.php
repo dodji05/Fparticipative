@@ -152,11 +152,7 @@ class DonateursController extends Controller
                 // 2- au porteur de projet
                 // 3- A l'association
 
-                return $this->render('ActeurBundle:Donateurs:Facture-don.html.twig', array(
-                    'projet' => $projet->getNomProjet(),
-                    'Montant'=>$form->get('montant')->getData(),
-                    'DateD'=>$dateDons
-                ));
+                return $this->redirectToRoute('facture_dons',['id'=>$dons]);
             }
 
 
@@ -191,5 +187,73 @@ class DonateursController extends Controller
             'projet' => $projet,
             'form' => $form->createView(),
             'stripe_public_key' => $this->getParameter('stripe_public_key'),));
+    }
+
+    /**
+     * @Route("/confirmation-dons/{id}",name="facture_dons")
+     */
+    public function confirmationAction(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $leDon = $em->getRepository('AdminBundle:Dons')->findOneBy(array('id'=>$id));
+
+$h = new Dons();
+
+//envoi de mail
+        $smtpkalo  = new \Swift_SmtpTransport('mail07.lwspanel.com',25);
+        $smtpkalo->setUsername('infostest@yolandadiva.com')
+            ->setPassword('Henry_1024');
+        $mailer = new \Swift_Mailer($smtpkalo);
+
+
+
+        //Envoi de mail
+        // 1- au donateur
+        $message_donateur = (new \Swift_Message('[PARTICIPATION BIEN RECUE] Pour le projet '))
+            ->setFrom($this->getParameter('mailer_user'))
+            ->setTo($this->getUser()->getEmail())
+            ->setBody(
+                $this->renderView(
+                // app/Resources/views/Emails/registration.html.twig
+                    'Email/Dons/notification_donateur.html.twig',
+                    array('don' => $leDon)
+                ),
+                'text/html'
+            );
+        $mailer->send($message_donateur);
+        // 2- au porteur de projet
+
+        $message_porteur = (new \Swift_Message('[NOUVELLE PARTICIPATION] pour votre projet '))
+            ->setFrom($this->getParameter('mailer_user'))
+            ->setTo($leDon->getProjet()->getPorteur()->getEmail())
+            ->setBody(
+                $this->renderView(
+                // app/Resources/views/Emails/registration.html.twig
+                    'Email/Dons/notification_promoteur.html.twig',
+                    array('don' => $leDon)
+                ),
+                'text/html'
+            );
+        $mailer->send($message_porteur);
+        // 3- A l'association
+
+        $message_association = (new \Swift_Message('[NOUVELLE PARTICIPATION] pour le projet '))
+            ->setFrom($this->getParameter('mailer_user'))
+            ->setTo($this->getUser()->getEmail())
+            ->setBody(
+                $this->renderView(
+                // app/Resources/views/Emails/no
+                    'Email/Dons/notification_co.html.twig',
+                    array('don' => $leDon)
+                ),
+                'text/html'
+            );
+        $mailer->send($message_association);
+
+        return $this->render('ActeurBundle:Donateurs:Facture-don.html.twig', array(
+            'projet' => $leDon,
+
+        ));
     }
 }
