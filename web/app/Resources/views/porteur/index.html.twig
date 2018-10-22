@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Porteurs list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Adresse</th>
+                <th>Mail</th>
+                <th>Telephone</th>
+                <th>Raisonsociale</th>
+                <th>Img</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for porteur in porteurs %}
+            <tr>
+                <td><a href="{{ path('porteur_show', { 'id': porteur.id }) }}">{{ porteur.id }}</a></td>
+                <td>{{ porteur.nom }}</td>
+                <td>{{ porteur.prenom }}</td>
+                <td>{{ porteur.adresse }}</td>
+                <td>{{ porteur.mail }}</td>
+                <td>{{ porteur.telephone }}</td>
+                <td>{{ porteur.raisonSociale }}</td>
+                <td>{{ porteur.img }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('porteur_show', { 'id': porteur.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('porteur_edit', { 'id': porteur.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('porteur_new') }}">Create a new porteur</a>
+        </li>
+    </ul>
+{% endblock %}

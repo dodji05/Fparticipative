@@ -71,10 +71,10 @@ class RegistrationListener implements EventSubscriberInterface
            if($codeInscription ){
                // code valide
                // on met l'attribut utilise a true et on persist
-               $codeInscription->setUtilise(true);
-               $this->em->persist($codeInscription);
+               //$codeInscription->setUtilise(true);
+               $this->em->remove($codeInscription);
+              //$this->em->persist($codeInscription);
                $this->em->flush();
-
                // on supprime la session codeInscription
                $session->remove('codeInscription');
 
@@ -115,6 +115,7 @@ class RegistrationListener implements EventSubscriberInterface
                 $user->setTelephone($attente->getTelephone());
                 $user->setEmail($attente->getEmail());
                 $user->setEmailCanonical($attente->getEmail());
+                $user->setstripeCustomerId($attente->getChargeId());
                 // $this->userManager->
             }
         }

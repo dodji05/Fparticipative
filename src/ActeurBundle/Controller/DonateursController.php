@@ -152,7 +152,7 @@ class DonateursController extends Controller
                 // 2- au porteur de projet
                 // 3- A l'association
 
-                return $this->redirectToRoute('facture_dons',['id'=>$dons]);
+                return $this->redirectToRoute('facture_dons',['id'=>$dons->getId()]);
             }
 
 
@@ -196,9 +196,9 @@ class DonateursController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $leDon = $em->getRepository('AdminBundle:Dons')->findOneBy(array('id'=>$id));
+        $leDon = $em->getRepository('AdminBundle:Dons')->findOneBy(array('id'=>$id,'donateur'=>$this->getUser()));
 
-$h = new Dons();
+
 
 //envoi de mail
         $smtpkalo  = new \Swift_SmtpTransport('mail07.lwspanel.com',25);

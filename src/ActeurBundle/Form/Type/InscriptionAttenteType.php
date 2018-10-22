@@ -17,9 +17,7 @@ class InscriptionAttenteType extends AbstractType
             ->add('prenom')
             ->add('email', EmailType::class)
             ->add('telephone')
-            ->add('token', HiddenType::class, [
-                'constraints' => [new NotBlank()],
-            ])
+
         ;
 
     }

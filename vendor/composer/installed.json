@@ -3432,23 +3432,23 @@
     },
     {
         "name": "fedapay/fedapay-php",
-        "version": "0.1.3",
-        "version_normalized": "0.1.3.0",
+        "version": "0.1.5",
+        "version_normalized": "0.1.5.0",
         "source": {
             "type": "git",
             "url": "https://github.com/fedapay/fedapay-php.git",
-            "reference": "7545de9ee039a86632d8f97c7f45d2079c2ed26b"
+            "reference": "c40ca576c784cd65761a1338c2052df2a1590f93"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/fedapay/fedapay-php/zipball/7545de9ee039a86632d8f97c7f45d2079c2ed26b",
-            "reference": "7545de9ee039a86632d8f97c7f45d2079c2ed26b",
+            "url": "https://api.github.com/repos/fedapay/fedapay-php/zipball/c40ca576c784cd65761a1338c2052df2a1590f93",
+            "reference": "c40ca576c784cd65761a1338c2052df2a1590f93",
             "shasum": ""
         },
         "require": {
+            "ext-curl": "*",
             "ext-json": "*",
             "ext-mbstring": "*",
-            "guzzlehttp/guzzle": "~6.0",
             "php": ">=5.5"
         },
         "require-dev": {
@@ -3456,7 +3456,7 @@
             "phpunit/phpunit": "~4.0",
             "squizlabs/php_codesniffer": "~2.0"
         },
-        "time": "2018-06-24T12:36:19+00:00",
+        "time": "2018-10-03T15:04:09+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

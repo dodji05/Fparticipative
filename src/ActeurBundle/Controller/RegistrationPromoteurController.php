@@ -32,94 +32,223 @@ class RegistrationPromoteurController extends Controller
     /**
      *
      *
-     *@Route("/inscription", name="first_inscription")
+     * @Route("/inscription", name="first_inscription")
      *
      */
-    public function preInscriptionAction (Request $request){
+    public function preInscriptionAction(Request $request)
+    {
 
-        $inscription =  new  InscriptionAttente();
+//        $inscription = new  InscriptionAttente();
+//
+//       // $form = $this->createForm('ActeurBundle\Form\Type\InscriptionAttenteType', $inscription);
+//        $defaultData = array('message' => 'Type your message here');
+//        $form = $this->createFormBuilder($defaultData)
+//            ->getForm();
+//        /** @var $userManager UserManagerInterface */
+//        $form->handleRequest($request);
+//        // $logger = new LoggerInterface();
+//        $em = $this->getDoctrine()->getManager();
+//
+//        if ($form->isSubmitted() && $form->isValid()) {
+////            dump($form);
+////            die();
+//
+//            $code_validation = md5(uniqid(mt_rand(), true));
+//            $inscription->setCodeInscription($code_validation);
+//
+//            $token = $request->request->get('stripeToken');
+//            \FedaPay\FedaPay::setApiKey($this->getParameter('feday_public_key'));
+//            $fedaPayClient = $this->get('fedapay_client');
+//
+//            /** @var User $user */
+//            $user = $this->getUser();
+//
+//            if (!$user->getStripeCustomerId()) {
+//                $fedaPayClient->createCustomer($user, $token);
+//            } else {
+//                $fedaPayClient->updateCustomerCard($user, $token);
+//            }
+//
+//            $fedaPayClient->createInvoiceItem(
+//                1000 * 100,
+//                $user,
+//                'INSCRIPTION A LA PLATEFORME'
+//            );
+//
+//            // guarantee it charges *right* now
+//            $fedaPayClient->createInvoice($user, true);
+//
+//
+//
+//            // Sauvegades du dons qui vient d'etre effectuee
+//
+//
+//            // envoie de mail de notification pour connection a son espace
+//            $smtpkalo = new \Swift_SmtpTransport('mail07.lwspanel.com', 25);
+//            $smtpkalo->setUsername('infostest@yolandadiva.com')
+//                ->setPassword('Henry_1024');
+//            $mailer = new \Swift_Mailer($smtpkalo);
+//            //$ip = $this->container->get('request')->getClientIp();
+//
+//            $user = $this->getUser();
+//            //  $user1 =
+//            $user_mail = $form->get('email')->getData();
+//
+//
+//            $message = (new \Swift_Message('Votre code de validation pour la plateforme'))
+//                ->setFrom("infostest@yolandadiva.com", "SOUTENIR UN PROJET")
+//                ->setTo($user_mail)
+//                ->setBody($this->renderView('Email/code_validation.html.twig', [
+//                    'code' => $code_validation,
+//                    'porteur_nom' => $form->get('nom'),
+//                    'porteur_prenom' => $form->get('prenom'),
+//                ]))
+//                ->setContentType('text/html');
+//            $mailer->send($message);
+////            dump($mailer);
+////            die();
+//         //   $inscription->setChargeId($charge->id);
+//            // $user->setPremium($charge->paid);
+//            $em->persist($inscription);
+//            $em->flush();
+//
+//            return $this->redirectToRoute('code-validation');
+//
+//
+//        } else {
+////            dump($form->getErrors(true));
+////            die();
+//        }
+//
+//
+//        return $this->render('@Acteur/Promotteurs/pre-inscription.form.html.twig', [
+//
+//            // 'form_inscription' => $InscriptionForm->createView(),
+//            'stripe_public_key' => $this->getParameter('stripe_public_key'),
+//            'feday_public_key' => $this->getParameter('feday_public_key'),
+//            'form' => $form->createView()
+//        ]);
+
+        $inscription = new  InscriptionAttente();
+        $session = new Session();
+        $session->remove('enAttente');
 
         $form = $this->createForm('ActeurBundle\Form\Type\InscriptionAttenteType', $inscription);
-        /** @var $userManager UserManagerInterface */
         $form->handleRequest($request);
-        // $logger = new LoggerInterface();
+
         $em = $this->getDoctrine()->getManager();
-
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $code_validation = md5(uniqid(mt_rand(), true));
-            $inscription->setCodeInscription($code_validation);
-
-            \Stripe\Stripe::setApiKey($this->getParameter('stripe_secret_key'));
-            // $config = array();
-            $config = $this->getParameter('payment');
-
-            try {
-
-                $charge = \Stripe\Charge::create([
-                    'amount' => "10000"/*20000$config['decimal'] ? $config['premium_amount'] * 100 : $config['premium_amount']*/,
-                    'currency' => $config['currency'],
-                    'description' => 'frais d\'inscription au projet',
-                    //'customer'=> $user->getNom(),
-                    'source' => $form->get('token')->getData(),
-                    //'receipt_email' => 'gildas31@gmail.com'/*$user->getEmail()*/,
-                ]);
-            } catch (\Stripe\Error\Base $e) {
-                //  $logger->error(sprintf('%s exception encountered when creating a premium payment: "%s"', get_class($e), $e->getMessage()), ['exception' => $e]);
-
-                throw $e;
-            }
-            // Sauvegades du dons qui vient d'etre effectuee
-
-
-
-
-            // envoie de mail de notification pour connection a son espace
-            $smtpkalo  = new \Swift_SmtpTransport('mail07.lwspanel.com',25);
-            $smtpkalo->setUsername('infostest@yolandadiva.com')
-                ->setPassword('Henry_1024');
-            $mailer = new \Swift_Mailer($smtpkalo);
-            //$ip = $this->container->get('request')->getClientIp();
-
-            $user = $this->getUser();
-            //  $user1 =
-            $user_mail = $form->get('email');
-
-
-            $message = ( new \Swift_Message('Votre code de validation pour la plateforme'))
-                ->setFrom("infostest@yolandadiva.com","SOUTENIR UN PROJET")
-                ->setTo('gildas31@gmail.com')
-                ->setBody($this->renderView('Email/code_validation.html.twig',[
-                    'code'=>$code_validation,
-                    'porteur_nom'=>$form->get('nom'),
-                    'porteur_prenom'=>$form->get('prenom'),
-                ]))
-                ->setContentType('text/html')
-            ;
-            $mailer->send($message);
-//            dump($mailer);
-//            die();
-            $inscription->setChargeId($charge->id);
-            // $user->setPremium($charge->paid);
-            $em->persist($inscription);
-            $em->flush();
-
-            return  $this->redirectToRoute('code-validation');
-
-
-        }
-        else {
-//            dump($form->getErrors(true));
-//            die();
+            $session->set('enAttente', $form->getData('acteur_bundle_inscription_attente'));
+            return $this->redirectToRoute('first_inscription_payement');
         }
 
+        return $this->render('@Acteur/Promotteurs/pre-inscription.form.html.twig', [
 
-        return $this->render('@Acteur/Promotteurs/pre-inscription.form.html.twig',[
+            // 'form_inscription' => $InscriptionForm->createView(),
 
-           // 'form_inscription' => $InscriptionForm->createView(),
-            'stripe_public_key' => $this->getParameter('stripe_public_key'),
-            'form'=>$form->createView()
+            'form' => $form->createView()
         ]);
 
     }
+    /**
+     *
+     *
+     *@Route("/inscription-payement", name="first_inscription_payement")
+     *
+     */
+    public function preInscriptionPayAction (Request $request){
+        $session = new Session();
+        $sessionAttente = $session->get("enAttente");
+        var_dump( $sessionAttente->getNom());
+        die();
+        \FedaPay\FedaPay::setApiKey($this->getParameter('feday_secret_key'));
+       // $fedaPayClient = $this->get('fedapay_client');
+
+        try {
+            $transaction = \FedaPay\Transaction::create(
+                $this->fedapayTransactionData(10000)
+            );
+            $token = $transaction->generateToken();
+        return $this->redirect($token->url);
+        } catch(\Exception $e) {
+          return $e->getMessage();
+        }
+    }
+
+    private function fedapayTransactionData($frais)
+    {
+        $customer_data = [
+            'firstname' => 'Junior',
+            'lastname' => 'Gantin',
+            'email' => 'nioperas06@gmail.com',
+            'phone_number' => [
+                'number'  => '66526416',
+                'country' => 'bj'
+            ]
+        ];
+        return [
+            'description' => 'Buy Camo Fang Backpack Jungle!',
+            'amount' => $frais,
+            'currency' => ['iso' => 'XOF'],
+            'callback_url' => 'http://localhost/Fparticipative/web/app_dev.php/register/porteur/code-validation',
+            'customer' => $customer_data
+        ];
+    }
+
+    /***
+     *
+     * @Route("/inscription-etape", name="first_step_inscription")
+     *
+     */
+    public function preInscriptionFindrAction(Request $request)
+    {
+        $inscription = new  InscriptionAttente();
+        $form = $this->createForm('ActeurBundle\Form\Type\InscriptionAttenteType', $inscription);
+        $form->handleRequest($request);
+
+        $em = $this->getDoctrine()->getManager();
+        if ($form->isSubmitted() && $form->isValid()) {
+            return $this->redirectToRoute('first_inscription_payement');
+        }
+
+        return $this->render('@Acteur/Promotteurs/pre-inscription.form.html.twig', [
+
+            // 'form_inscription' => $InscriptionForm->createView(),
+
+            'form' => $form->createView()
+        ]);
+
+    }
+
+    /***
+     *
+     *@Route("/inscription-transaction", name="inscription_transaction")
+     *
+     */
+
+    public function callback(Request $request)
+    {
+        $transaction_id = $request->input('id');
+        $message = '';
+        try {
+            $transaction = \FedaPay\Transaction::retrieve($transaction_id);
+            switch($transaction->status) {
+                case 'approved':
+                    $message = 'Transaction approuvée.';
+                    break;
+                case 'canceled':
+                    $message = 'Transaction annulée.';
+                    break;
+                case 'declined':
+                    $message = 'Transaction déclinée.';
+                    break;
+            }
+        } catch(\Exception $e) {
+            $message = $e->getMessage();
+        }
+        return view('callback', compact('message'));
+    }
+
+
 }
+

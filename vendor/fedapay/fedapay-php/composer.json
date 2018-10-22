@@ -8,13 +8,15 @@
     ],
     "homepage": "https://fedapay.com/",
     "license": "MIT",
-    "authors": [{
-        "name": "FedaPay and contributors",
-        "homepage": "https://github.com/fedapay/fedapay-php/contributors"
-    }],
+    "authors": [
+        {
+            "name": "FedaPay and contributors",
+            "homepage": "https://github.com/fedapay/fedapay-php/contributors"
+        }
+    ],
     "require": {
         "php": ">=5.5",
-        "guzzlehttp/guzzle": "~6.0",
+        "ext-curl": "*",
         "ext-json": "*",
         "ext-mbstring": "*"
     },

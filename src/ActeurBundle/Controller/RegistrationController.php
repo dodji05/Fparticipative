@@ -37,7 +37,12 @@ class RegistrationController extends BaseController
         if (null !== $event->getResponse()) {
             return $event->getResponse();
         }
+        // last username entered by the user
+       // $lastUsername = (null === $session) ? '' : $session->get($lastUsernameKey);
 
+        $csrfToken = $this->has('security.csrf.token_manager')
+            ? $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue()
+            : null;
         $form = $formFactory->createForm();
         $form->setData($user);
 
@@ -69,9 +74,10 @@ class RegistrationController extends BaseController
             }
         }
 
-        return $this->render('@FOSUser/Registration/register.html.twig', array(
-            'form' => $form->createView(),
-        ));
+    //        return $this->render('@FOSUser/Registration/register.html.twig', array(
+    //            'form' => $form->createView(),
+    //            'csrf_token' => $csrfToken,
+    //        ));
     }
 
 }

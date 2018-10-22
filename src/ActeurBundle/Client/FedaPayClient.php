@@ -6,10 +6,10 @@
  * Time: 15:27
  */
 
-namespace AppBundle;
+namespace ActeurBundle\Client;
 
 
-use AppBundle\Entity\User;
+use ActeurBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 
 class FedaPayClient
@@ -63,5 +63,25 @@ class FedaPayClient
             $invoice->pay();
         }
         return $invoice;
+    }
+    private function fedapayTransactionData()
+    {
+        $customer_data = [
+            'firstname' => 'Junior',
+            'lastname' => 'Gantin',
+            'email' => 'nioperas06@gmail.com',
+            'phone_number' => [
+                'number'  => '66526416',
+                'country' => 'bj'
+            ]
+        ];
+
+        return [
+            'description' => 'Buy e-book!',
+            'amount' => 500,
+            'currency' => ['iso' => 'XOF'],
+            'callback_url' => url('callback'),
+            'customer' => $customer_data
+        ];
     }
 }

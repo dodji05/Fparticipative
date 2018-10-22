@@ -51,6 +51,10 @@ services:
         class: ActeurBundle\Client\StripeClient
         arguments: ['%stripe_secret_key%']
         public: true
+    app.feday.client:
+        class: ActeurBundle\Client\FedaPayClient
+        arguments: ['%feday_secret_key%']
+        public: true
 
     app.param.init:
         class: ActeurBundle\Client\ParamInitiaux

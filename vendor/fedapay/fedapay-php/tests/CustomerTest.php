@@ -25,13 +25,11 @@ class CustomerTest extends BaseTestCase
             'meta' => ['page' => 1]
         ];
 
-        $client = $this->createMockClient(200, $body);
-        \FedaPay\Requestor::setHttpClient($client);
+        $this->mockRequest('get', '/v1/customers', [], $body);
 
         $object = \FedaPay\Customer::all();
 
-        $this->exceptRequest('/v1/customers', 'GET');
-
+        $this->assertTrue(is_array($object->customers));
         $this->assertInstanceOf(\FedaPay\FedaPayObject::class, $object);
         $this->assertInstanceOf(\FedaPay\FedaPayObject::class, $object->meta);
         $this->assertInstanceOf(\FedaPay\Customer::class, $object->customers[0]);
@@ -54,14 +52,11 @@ class CustomerTest extends BaseTestCase
             ]
         ];
 
-        $client = $this->createMockClient(500, $body);
-        \FedaPay\Requestor::setHttpClient($client);
+        $this->mockRequest('post', '/v1/customers', $data, $body, 500);
 
         try {
             \FedaPay\Customer::create($data);
         } catch (\FedaPay\Error\ApiConnection $e) {
-            $this->exceptRequest('/v1/customers', 'POST', null, $data);
-
             $this->assertTrue($e->hasErrors());
             $this->assertNotNull($e->getErrorMessage());
             $errors = $e->getErrors();
@@ -95,12 +90,10 @@ class CustomerTest extends BaseTestCase
             ]
         ];
 
-        $client = $this->createMockClient(200, $body);
-        \FedaPay\Requestor::setHttpClient($client);
+        $this->mockRequest('post', '/v1/customers', $data, $body);
 
         $customer = \FedaPay\Customer::create($data);
 
-        $this->exceptRequest('/v1/customers', 'POST', null, $data);
         $this->assertInstanceOf(\FedaPay\Customer::class, $customer);
         $this->assertEquals($customer->firstname, $data['firstname']);
         $this->assertEquals($customer->lastname, $data['lastname']);
@@ -135,12 +128,10 @@ class CustomerTest extends BaseTestCase
             ]
         ];
 
-        $client = $this->createMockClient(200, $body);
-        \FedaPay\Requestor::setHttpClient($client);
+        $this->mockRequest('get', '/v1/customers/1', [], $body);
 
         $customer = \FedaPay\Customer::retrieve(1);
 
-        $this->exceptRequest('/v1/customers/1', 'GET');
         $this->assertInstanceOf(\FedaPay\Customer::class, $customer);
         $this->assertEquals($customer->firstname, $data['firstname']);
         $this->assertEquals($customer->lastname, $data['lastname']);
@@ -175,12 +166,10 @@ class CustomerTest extends BaseTestCase
             ]
         ];
 
-        $client = $this->createMockClient(200, $body);
-        \FedaPay\Requestor::setHttpClient($client);
+        $this->mockRequest('put', '/v1/customers/1', $data, $body);
 
         $customer = \FedaPay\Customer::update(1, $data);
 
-        $this->exceptRequest('/v1/customers/1', 'PUT', null, $data);
         $this->assertInstanceOf(\FedaPay\Customer::class, $customer);
         $this->assertEquals($customer->firstname, $data['firstname']);
         $this->assertEquals($customer->lastname, $data['lastname']);
@@ -201,7 +190,6 @@ class CustomerTest extends BaseTestCase
             'email' => $faker->unique()->email,
             'phone' => $faker->phoneNumber
         ];
-
         $body = [
             'v1/customer' => [
                 'id' => 1,
@@ -214,22 +202,21 @@ class CustomerTest extends BaseTestCase
                 'updated_at' => '2018-03-12T09:09:03.969Z'
             ]
         ];
-
-        $client = $this->createMockClient(200, $body);
-        \FedaPay\Requestor::setHttpClient($client);
-
+        $this->mockRequest('post', '/v1/customers', $data, $body);
         $customer = \FedaPay\Customer::create($data);
-
         $customer->firstname = 'First name';
+        $updateData = [
+            'klass' => 'v1/customer',
+            'firstname' => 'First name',
+            'lastname' => $data['lastname'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'created_at' => '2018-03-12T09:09:03.969Z',
+            'updated_at' => '2018-03-12T09:09:03.969Z'
+        ];
 
-        $client = $this->createMockClient(200, $body);
-        \FedaPay\Requestor::setHttpClient($client);
-
+        $this->mockRequest('put', '/v1/customers/1', $updateData, $body);
         $customer->save();
-
-        $this->exceptRequest('/v1/customers/1', 'PUT', null, [
-            'firstname' => 'First name'
-        ]);
     }
 
     /**
@@ -258,15 +245,11 @@ class CustomerTest extends BaseTestCase
             ]
         ];
 
-        $client = $this->createMockClient(200, $body);
-        \FedaPay\Requestor::setHttpClient($client);
-
+        $this->mockRequest('post', '/v1/customers', $data, $body);
         $customer = \FedaPay\Customer::create($data);
 
-        $client = $this->createMockClient(200);
-        \FedaPay\Requestor::setHttpClient($client);
-        $customer->delete();
+        $this->mockRequest('delete', '/v1/customers/1');
 
-        $this->exceptRequest('/v1/customers/1', 'DELETE');
+        $customer->delete();
     }
 }

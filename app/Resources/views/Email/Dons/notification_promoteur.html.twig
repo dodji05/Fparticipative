@@ -7,4 +7,4 @@
 {% for tt in  don.projet.dons %}
     {% set total =total + tt.montant  %}
 {% endfor %}
-<p>Au total vous avez reçu  {{ tt|number_format(0, ' ', ' ') }} sur {{ don.projet.objectif|number_format(0, ' ', ' ') }}</p>
+<p>Au total vous avez reçu  {{ total|number_format(0, ' ', ' ') }} sur {{ don.projet.objectif|number_format(0, ' ', ' ') }}</p>
