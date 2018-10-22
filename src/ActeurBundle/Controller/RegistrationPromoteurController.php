@@ -159,14 +159,14 @@ class RegistrationPromoteurController extends Controller
     public function preInscriptionPayAction (Request $request){
         $session = new Session();
         $sessionAttente = $session->get("enAttente");
-        var_dump( $sessionAttente->getNom());
-        die();
+//        var_dump( $sessionAttente->getNom());
+//        die();
         \FedaPay\FedaPay::setApiKey($this->getParameter('feday_secret_key'));
        // $fedaPayClient = $this->get('fedapay_client');
 
         try {
             $transaction = \FedaPay\Transaction::create(
-                $this->fedapayTransactionData(10000)
+                $this->fedapayTransactionData(10000, $sessionAttente)
             );
             $token = $transaction->generateToken();
         return $this->redirect($token->url);
@@ -175,14 +175,14 @@ class RegistrationPromoteurController extends Controller
         }
     }
 
-    private function fedapayTransactionData($frais)
+    private function fedapayTransactionData($frais,$user)
     {
         $customer_data = [
-            'firstname' => 'Junior',
-            'lastname' => 'Gantin',
-            'email' => 'nioperas06@gmail.com',
+            'firstname' => $user->getNom(),
+            'lastname' => $user->getPrenom(),
+            'email' => $user->getEmail(),
             'phone_number' => [
-                'number'  => '66526416',
+                'number'  => $user->getTelephone(),
                 'country' => 'bj'
             ]
         ];
