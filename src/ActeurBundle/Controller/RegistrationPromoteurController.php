@@ -106,7 +106,7 @@ class RegistrationPromoteurController extends Controller
 //                ->setContentType('text/html');
 //            $mailer->send($message);
 ////            dump($mailer);
-////            die();
+//            die();
 //         //   $inscription->setChargeId($charge->id);
 //            // $user->setPremium($charge->paid);
 //            $em->persist($inscription);
@@ -187,7 +187,7 @@ class RegistrationPromoteurController extends Controller
             ]
         ];
         return [
-            'description' => 'Buy Camo Fang Backpack Jungle!',
+            'description' => 'frais dinscription',
             'amount' => $frais,
             'currency' => ['iso' => 'XOF'],
             'callback_url' => 'http://localhost/Fparticipative/web/app_dev.php/register/porteur/code-validation',
@@ -228,13 +228,49 @@ class RegistrationPromoteurController extends Controller
 
     public function callback(Request $request)
     {
-        $transaction_id = $request->input('id');
+        $transaction_id = $request->get('id');
         $message = '';
         try {
             $transaction = \FedaPay\Transaction::retrieve($transaction_id);
             switch($transaction->status) {
                 case 'approved':
                     $message = 'Transaction approuvée.';
+                    $em = $this->getDoctrine()->getManager();
+                    $session = new Session();
+                    $sessionAttente = $session->get("enAttente");
+
+                    $code_validation = md5(uniqid(mt_rand(), true));
+                    $sessionAttente->setCodeInscription($code_validation);
+
+                    // envoie de mail de notification pour connection a son espace
+                    $smtpkalo = new \Swift_SmtpTransport('mail07.lwspanel.com', 25);
+                    $smtpkalo->setUsername('infostest@yolandadiva.com')
+                        ->setPassword('Henry_1024');
+                    $mailer = new \Swift_Mailer($smtpkalo);
+                    //$ip = $this->container->get('request')->getClientIp();
+
+
+                    $user_mail = $sessionAttente->getEmail();
+
+
+                    $message = (new \Swift_Message('Votre code de validation pour la plateforme'))
+                        ->setFrom("infostest@yolandadiva.com", "SOUTENIR UN PROJET")
+                        ->setTo($user_mail)
+                        ->setBody($this->renderView('Email/code_validation.html.twig', [
+                            'code' => $code_validation,
+                            'porteur_nom' => $sessionAttente->getNom(),
+                            'porteur_prenom' => $sessionAttente->getPrenom(),
+                        ]))
+                        ->setContentType('text/html');
+                    $mailer->send($message);
+//            dump($mailer);
+//            die();
+                    //   $inscription->setChargeId($charge->id);
+                    // $user->setPremium($charge->paid);
+                    $em->persist($sessionAttente);
+                    $em->flush();
+
+                    return $this->redirectToRoute('code-validation');
                     break;
                 case 'canceled':
                     $message = 'Transaction annulée.';
