@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
 class RegistrationPromoteurController extends Controller
@@ -30,7 +31,7 @@ class RegistrationPromoteurController extends Controller
      * @Route("/inscription", name="first_inscription")
      *
      */
-    public function preInscriptionAction(Request $request)
+    public function preInscriptionAction(Request $request, SessionInterface $session)
     {
 
 //        $inscription = new  InscriptionAttente();
@@ -125,7 +126,7 @@ class RegistrationPromoteurController extends Controller
 //        ]);
 
         $inscription = new  InscriptionAttente();
-        $session = new Session();
+        //$session = new Session();
         $session->remove('enAttente');
 
         $form = $this->createForm('ActeurBundle\Form\Type\InscriptionAttenteType', $inscription);
@@ -151,8 +152,8 @@ class RegistrationPromoteurController extends Controller
      *@Route("/inscription-payement", name="first_inscription_payement")
      *
      */
-    public function preInscriptionPayAction (Request $request){
-        $session = new Session();
+    public function preInscriptionPayAction (Request $request,SessionInterface $session){
+      //  $session = new Session();
         $sessionAttente = $session->get("enAttente");
 
         \FedaPay\FedaPay::setApiKey($this->getParameter('feday_secret_key'));
@@ -165,7 +166,11 @@ class RegistrationPromoteurController extends Controller
             $token = $transaction->generateToken();
         return $this->redirect($token->url);
         } catch(\Exception $e) {
-          return $e->getMessage();
+            $this->addFlash(
+                'notice',
+                $this->generateUrl('first_inscription_fedapay',array(null),0)
+            );
+            return $this->redirectToRoute('first_inscription');
         }
     }
 
@@ -184,7 +189,7 @@ class RegistrationPromoteurController extends Controller
             'description' => 'frais dinscription',
             'amount' => $frais,
             'currency' => ['iso' => 'XOF'],
-            'callback_url' => 'https://soutenirunprojet.yo.fr/inscription-feday',//$this->generateUrl('first_inscription_fedapay') https://soutenirunprojet.yo.fr/http://localhost:8888/FparticipativeV3/web/app_dev.php/inscription-feday,
+            'callback_url' =>  $this->generateUrl('first_inscription_fedapay',array(null),0),//'https://soutenirunprojet.yo.fr/inscription-feday',//$this->generateUrl('first_inscription_fedapay') https://soutenirunprojet.yo.fr/http://localhost:8888/FparticipativeV3/web/app_dev.php/inscription-feday,
             'customer' => $customer_data
         ];
     }

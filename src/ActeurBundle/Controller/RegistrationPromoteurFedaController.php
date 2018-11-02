@@ -37,8 +37,9 @@ class RegistrationPromoteurFedaController extends Controller
         $transaction_id = $request->get('id');
         global $message;// = '';
         $message='';
+
         global $route;
-        $route = '';
+        $route = 'first_inscription';
         try {
             $transaction = \FedaPay\Transaction::retrieve($transaction_id);
             switch($transaction->status) {
@@ -57,11 +58,8 @@ class RegistrationPromoteurFedaController extends Controller
                     $smtpkalo->setUsername('infostest@yolandadiva.com')
                         ->setPassword('Henry_1024');
                     $mailer = new \Swift_Mailer($smtpkalo);
-                    //$ip = $this->container->get('request')->getClientIp();
-
 
                     $user_mail = $sessionAttente->getEmail();
-
 
                     $message = (new \Swift_Message('Votre code de validation pour la plateforme'))
                         ->setFrom("infostest@yolandadiva.com", "SOUTENIR UN PROJET")
@@ -84,16 +82,27 @@ class RegistrationPromoteurFedaController extends Controller
                     $em->persist( $inscription);
                     $em->flush();
                     // $route= 'code-validation';
-
+                    $this->addFlash(
+                        'success',
+                        'Felicitation!!!! votre transaction s est effectuee avec succes. Veuillez entre le code reçu par sms et par mail dans le formulaire ci-dessous  !!!!!'
+                    );
                    return $this->redirectToRoute('code-validation');
                     break;
                 case 'canceled':
                     $message = 'Transaction annulée.';
-                    $route='feday_transaction_annule';
+                    $this->addFlash(
+                        'notice',
+                        'Oups!!!! votre transaction n\'a pas pu aboutie. Verifier si vous avez de fond pour effectuer cette operation. Merci  !!!!!'
+                    );
+                    $route='first_inscription';
                     break;
                 case 'declined':
                     $message = 'Transaction déclinée.';
-                    $route ='feday_transaction_decline';
+                    $this->addFlash(
+                        'notice',
+                        'Oups!!!! votre transaction n\'a pas pu aboutie. Verifier si vous avez de fond pour effectuer cette operation. Merci  !!!!!'
+                    );
+                    $route ='first_inscription';
                     break;
             }
         } catch(\Exception $e) {
