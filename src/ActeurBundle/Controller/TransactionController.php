@@ -35,8 +35,9 @@ class TransactionController extends Controller
                     $session = new Session();
                     $sessionAttente = $session->get("enAttente");
 
+
                     $code_validation = md5(uniqid(mt_rand(), true));
-                    $sessionAttente->setCodeInscription($code_validation);
+                   // $sessionAttente->setCodeInscription($code_validation);
 
                     // envoie de mail de notification pour connection a son espace
                     $smtpkalo = new \Swift_SmtpTransport('mail07.lwspanel.com', 25);
@@ -59,13 +60,17 @@ class TransactionController extends Controller
                         ]))
                         ->setContentType('text/html');
                     $mailer->send($message);
-//            dump($mailer);
-//            die();
-                    //   $inscription->setChargeId($charge->id);
-                    // $user->setPremium($charge->paid);
-                    $em->persist($sessionAttente);
+
+                    $inscription = new InscriptionAttente();
+                    $inscription->setCodeInscription( $code_validation);
+                    $inscription->setPrenom($sessionAttente->getPrenom());
+                    $inscription->setNom($sessionAttente->getNom());
+                    $inscription->setEmail($sessionAttente->getPrenom());
+                    $inscription->setTelephone($sessionAttente->getTelephone());
+
+                    $em->persist( $inscription);
                     $em->flush();
-                    $route= 'code-validation';
+                   // $route= 'code-validation';
 
                     // return $this->redirectToRoute('code-validation');
                     break;

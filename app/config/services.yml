@@ -47,10 +47,10 @@ services:
     #     arguments:
     #         $someArgument: 'some_value'
 
-    app.stripe.client:
-        class: ActeurBundle\Client\StripeClient
-        arguments: ['%stripe_secret_key%']
-        public: true
+#    app.stripe.client:
+#        class: ActeurBundle\Client\StripeClient
+#        arguments: ['%stripe_secret_key%']
+#        public: true
     app.feday.client:
         class: ActeurBundle\Client\FedaPayClient
         arguments: ['%feday_secret_key%']

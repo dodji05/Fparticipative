@@ -5,13 +5,8 @@ namespace ActeurBundle\Controller;
 use ActeurBundle\Entity\InscriptionAttente;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
 class RegistrationPromoteurController extends Controller
@@ -159,10 +154,9 @@ class RegistrationPromoteurController extends Controller
     public function preInscriptionPayAction (Request $request){
         $session = new Session();
         $sessionAttente = $session->get("enAttente");
-//        var_dump( $sessionAttente->getNom());
-//        die();
+
         \FedaPay\FedaPay::setApiKey($this->getParameter('feday_secret_key'));
-       // $fedaPayClient = $this->get('fedapay_client');
+
 
         try {
             $transaction = \FedaPay\Transaction::create(
@@ -180,7 +174,7 @@ class RegistrationPromoteurController extends Controller
         $customer_data = [
             'firstname' => $user->getNom(),
             'lastname' => $user->getPrenom(),
-            'email' => $user->getEmail(),
+            'email' =>$user->getEmail(),
             'phone_number' => [
                 'number'  => $user->getTelephone(),
                 'country' => 'bj'
@@ -190,7 +184,7 @@ class RegistrationPromoteurController extends Controller
             'description' => 'frais dinscription',
             'amount' => $frais,
             'currency' => ['iso' => 'XOF'],
-            'callback_url' => 'http://localhost/Fparticipative/web/app_dev.php/inscription-feday',//$this->generateUrl('first_inscription_fedapay'),
+            'callback_url' => 'https://soutenirunprojet.yo.fr/inscription-feday',//$this->generateUrl('first_inscription_fedapay') https://soutenirunprojet.yo.fr/http://localhost:8888/FparticipativeV3/web/app_dev.php/inscription-feday,
             'customer' => $customer_data
         ];
     }

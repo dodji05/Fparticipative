@@ -5,13 +5,8 @@ namespace ActeurBundle\Controller;
 use ActeurBundle\Entity\InscriptionAttente;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 
 class RegistrationPromoteurFedaController extends Controller
@@ -31,30 +26,31 @@ class RegistrationPromoteurFedaController extends Controller
 
     /**
      *
-     *
      *@Route("/inscription-feday", name="first_inscription_fedapay")
      *
      */
-    public function callbackAction (Request $request){
+
+
+    public function callbackAction(Request $request)
+    {
         \FedaPay\FedaPay::setApiKey($this->getParameter('feday_secret_key'));
-
         $transaction_id = $request->get('id');
-        $message = '';
+        global $message;// = '';
+        $message='';
+        global $route;
         $route = '';
-
         try {
             $transaction = \FedaPay\Transaction::retrieve($transaction_id);
-
             switch($transaction->status) {
                 case 'approved':
-
                     $message = 'Transaction approuvée.';
-
+                    $em = $this->getDoctrine()->getManager();
                     $session = new Session();
                     $sessionAttente = $session->get("enAttente");
 
+
                     $code_validation = md5(uniqid(mt_rand(), true));
-                    $sessionAttente->setCodeInscription($code_validation);
+                    // $sessionAttente->setCodeInscription($code_validation);
 
                     // envoie de mail de notification pour connection a son espace
                     $smtpkalo = new \Swift_SmtpTransport('mail07.lwspanel.com', 25);
@@ -77,31 +73,51 @@ class RegistrationPromoteurFedaController extends Controller
                         ]))
                         ->setContentType('text/html');
                     $mailer->send($message);
-//
-                    $inscription = new InscriptionAttente();
-                    $inscription->setNom( $sessionAttente->getNom());
-                    $inscription->setPrenom($sessionAttente->getPrenom());
-                    $inscription->setCodeInscription( $code_validation);
-                    $inscription->setTelephone($sessionAttente->getTelephone());
-                    $em = $this->getDoctrine()->getManager();
-                    $em->persist($inscription);
-                    $em->flush();
-                    $route= 'code-validation';
 
-                     return $this->redirectToRoute('code-validation');
+                    $inscription = new InscriptionAttente();
+                    $inscription->setCodeInscription( $code_validation);
+                    $inscription->setPrenom($sessionAttente->getPrenom());
+                    $inscription->setNom($sessionAttente->getNom());
+                    $inscription->setEmail($sessionAttente->getPrenom());
+                    $inscription->setTelephone($sessionAttente->getTelephone());
+
+                    $em->persist( $inscription);
+                    $em->flush();
+                    // $route= 'code-validation';
+
+                   return $this->redirectToRoute('code-validation');
                     break;
                 case 'canceled':
                     $message = 'Transaction annulée.';
+                    $route='feday_transaction_annule';
                     break;
                 case 'declined':
                     $message = 'Transaction déclinée.';
+                    $route ='feday_transaction_decline';
                     break;
             }
         } catch(\Exception $e) {
             $message = $e->getMessage();
         }
-        //return $this->redirectToRoute($route);
-        return $this->redirectToRoute('code-validation');
+        return $this->redirectToRoute($route);
+    }
+
+    /**
+     *
+     *@Route("/transcation/annulee", name="feday_transaction_annule")
+     *
+     */
+
+    public function transcationAnnuleeAction(){
+
+    }
+    /**
+     *
+     *@Route("/transcation/decline", name="feday_transaction_decline")
+     *
+     */
+
+    public function transcationDeclineAction(){
 
     }
 }

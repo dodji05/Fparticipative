@@ -101,7 +101,8 @@ class InscriptionAttente
     {
         $this->dateInscription = new \DateTime();
         $this->utilise = false;
-      //  $this->dateValidation = null;
+        $this->chargeId = 'vide';
+        $this->dateValidation = null;
     }
 
 
