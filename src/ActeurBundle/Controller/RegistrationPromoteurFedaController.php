@@ -49,7 +49,6 @@ class RegistrationPromoteurFedaController extends Controller
                     $session = new Session();
                     $sessionAttente = $session->get("enAttente");
 
-
                     $code_validation = md5(uniqid(mt_rand(), true));
                     // $sessionAttente->setCodeInscription($code_validation);
 
@@ -106,9 +105,14 @@ class RegistrationPromoteurFedaController extends Controller
                     break;
             }
         } catch(\Exception $e) {
-            $message = $e->getMessage();
+            $this->addFlash(
+                'notice',
+                'Desole une erreur sest produite veuillez ressayer    '
+            );
+            return $this->redirectToRoute('first_inscription');
+
         }
-        return $this->redirectToRoute($route);
+        return $this->redirectToRoute('first_inscription');
     }
 
     /**

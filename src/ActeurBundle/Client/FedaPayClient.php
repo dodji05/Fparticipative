@@ -11,77 +11,66 @@ namespace ActeurBundle\Client;
 
 use ActeurBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
+use Symfony\Bundle\FrameworkBundle\Controller\ControllerTrait;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Dump\Container;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class FedaPayClient
 {
+   use ControllerTrait;
 //    private $em;
-//    public function __construct($secretfedaKey,EntityManager $em)
-//    {
+    private  $session;
+   public $container;
+    public function __construct($secretfedaKey,Session $session,ContainerInterface $container)
+    {
 //        $this->em = $em;
-//
-//        \FedaPay\FedaPay::setApiKey("$secretfedaKey");
-//    }
-//    public function createCustomer(User $user, $paymentToken){
-//        $customer = \FedaPay\Customer::create([
-//            'email' => $user->getEmail(),
-//            "firstname" => "jhon",
-//            "lastname" => "Doe",
-//            "phone" => "+229 97 76 78 99"
-//        ]);
-//        $user->setStripeCustomerId($customer->id);
-//        $this->em->persist($user);
-//        $this->em->flush($user);
-//        return $customer;
-//
-//    }
-//
-//    public function updateCustomerCard(User $user, $paymentToken) {
-//
-//        $customer = \FedaPay\Customer::retrieve($user->getStripeCustomerId());
-//        $customer->source = $paymentToken;
-//        $customer->save();
-//    }
-//
-//    public function createInvoiceItem($amount, User $user, $description) {
-//        return \FedaPay\Transaction::create(array(
-//            "amount" => $amount,
-//            "currency" => [
-//                "code" => "xof"
-//            ],
-//            "items"=> 1,
-//            "callback_url"=>"/",
-//            "description" => $description
-//        ));
-//    }
-//    public function createInvoice(User $user, $payImmediately = true)
+        $this->session = $session;
+        $this->session =  $session->get("enAttente");
+        $this->container = $container;
+
+
+        \FedaPay\FedaPay::setApiKey("$secretfedaKey");
+    }
+
+    public function transactionFeday($montant){
+
+        try {
+            $transaction = \FedaPay\Transaction::create(
+                $this->fedapayTransactionData($montant)
+            );
+            $token = $transaction->generateToken();
+            return $this->redirect($token->url);
+        } catch(\Exception $e) {
+            $this->addFlash(
+                'notice',
+                'Desole une erreur sest produite veuillez ressayer    '
+            );
+            return $this->container->redirectToRoute('first_inscription');
+        }
+    }
+    public function fedapayTransactionData($frais)
+    {
+        $customer_data = [
+            'firstname' => $this->session->getNom(),
+            'lastname' => $this->session->getPrenom(),
+            'email' =>$this->session->getEmail(),
+            'phone_number' => [
+                'number'  => $this->session->getTelephone(),
+                'country' => 'bj'
+            ]
+        ];
+        return [
+            'description' => 'frais dinscription',
+            'amount' => $frais,
+            'currency' => ['iso' => 'XOF'],
+            'callback_url' =>  $this->generateUrl('first_inscription_fedapay',array(null),0),//'https://soutenirunprojet.yo.fr/inscription-feday',//$this->generateUrl('first_inscription_fedapay') https://soutenirunprojet.yo.fr/http://localhost:8888/FparticipativeV3/web/app_dev.php/inscription-feday,
+            'customer' => $customer_data
+        ];
+    }
+
+//    public function setContainer()
 //    {
-//        $invoice = \Stripe\Invoice::create(array(
-//            "customer" => $user->getStripeCustomerId()
-//        ));
-//        if ($payImmediately) {
-//            // guarantee it charges *right* now
-//            $invoice->pay();
-//        }
-//        return $invoice;
-//    }
-//    private function fedapayTransactionData()
-//    {
-//        $customer_data = [
-//            'firstname' => 'Junior',
-//            'lastname' => 'Gantin',
-//            'email' => 'nioperas06@gmail.com',
-//            'phone_number' => [
-//                'number'  => '66526416',
-//                'country' => 'bj'
-//            ]
-//        ];
-//
-//        return [
-//            'description' => 'Buy e-book!',
-//            'amount' => 500,
-//            'currency' => ['iso' => 'XOF'],
-//            'callback_url' => url('callback'),
-//            'customer' => $customer_data
-//        ];
+//        $this->container->
 //    }
 }

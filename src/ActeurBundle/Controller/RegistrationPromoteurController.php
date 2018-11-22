@@ -34,105 +34,15 @@ class RegistrationPromoteurController extends Controller
     public function preInscriptionAction(Request $request, SessionInterface $session)
     {
 
-//        $inscription = new  InscriptionAttente();
-//
-//       // $form = $this->createForm('ActeurBundle\Form\Type\InscriptionAttenteType', $inscription);
-//        $defaultData = array('message' => 'Type your message here');
-//        $form = $this->createFormBuilder($defaultData)
-//            ->getForm();
-//        /** @var $userManager UserManagerInterface */
-//        $form->handleRequest($request);
-//        // $logger = new LoggerInterface();
-//        $em = $this->getDoctrine()->getManager();
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-////            dump($form);
-////            die();
-//
-//            $code_validation = md5(uniqid(mt_rand(), true));
-//            $inscription->setCodeInscription($code_validation);
-//
-//            $token = $request->request->get('stripeToken');
-//            \FedaPay\FedaPay::setApiKey($this->getParameter('feday_public_key'));
-//            $fedaPayClient = $this->get('fedapay_client');
-//
-//            /** @var User $user */
-//            $user = $this->getUser();
-//
-//            if (!$user->getStripeCustomerId()) {
-//                $fedaPayClient->createCustomer($user, $token);
-//            } else {
-//                $fedaPayClient->updateCustomerCard($user, $token);
-//            }
-//
-//            $fedaPayClient->createInvoiceItem(
-//                1000 * 100,
-//                $user,
-//                'INSCRIPTION A LA PLATEFORME'
-//            );
-//
-//            // guarantee it charges *right* now
-//            $fedaPayClient->createInvoice($user, true);
-//
-//
-//
-//            // Sauvegades du dons qui vient d'etre effectuee
-//
-//
-//            // envoie de mail de notification pour connection a son espace
-//            $smtpkalo = new \Swift_SmtpTransport('mail07.lwspanel.com', 25);
-//            $smtpkalo->setUsername('infostest@yolandadiva.com')
-//                ->setPassword('Henry_1024');
-//            $mailer = new \Swift_Mailer($smtpkalo);
-//            //$ip = $this->container->get('request')->getClientIp();
-//
-//            $user = $this->getUser();
-//            //  $user1 =
-//            $user_mail = $form->get('email')->getData();
-//
-//
-//            $message = (new \Swift_Message('Votre code de validation pour la plateforme'))
-//                ->setFrom("infostest@yolandadiva.com", "SOUTENIR UN PROJET")
-//                ->setTo($user_mail)
-//                ->setBody($this->renderView('Email/code_validation.html.twig', [
-//                    'code' => $code_validation,
-//                    'porteur_nom' => $form->get('nom'),
-//                    'porteur_prenom' => $form->get('prenom'),
-//                ]))
-//                ->setContentType('text/html');
-//            $mailer->send($message);
-////            dump($mailer);
-//            die();
-//         //   $inscription->setChargeId($charge->id);
-//            // $user->setPremium($charge->paid);
-//            $em->persist($inscription);
-//            $em->flush();
-//
-//            return $this->redirectToRoute('code-validation');
-//
-//
-//        } else {
-////            dump($form->getErrors(true));
-////            die();
-//        }
-//
-//
-//        return $this->render('@Acteur/Promotteurs/pre-inscription.form.html.twig', [
-//
-//            // 'form_inscription' => $InscriptionForm->createView(),
-//            'stripe_public_key' => $this->getParameter('stripe_public_key'),
-//            'feday_public_key' => $this->getParameter('feday_public_key'),
-//            'form' => $form->createView()
-//        ]);
 
         $inscription = new  InscriptionAttente();
-        //$session = new Session();
+       // $session = new Session();
         $session->remove('enAttente');
 
         $form = $this->createForm('ActeurBundle\Form\Type\InscriptionAttenteType', $inscription);
         $form->handleRequest($request);
 
-        $em = $this->getDoctrine()->getManager();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $session->set('enAttente', $form->getData('acteur_bundle_inscription_attente'));
             return $this->redirectToRoute('first_inscription_payement');
@@ -153,15 +63,18 @@ class RegistrationPromoteurController extends Controller
      *
      */
     public function preInscriptionPayAction (Request $request,SessionInterface $session){
-      //  $session = new Session();
+        $session = new Session();
         $sessionAttente = $session->get("enAttente");
+
+//        $fedapay = $this->get('app.feday.client');
+//        $fedapay->transactionFeday(10000);
 
         \FedaPay\FedaPay::setApiKey($this->getParameter('feday_secret_key'));
 
 
         try {
             $transaction = \FedaPay\Transaction::create(
-                $this->fedapayTransactionData(10000, $sessionAttente)
+                $this->fedapayTransactionData($this->getParameter('frais_adhesion'), $sessionAttente)
             );
             $token = $transaction->generateToken();
         return $this->redirect($token->url);
@@ -172,6 +85,7 @@ class RegistrationPromoteurController extends Controller
             );
             return $this->redirectToRoute('first_inscription');
         }
+
     }
 
     private function fedapayTransactionData($frais,$user)

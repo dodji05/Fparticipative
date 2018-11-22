@@ -53,7 +53,9 @@ services:
 #        public: true
     app.feday.client:
         class: ActeurBundle\Client\FedaPayClient
-        arguments: ['%feday_secret_key%']
+        calls:
+            - [fedapayTransactionData, ['@service_container']]
+        arguments: ['%feday_secret_key%','@session','@service_container']
         public: true
 
     app.param.init:
