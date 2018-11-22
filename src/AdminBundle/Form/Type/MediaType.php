@@ -11,7 +11,7 @@ class MediaType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('imageFile',VichImageType::class,array('label' => 'image photo'));
+        $builder->add('imageFile',VichImageType::class,array('label' => 'image du projet'));
     }
 
     public function configureOptions(OptionsResolver $resolver)

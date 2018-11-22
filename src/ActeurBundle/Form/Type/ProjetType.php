@@ -38,7 +38,7 @@ class ProjetType extends AbstractType
                  'invalid_message'=>'fichier au format pdf',
             ])
             ->add('imageFile', VichImageType::class,[
-                'label'=>'logo du projet'
+                'label'=>'logo'
             ])
             ->add('media', CollectionType::class, [
                 'entry_type' => MediaType::class,

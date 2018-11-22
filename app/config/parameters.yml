@@ -1,10 +1,10 @@
 # This file is auto-generated during the composer install
 parameters:
     database_host: localhost
-    database_port: 3306
+    database_port: null
     database_name: fundme
     database_user: root
-    database_password: root
+    database_password:
     mailer_transport: smtp
     mailer_host: mail07.lwspanel.com
     mailer_user: infostest@yolandadiva.com
@@ -16,6 +16,7 @@ parameters:
     stripe_secret_key: sk_test_ZkFGZwpPh4dleQVRYNWSOEAj
     feday_public_key: pk_sandbox_OqCD15OIqzaw7fv9xtend2WU
     feday_secret_key: sk_sandbox_8XkZp1VnWYKbs8_aIQxdhApi
+    frais_adhesion: 10000
     app.projets.encours:
     app.projets.boucles:
     app.projets.realises:
