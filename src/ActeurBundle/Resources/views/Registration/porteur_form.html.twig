@@ -1,6 +1,7 @@
 {% trans_default_domain 'FOSUserBundle' %}
-{% extends "@FOSUser/layout_user_form.html.twig" %}
 
+{% extends "@FOSUser/layout_user_form.html.twig" %}
+{% block   %}{% endblock %}
 {% block monform %}
     <div class="row">
 {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register login-form'}}) }}
@@ -38,7 +39,7 @@
                 <div class="input-field col s6">
                     <i class="material-icons prefix">account_circle</i>
                     {#<input id="icon_prefix" type="text" class="validate">#}
-                    {{ form_widget(form.dateNaissance) }}
+                    {{ form_widget(form.dateNaissance,{'attr':{'class': 'datepicker'}}) }}
 
                     <label> {{ form_label(form.dateNaissance) }}</label>
                 </div>
@@ -183,8 +184,8 @@
         $(document).ready(function(){
             $('#societe').hide();
 
-            $("#adminbundle_porteur_type").change(function() {
-                if ( $("#adminbundle_porteur_type").val() == "2"){
+            $("#fos_user_registration_form_nature").change(function() {
+                if ( $("#fos_user_registration_form_nature").val() == "2"){
                     $('#societe').show();
 
                     $('#personne').hide();
@@ -198,6 +199,11 @@
             })
 
         });
+
+    $('.datepicker').datepicker({
+        weekStart:1,
+        color: 'red'
+    });
     </script>
 {% endblock %}
 
