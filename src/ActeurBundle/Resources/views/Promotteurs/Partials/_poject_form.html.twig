@@ -1,8 +1,23 @@
 <div class="row">
     <br/><br/>
     <div class="col s6 m8 l8 offset-s3 offset-l2 offset-m1 margin010">
-        1- Veuillez remplir le fournulaire ci-apres pour soumettre votre projets <br/>
-        2- Telecahrge ici le canvenas du plan d'affaire remplissez puis envoyer le nous avec le formulaire
+
+
+                <div id="card-alert" class="card green">
+                    <ol>
+                        <li>
+                    <div class="card-content white-text">
+                        <p> Veuillez remplir le fournulaire ci-apres pour soumettre votre projets</p>
+                    </div>
+                        </li>
+
+                        <li>
+                            <div class="card-content white-text">
+                                <p>  Telecaharger <a href="{{ asset('docs/Canevas_de_Plan_affaire.rtf') }}">  ici </a>le canvenas du plan d'affaire remplissez puis envoyer le nous avec le formulaire</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
 
         <br/><br/>
     </div>
@@ -35,7 +50,8 @@
                             </div>
                             <div class="col s12 m7 l8">
                                 {{ form_widget(form.imageFile,{'attr':{'class':'dropify' }}) }}
-                                {{ form_errors(form.imageFile) }}
+
+                                <span style="color: red; font-size: 12px"> {{ form_errors(form.imageFile) }}    </span>
                             </div>
                         </div>
                     </div>
@@ -49,14 +65,15 @@
                             </div>
                             <div class="col s12 m7 l8">
                                 {{ form_widget(form.planFile,{'attr':{'class':'dropify' }}) }}
-                                <span style="color: red; font-size: 9px"> {{ form_errors(form.planFile) }}    </span>
+                                <span style="color: red; font-size: 14px"> {{ form_errors(form.planFile) }}    </span>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
-                <div class="row">
+                <div class="row" style="margin-top: 15px">
                     <div class="input-field col s12">
                         {{ form_label(form.descriptionCourteProjet) }}
                         {{ form_widget(form.descriptionCourteProjet,{'attr':{'class': 'materialize-textarea','rows':'5'}}) }}
@@ -109,5 +126,4 @@
     </div>
 </div>
 </div>
-
 

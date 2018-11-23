@@ -1,7 +1,0 @@
-app:
-    resource: '@AppBundle/Controller/'
-    type: annotation
-frontendbundle:
-    resource: "@FrontEndBundle/Controller/"
-    type:     annotation
-    prefix:   /	

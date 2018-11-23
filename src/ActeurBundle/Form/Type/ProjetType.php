@@ -35,7 +35,7 @@ class ProjetType extends AbstractType
 
             ->add('planFile', VichFileType::class,[
                 'label'=>'Le plan d affaire',
-                 'invalid_message'=>'fichier au format pdf',
+                 'invalid_message'=>'fichier au format pdf ou word',
             ])
             ->add('imageFile', VichImageType::class,[
                 'label'=>'logo'

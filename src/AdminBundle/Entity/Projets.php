@@ -55,8 +55,10 @@ class Projets
     private $logo;
 
     /**
+     * @Assert\NotBlank(message="Veuillez télécharger le plan d`affaire sous forme de fichier PDF ou word.")
      * @Vich\UploadableField(mapping="porteur_plan_affaires", fileNameProperty="docPlanAffaire")
-     * @Assert\File(mimeTypes = {"application/pdf"}  )
+     * @Assert\File(mimeTypes = {"application/pdf","application/msword"},
+     *     mimeTypesMessage = "Veuillez télécharger le plan d`affaire sous forme de fichier PDF ou word."  )
      *
      * @var File
      */
@@ -64,6 +66,8 @@ class Projets
 
     /**
      * @Vich\UploadableField(mapping="admin_images", fileNameProperty="logo")
+     * @Assert\File(mimeTypes = {"image/png","image/jpeg"},
+     *     mimeTypesMessage = "Veuillez télécharger le logo sous format png jpeg."  )
      * @var File
      */
     private $imageFile;
