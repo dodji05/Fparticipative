@@ -63,7 +63,7 @@ class RegistrationPromoteurController extends Controller
      *
      */
     public function preInscriptionPayAction (Request $request,SessionInterface $session){
-        $session = new Session();
+       // $session = new Session();
         $sessionAttente = $session->get("enAttente");
 
 //        $fedapay = $this->get('app.feday.client');
@@ -81,7 +81,7 @@ class RegistrationPromoteurController extends Controller
         } catch(\Exception $e) {
             $this->addFlash(
                 'notice',
-                $this->generateUrl('first_inscription_fedapay',array(null),0)
+                $this->generateUrl('first_inscription_fedapay'.$e->getMessage(),array(null),0)
             );
             return $this->redirectToRoute('first_inscription');
         }

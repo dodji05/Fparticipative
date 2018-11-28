@@ -1,10 +1,10 @@
 # This file is auto-generated during the composer install
 parameters:
     database_host: localhost
-    database_port: null
+    database_port: 3306
     database_name: fundme
     database_user: root
-    database_password:
+    database_password: root
     mailer_transport: smtp
     mailer_host: mail07.lwspanel.com
     mailer_user: infostest@yolandadiva.com
