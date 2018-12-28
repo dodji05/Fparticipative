@@ -5,156 +5,164 @@
      {#{% endstylesheets %}#}
  {#{% endblock %}#}
     {% block contenu %}
-        salut commment
-         {% for media in projet.media|slice(0,1)%}
-        <div class="project-header-cover" style="background-image: url('{{ asset ('uploads/admin/images/')}}{{ media.chemin  }}')">
+
+        {% for media in projet.media|slice(0,1) %}
+            <div class="project-header-cover" style="background-image: url('{{ asset ('uploads/admin/images/') }}{{ media.chemin }}')">
+        {% endfor %}
+        <div itemscope="" itemtype="http://schema.org/Product" class="hidden">
+            <span itemprop="name">{{ projet.nomProjet }}</span>
+            {% for media in projet.media|slice(0,1) %}
+                <img src="{{ asset ('uploads/admin/images/') }}{{ media.chemin }}"
+                     alt="{{ projet.nomProjet }} en financement sur Projets" itemprop="image">
             {% endfor %}
-            <div itemscope="" itemtype="http://schema.org/Product" class="hidden">
-                <span itemprop="name">{{ projet.nomProjet }}</span>
-                {% for media in projet.media|slice(0,1)%}
-                <img src="{{ asset ('uploads/admin/images/')}}{{ media.chemin  }}" alt="{{ projet.nomProjet }} en financement sur Projets" itemprop="image">
-                {% endfor %}
-                <p itemprop="description">{{ projet.descriptionProjet|raw }}</p>
-                {#<div itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">#}
-                    {#<span itemprop="ratingValue">4,37</span> / 5 sur <span itemprop="reviewCount">293</span> votants#}
-                {#</div>#}
-                {#<div itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">#}
-                    {#<span itemprop="price">100.0</span> <meta itemprop="priceCurrency" content="EUR"> (Offre se terminant le <time itemprop="priceValidUntil" datetime="2018-03-11"> 11 mars 2018</time>)#}
-                {#</div>#}
-                {#<div itemprop="offers" itemscope="" itemtype="http://schema.org/AggregateOffer"> <span itemprop="lowPrice">100.0</span>#}
-                    {#<span itemprop="highPrice">100000.0</span>#}
-                {#</div>#}
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
-                      </div>
-                    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"> <div class="project-header-card project-card startup">
-                            <div class="project-header-card-content">
-                                {% if projet.logo %}
+            <p itemprop="description">{{ projet.descriptionProjet|raw }}</p>
+            {#<div itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">#}
+            {#<span itemprop="ratingValue">4,37</span> / 5 sur <span itemprop="reviewCount">293</span> votants#}
+            {#</div>#}
+            {#<div itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">#}
+            {#<span itemprop="price">100.0</span> <meta itemprop="priceCurrency" content="EUR"> (Offre se terminant le <time itemprop="priceValidUntil" datetime="2018-03-11"> 11 mars 2018</time>)#}
+            {#</div>#}
+            {#<div itemprop="offers" itemscope="" itemtype="http://schema.org/AggregateOffer"> <span itemprop="lowPrice">100.0</span>#}
+            {#<span itemprop="highPrice">100000.0</span>#}
+            {#</div>#}
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="project-header-card project-card startup">
+                        <div class="project-header-card-content">
+                            {% if projet.logo %}
                                 <div class="logo-container">
-                                    <img src="{{ asset ('uploads/admin/images/')}}{{ projet.logo  }}" class="center-block img-rounded max-height max-height-100" alt="{{ projet.nomProjet }}" title="{{ projet.nomProjet }}">
+                                    <img src="{{ asset ('uploads/admin/images/') }}{{ projet.logo }}"
+                                         class="center-block img-rounded max-height max-height-100"
+                                         alt="{{ projet.nomProjet }}" title="{{ projet.nomProjet }}">
                                 </div>
-                                {% endif %}
-                                <h1 class="text-bold text-center">{{ projet.nomProjet }}</h1>
-                                <p class="text-center text-muted tags">
-                                    <small> <i class="ion ion-ios-pricetags"></i>
-                                        <a style="color: inherit; text-decoration: inherit;" href="#" class="new-tab">{{ projet.categorie.nomCategorie }}</a> ·
+                            {% endif %}
+                            <h1 class="text-bold text-center">{{ projet.nomProjet }}</h1>
+                            <p class="text-center text-muted tags">
+                                <small><i class="ion ion-ios-pricetags"></i>
+                                    <a style="color: inherit; text-decoration: inherit;" href="#"
+                                       class="new-tab">{{ projet.categorie.nomCategorie }}</a> ·
 
-                                <p class="text-center description-courte">{{ projet.descriptionCourteProjet|slice(0,550)|raw  }}</p>
-                                <div class="project-position-bottom">
-                                    <div class="call-to-action selection-tool">
-                                        <form class="add-to-my-selection"  accept-charset="utf-8">
+                            <p class="text-center description-courte">{{ projet.descriptionCourteProjet|slice(0,550)|raw }}</p>
+                            <div class="project-position-bottom">
+                                <div class="call-to-action selection-tool">
+                                    <form class="add-to-my-selection" accept-charset="utf-8">
 
-                                            {% set totaldon = 0 %}
-                                            {% for don in projet.dons %}
-                                                {% set totaldon =totaldon+ don.montant %}
-                                            {% endfor %}
-                                            OBJECTIF : atteint a {{ ( totaldon / projet.objectif)*100 }}%
+                                        {% set totaldon = 0 %}
+                                        {% for don in projet.dons %}
+                                            {% set totaldon =totaldon+ don.montant %}
+                                        {% endfor %}
+                                        OBJECTIF : atteint a {{ ( totaldon / projet.objectif)*100 }}%
 
-                                            <div class="progress" style="margin:10px;">
-                                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{ ( totaldon / projet.objectif)*100 }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ ( totaldon / projet.objectif)*100 }}%;"></div>
+                                        <div class="progress" style="margin:10px;">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                                 role="progressbar"
+                                                 aria-valuenow="{{ ( totaldon / projet.objectif)*100 }}"
+                                                 aria-valuemin="0" aria-valuemax="100"
+                                                 style="width: {{ ( totaldon / projet.objectif)*100 }}%;"></div>
+                                        </div>
+
+
+                                        {#<div class="_29uQZrC2axie4abnqpZMvX">#}
+                                        {#<div class="_2KApe8F2RB8hfyUg6KS0sX">#}
+                                        {#<span style="width: {{ ( totaldon / projet.objectif)*100 }}%;"></span>#}
+                                        {#</div>#}
+                                        {#<span class="_2DTXEo_6pKh0s-iQnMw9LU">#}
+
+                                        {#<b>{{ totaldon }}</b> <!-- /react-text --><!-- react-text: 1167 -->. Aidez-nous à atteindre les#}
+                                        {#<!-- /react-text --><!-- react-text: 1168 -->{{ projet.objectif|number_format(0, ' ', ' ') }} pour le financement du projet<!-- /react-text -->#}
+                                        {#</span>#}
+                                        {#</div>#}
+
+                                        {#<div class="row">#}
+                                        {#<div class="col-xs-10"> #}
+                                        {#<label class="text-center">&nbsp; Ajouter au panier :</label>#}
+                                        {#<div class="slider-cool keep-slider calcul-avantage noUi-target noUi-ltr noUi-horizontal noUi-connect" data-min="100" data-step="100" data-max="100000" data-selected="">#}
+                                        {#<input type="hidden" name="montant" value="">#}
+                                        {#<div class="noUi-base">#}
+                                        {#<div class="noUi-origin noUi-background" style="left: 0%;">#}
+                                        {#<div class="noUi-handle noUi-handle-lower">#}
+                                        {#<div class="noUiSlider-tooltip top show">#}
+                                        {#<strong>100&nbsp;€</strong>#}
+                                        {#</div>#}
+                                        {#</div>#}
+                                        {#</div>#}
+                                        {#</div>#}
+                                        {#</div>#}
+                                        {#<small>#}
+                                        {#<span class="text-muted"> A partir de 100 € </span>#}
+                                        {#<span class="text-primary text-saved pull-right text-bold" style="display: none">Sauvegardé !</span>#}
+                                        {#</small>#}
+                                        {#</div>#}
+                                        {#<div class="col-xs-2">#}
+                                        {#<button type="submit" class="btn btn-primary no-margin call-to-action-btn">OK</button>#}
+                                        {#</div>#}
+                                        {#</div>#}
+                                        {% if is_granted("ROLE_INVESTISSEUR") %}
+
+                                            <div class="row defisc-tool text-center text-primary">
+                                                <a href="{{ path('payement_admin',{'id': projet.id}) }}"
+                                                   class="btn btn-link">
+                                                    <i class="ion ion-ios-locked"></i> JE SOUTIENS LE PROJET</a>
+
+                                                {#<div class="col-xs-12 text-center border-left">#}
+                                                {#<p class="no-margin"> je fais un don</p>#}
+                                                {#</div>#}
                                             </div>
-
-
-
-
-
-
-
-
-
-
-
-                                            {#<div class="_29uQZrC2axie4abnqpZMvX">#}
-                                                {#<div class="_2KApe8F2RB8hfyUg6KS0sX">#}
-                                                    {#<span style="width: {{ ( totaldon / projet.objectif)*100 }}%;"></span>#}
-                                                {#</div>#}
-                                                {#<span class="_2DTXEo_6pKh0s-iQnMw9LU">#}
-
-                                                    {#<b>{{ totaldon }}</b> <!-- /react-text --><!-- react-text: 1167 -->. Aidez-nous à atteindre les#}
-                                                    {#<!-- /react-text --><!-- react-text: 1168 -->{{ projet.objectif|number_format(0, ' ', ' ') }} pour le financement du projet<!-- /react-text -->#}
-                      {#</span>#}
-                                            {#</div>#}
-
-                                            {#<div class="row">#}
-                                                {#<div class="col-xs-10"> #}
-                                                    {#<label class="text-center">&nbsp; Ajouter au panier :</label>#}
-                                                    {#<div class="slider-cool keep-slider calcul-avantage noUi-target noUi-ltr noUi-horizontal noUi-connect" data-min="100" data-step="100" data-max="100000" data-selected="">#}
-                                                        {#<input type="hidden" name="montant" value="">#}
-                                                        {#<div class="noUi-base">#}
-                                                            {#<div class="noUi-origin noUi-background" style="left: 0%;">#}
-                                                                {#<div class="noUi-handle noUi-handle-lower">#}
-                                                                    {#<div class="noUiSlider-tooltip top show">#}
-                                                                        {#<strong>100&nbsp;€</strong>#}
-                                                                    {#</div>#}
-                                                                {#</div>#}
-                                                            {#</div>#}
-                                                        {#</div>#}
-                                                    {#</div>#}
-                                                    {#<small>#}
-                                                        {#<span class="text-muted"> A partir de 100 € </span>#}
-                                                        {#<span class="text-primary text-saved pull-right text-bold" style="display: none">Sauvegardé !</span>#}
-                                                    {#</small>#}
-                                                {#</div>#}
-                                                {#<div class="col-xs-2">#}
-                                                    {#<button type="submit" class="btn btn-primary no-margin call-to-action-btn">OK</button>#}
-                                                {#</div>#}
-                                            {#</div>#}
-                                            {% if is_granted("ROLE_INVESTISSEUR") %}
-
-                                                <div class="row defisc-tool text-center text-primary">
-                                                    <a href="{{ path('payement_admin',{'id': projet.id}) }}" class="btn btn-link">
-                                                        <i class="ion ion-ios-locked"></i> JE SOUTIENS LE PROJET</a>
-
-                                                    {#<div class="col-xs-12 text-center border-left">#}
-                                                        {#<p class="no-margin"> je fais un don</p>#}
-                                                    {#</div>#}
+                                        {% else %}
+                                            <div class="row defisc-tool text-center text-primary">
+                                                <div class="col-xs-12 text-center border-left">
+                                                    <a href="{{ path('donateur_register') }}" class="btn btn-link">
+                                                        <i class="ion ion-ios-locked"></i>Connectez-vous  <br/> pour accéder à l'offre complète<br/>
+                                                        </a>
                                                 </div>
-                                            {% else %}
-                                                <div class="row defisc-tool text-center text-primary">
-                                                    <div class="col-xs-12 text-center border-left">
-                                                        <a href="{{ path('donateur_register') }}" class="btn btn-link">
-                                                            <i class="ion ion-ios-locked"></i> &nbsp; Connectez-vous</a>
-                                                        <p class="no-margin">pour accéder à l'offre complète</p>
-                                                    </div>
-                                                </div>
-                                            {% endif %}
+                                            </div>
+                                        {% endif %}
 
-                                        </form>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
-                        <i class="ion ion-ios-arrow-down ion-4x project-header-card-down-arrow text-center"></i>
                     </div>
+                    <i class="ion ion-ios-arrow-down ion-4x project-header-card-down-arrow text-center"></i>
                 </div>
             </div>
         </div>
+        </div>
         {#descripton projet#}
         <div class="row-container container-small container-project">
-            <div class="container"> <div class="row">
+            <div class="container">
+                <div class="row">
                     <div class="col-xs-12 col-sm-8 col-md-8">
                         <div class="project-tab-content">
-                            <h2 style=" font-size: 32px;line-height: 1.5;padding: 0;"> {{ projet.nomProjet }} recherche {{ projet.objectif|number_format(0, ' ', ' ') }} €</h2>
-                           {{ projet.descriptionProjet|raw }}
-                            </div>
+                            <h2 style=" font-size: 32px;line-height: 3.5;padding: 0;"> {{ projet.nomProjet }}
+                                recherche {{ projet.objectif|number_format(0, ' ', ' ') }} CFA</h2>
+                            {{ projet.descriptionProjet|raw }}
+                        </div>
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-4 project-side">
                         <div class="project-side project-details-operation">
                             <div class="funding">
-                                <h3 class="h4 text-center text-primary text-bold no-margin-bottom"> {{ projet.objectif|number_format(0, ' ', ' ') }}  recherchés </h3> <hr>
-                            </div> <h2 class="h3 text-center text-primary"> <i class="ion ion-android-time"></i>
-                                <strong> Collecte en cours </strong> </h2>
-                            <p class="text-center text-primary"> date limite : {{ projet.dateLimite|date('d-m-y') }} </p>
-                            <p class="text-center small text-muted help-block"> </p> <hr>
+                                <h3 class="h4 text-center text-primary text-bold no-margin-bottom"> {{ projet.objectif|number_format(0, ' ', ' ') }}
+                                    recherchés </h3>
+                                <hr>
+                            </div>
+                            <h2 class="h3 text-center text-primary"><i class="ion ion-android-time"></i>
+                                <strong> Collecte en cours </strong></h2>
+                            <p class="text-center text-primary"> date limite
+                                : {{ projet.dateLimite|date('d-m-y') }} </p>
+                            <p class="text-center small text-muted help-block"></p>
+                            <hr>
                             <div class="clearfix line-details">
                                 <span class="pull-left text-muted"><h2 class="h3 text-center text-primary">Porteur du projet</h2></span>
                                 <span class="pull-right text-right">
-                                    {% if projet.porteur.nature.id ==1 %}
-                                        <h2 class="h3 text-center text-primary"><strong> {{ projet.porteur.raisonSociale }}</strong></h2>
+                                    {% if projet.porteur.nature.id == 1 %}
+                                        <h2 class="h3 text-center text-primary"><strong>  {{ projet.porteur.nom ~ " " ~ projet.porteur.prenom }}</strong></h2>
                                         {% else %}
-                                        <h2 class="h3 text-center text-primary"> <strong>{{ projet.porteur.nom ~ " " ~ projet.porteur.prenom }}</strong></h2>
+                                        <h2 class="h3 text-center text-primary"> <strong> {{ projet.porteur.raisonSociale }}</strong></h2>
                                     {% endif %}
                                 </span>
                             </div>
@@ -173,38 +181,23 @@
                             </div>
                             <div class="clearfix line-details last">
                                 <p class="text-center text-primary lead no-margin">
-                                    <a href="#" class="btn btn-link btn-lg"><i class="ion ion-ios-locked"></i> &nbsp; Connectez-vous</a><br> pour financer le projet
+                                    <a href="{{ path('donateur_register') }}" class="btn btn-link btn-lg"><i class="ion ion-ios-locked"></i> &nbsp;
+                                        Connectez-vous <br/> pour financer le projet</a>
                                 </p>
                             </div>
                         </div>
-                        <div class="modal fade" id="modalVentilationInvestisseur" tabindex="-1" role="dialog" aria-labelledby="modalVentilationInvestisseur"> <div class="modal-dialog" role="document">
-                                <div class="modal-content"> <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                        <h4 class="modal-title" id="myModalLabel"><strong>Comment sont répartis les différents types d'investisseurs ?</strong></h4>
-                                    </div>
-                                    <div class="modal-body text-justify"> <p>Il existe 3 catégories d'investisseurs sur WiSEED pour lesquelles une part de la collecte peut être réservée. </p>
-                                        <ul>
-                                            <li> <strong>les Professionnels</strong> : sociétés d’investissement ou ClubDeal (<a href="/fr/investir/immobilier/club-deal">En savoir plus</a>) qui s'engagent auprès de WiSEED sur un volume annuel ou mensuel de fonds à ventiler sur plusieurs projets. Pour ce projet, aucune réservation. </li>
-                                            <li> <strong>les Premiums</strong> : WiSEEDers particulièrement actifs et ayant une activité d’investissement soutenue (<a href="/fr/premium" target="_blank" class="new-tab">En savoir plus</a>). Pour ce projet, aucune réservation. </li>
-                                            <li> <strong>les Individuels</strong> : personne physique ou morale qui n’ont pas le statut Professionnel ou Premium. Pour ce projet : 300&nbsp;000,00 € </li>
-                                        </ul>
-                                        <p></p>
-                                        <p> Cette ventilation est réalisée dans un souci de répartir de manière équilibrée les investissements par catégorie. Pour rappel, les conditions de souscription sont identiques pour tous. </p>
-                                    </div>
-                                    <div class="modal-footer" style="padding-top:0px; padding-bottom:0px;">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
 
                         <div class="project-side-others">
-                            <h4 class="text-bold"><i class="ion ion-lg ion-ios-upload-outline"></i> Partagez ce projet </h4>
-                            <p> <a class="share-btn share-popup share-facebook tooltip-show btn btn-sm btn-primary btn-flat no-margin" href="" title="" data-original-title="Partager sur Facebook"> <i class="ion ion-2x ion-social-facebook"></i></a>
-                                <a class="share-btn share-popup share-twitter tooltip-show btn btn-sm btn-primary btn-flat no-margin" href="https://twitter.com/share?{{ path('le_projet',{'id': projet.id}) }}" title="{{ projet.nomProjet }}" data-original-title="Partager sur Twitter"> <i class="ion ion-2x ion-social-twitter"></i></a>
+                            <h4 class="text-bold"><i class="ion ion-lg ion-ios-upload-outline"></i> Partagez ce projet
+                            </h4>
+                            <p>
+                                <a class="share-btn share-popup share-facebook tooltip-show btn btn-sm btn-primary btn-flat no-margin"
+                                   href="" title="" data-original-title="Partager sur Facebook"> <i
+                                            class="ion ion-2x ion-social-facebook"></i></a>
+                                <a class="share-btn share-popup share-twitter tooltip-show btn btn-sm btn-primary btn-flat no-margin"
+                                   href="https://twitter.com/share?{{ path('le_projet',{'id': projet.id}) }}"
+                                   title="{{ projet.nomProjet }}" data-original-title="Partager sur Twitter"> <i
+                                            class="ion ion-2x ion-social-twitter"></i></a>
 
                         </div>
                     </div>

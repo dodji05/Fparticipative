@@ -68,6 +68,7 @@ class RegistrationPromoteurController extends Controller
 
 //        $fedapay = $this->get('app.feday.client');
 //        $fedapay->transactionFeday(10000);
+      //  \FedaPay\FedaPay::setEnvironment():
 
         \FedaPay\FedaPay::setApiKey($this->getParameter('feday_secret_key'));
 

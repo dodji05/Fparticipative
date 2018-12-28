@@ -39,7 +39,7 @@
 {% endblock %}
 
     {#pied de page#}
-    <div class="footer-wrapper">
+    <div class="footer-wrapper" style="margin-top: 45px">
         <div class="row-container">
             <div class="container">
                 <div class="row">
@@ -51,11 +51,11 @@
 
                         </p>
                     </div>
-                    <div class="col-4 col-xs-12 col-sm-4 col-md-3 text-center">
-                        <p>Abonnez-vous à la newsletter &nbsp; <span class="glyphicon glyphicon-info-sign tooltip-show" data-toggle="tooltip" title="" data-original-title="Votre email n'est communiqué à personne et n'est utilisé que par nous pour communiquer sur les projets. Vous pourrez à tout moment vous désabonner en cliquant sur le lien en bas de chaque newsletter."></span> </p>
-                        <div class="input-group" id="abonnement-newsletter"> <input id="emailAbonnement" type="email" name="emailAbonnement" class="form-control" placeholder="votre@email.fr"> <span class="input-group-btn"> <button class="btn btn-md btn-fl at btn-primary" type="button" data-loading-text="..." data-authenticity-token="" data-url-post="#"> OK </button> </span>
-                        </div>
-                    </div>
+                    {#<div class="col-4 col-xs-12 col-sm-4 col-md-3 text-center">#}
+                        {#<p>Abonnez-vous à la newsletter &nbsp; <span class="glyphicon glyphicon-info-sign tooltip-show" data-toggle="tooltip" title="" data-original-title="Votre email n'est communiqué à personne et n'est utilisé que par nous pour communiquer sur les projets. Vous pourrez à tout moment vous désabonner en cliquant sur le lien en bas de chaque newsletter."></span> </p>#}
+                        {#<div class="input-group" id="abonnement-newsletter"> <input id="emailAbonnement" type="email" name="emailAbonnement" class="form-control" placeholder="votre@email.fr"> <span class="input-group-btn"> <button class="btn btn-md btn-fl at btn-primary" type="button" data-loading-text="..." data-authenticity-token="" data-url-post="#"> OK </button> </span>#}
+                        {#</div>#}
+                    {#</div>#}
                     <div class="clearfix">
 
                     </div>
@@ -76,7 +76,7 @@
                         <h4 class="">Comment ça marche ?</h4>
                         <ul class="ion-ul ">
                             <li> <a href="{{ path('comment_marche') }}" title="Comment ça marche"> <i class="ion ion-li ion-ios-arrow-right"></i> Comment investir </a> </li>
-                            <li> <a href="{{ path('comment_marche') }}" title="Comment ça marche"> <i class="ion ion-li ion-ios-arrow-right"></i> Comment lever des fonds </a> </li>
+                            {#<li> <a href="{{ path('comment_marche') }}" title="Comment ça marche"> <i class="ion ion-li ion-ios-arrow-right"></i> Comment lever des fonds </a> </li>#}
 
                              </ul>
                     </div>

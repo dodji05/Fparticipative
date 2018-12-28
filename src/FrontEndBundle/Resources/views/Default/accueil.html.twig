@@ -4,7 +4,7 @@
         <div class="upon-carousel-fixed">
             <a class="control-big-carousel left btn btn-link withoutripple hidden-xs" href="#big-carousel" data-slide=prev> <i class="ion ion-ios-arrow-left ion-2x"></i> </a>
             <a class="control-big-carousel right btn btn-link withoutripple hidden-xs" href="#big-carousel" data-slide=next> <i class="ion ion-ios-arrow-right ion-2x"></i> </a>
-            <a id=big-carousel-pause-btn class="control-big-carousel btn btn-link withoutripple hidden-xs" href="#" data-paused=false> <i class="ion ion-ios-pause ion-5x"></i> </a>
+            {#<a id=big-carousel-pause-btn class="control-big-carousel btn btn-link withoutripple hidden-xs" href="#" data-paused=false> <i class="ion ion-ios-pause ion-5x"></i> </a>#}
             <div class=container>
                 <div class="row row-carousel">
                     <div class="col-xs-12 col-md-8">
@@ -31,13 +31,13 @@
                 {% for projet in projets %}
                 {% if loop.index == 1 %}
                 {% for media in projet.media|slice(0,1)%}
-                            <div class="slideCarousel active item" data-image-desktop="{{ asset ('uploads/admin/images/')}}{{ media.chemin  }}" data-image-mobile="http://localhost/fundme/web/uploads/admin/images/joshsommersbeach05.jpg">
+                            <div class="slideCarousel active item" data-image-desktop="{{ asset ('uploads/admin/images/')}}{{ media.chemin  }}" data-image-mobile="{{ asset ('uploads/admin/images/')}}{{ media.chemin  }}">
 
 
                         {% endfor %}
                    {% else %}
                    {% for media in projet.media|slice(0,1)%}
-                            <div class="slideCarousel  item" data-image-desktop="{{ asset ('uploads/admin/images/')}}{{ media.chemin  }}" data-image-mobile="http://localhost/fundme/web/uploads/admin/images/joshsommersbeach05.jpg">
+                            <div class="slideCarousel  item" data-image-desktop="{{ asset ('uploads/admin/images/')}}{{ media.chemin  }}" data-image-mobile="{{ asset ('uploads/admin/images/')}}{{ media.chemin  }}">
 
 
                         {% endfor %}
@@ -66,7 +66,7 @@
                 <div class="row">
                     <div class="col-xs-12 col-sm-8 col-md-8"> <h3 class="h3 text-bold">Découvrez les projets entierement financés</h3> </div>
                     <div class="col-xs-12 col-sm-4 col-md-4">
-                        <a href="#" class="btn btn-primary pull-right">Voir tous les projets réalisés<i class="ion ion-btn ion-ios-arrow-right"></i></a>
+                        <a href="{{ path('projets_realises') }}" class="btn btn-primary pull-right">Voir tous les projets réalisés<i class="ion ion-btn ion-ios-arrow-right"></i></a>
                     </div>
                 </div> <br>
                 <div class="controls-carousel-absolute hidden-xs">
@@ -84,7 +84,7 @@
                             {% set totaldon =totaldon+ don.montant %}
                         {% endfor %}
                             <div class="col-xs-12 col-sm-6 col-md-4 col-project-card">
-    <div class="project-card enr" id="19370683">
+    <div class="project-card enr">
         <a href="" class="link">
         {% for media in projet.media|slice(0,1)%}
                         <div class="project-thumbnail text-right" style="background-image: url('{{ asset ('uploads/admin/images/')}}{{ media.chemin  }}')"> </div>

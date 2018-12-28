@@ -17,8 +17,11 @@
                  <div class="row">
                      {% set totaldon = 0 %}
                      {% for projet in projets %}
+                         {% set totaldonateur = 0 %}
+                         {% set totaldonateur1  = projet.dons|length %}
                          {% for don in projet.dons %}
                              {% set totaldon =totaldon+ don.montant %}
+                             {% set totaldonateur = totaldonateur +1  %}
                          {% endfor %}
                          <div class="col-xs-12 col-sm-6 col-md-4 col-project-card">
                              <div class="project-card startup" id="{{ projet.id }}">
@@ -41,7 +44,7 @@
 
 
                                          {% endif %}
-                                         &nbsp;<small title="{{ porteur }}">par {{ porteur }}</small>
+                                         {#&nbsp;<small title="{{ porteur }}">par {{ porteur }}</small>#}
                                      </h3></a>
                                  <a href="{{ path('le_projet',{'id': projet.id}) }}">
                                      <p class="description-courte">{{ projet.descriptionCourteProjet|slice(0,300)|raw }}</p> <br/><br/><br/>
@@ -88,7 +91,7 @@
                                              <strong class="text-on-one-line">en cours</strong>
                                          </li>
                                          <li> <strong>{{ projet.objectif|number_format(0, ' ', ' ') }}</strong> <br>recherchés </li>
-                                         <li> <strong>{{ totaldon }}</strong> <br>Contributeurs </li>
+                                         <li> <strong>{{ totaldonateur1  }}</strong> <br>Contributeurs </li>
                                          <li> <strong>{{ totaldon|number_format(0, ' ', ' ') }}</strong> <br>Récoltées </li>
                                      </ul>
                                  </div>
