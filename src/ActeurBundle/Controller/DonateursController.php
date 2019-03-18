@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use ActeurBundle\Client\StripeClient;
 
@@ -32,7 +33,7 @@ class DonateursController extends Controller
         $fond = $fond->findBy(array('donateur'=>$this->getUser()));
 
         $projets =  $em->getRepository('AdminBundle:Projets')->projetsValides(10,"enFinancement");
-       // $user = $em->getRepository('AdminBundle:Donateurs')->findOneBy(array('id'=>4));
+        // $user = $em->getRepository('AdminBundle:Donateurs')->findOneBy(array('id'=>4));
 
         return $this->render('@Acteur/Donateurs/index.html.twig', array(
             'fonds'=>$fond,
@@ -46,7 +47,7 @@ class DonateursController extends Controller
         $em = $this->getDoctrine()->getManager();
         $projets =  $em->getRepository('AdminBundle:Dons')->projetsFinances($this->getUser());
 
-       // var_dump($projets);die();$projets = $em->getRepository('AdminBundle:Projets')->tousLesProjetsValides();
+        // var_dump($projets);die();$projets = $em->getRepository('AdminBundle:Projets')->tousLesProjetsValides();
 
         return $this->render('@Acteur/Donateurs/projets_finances.html.twig' ,array(
             'type'=>'FINANCE',
@@ -94,99 +95,67 @@ class DonateursController extends Controller
     public function VoteProjetAction(Request $request,$id)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $repos = $em->getRepository('AdminBundle:Projets');
-        $projet = $repos->findOneBy(array('id'=>$id));
-
-
+        $session = new Session();
+        $projet = $em->getRepository('AdminBundle:Projets')->findOneBy(array('id'=>$id, 'selectionne'=>1));
         $form = $this->get('form.factory')
             ->createNamedBuilder('payment-form')
-            ->add('token', HiddenType::class, [
-                'constraints' => [new NotBlank()],
+
+            ->add('montant',IntegerType::class,[
+                'attr' => [
+                    'placeholder' =>'Veuillez entre le montant de votre participation'
+                ]
             ])
-            ->add('montant',IntegerType::class)
-            ->add('submit', SubmitType::class)
+            ->add('submit', SubmitType::class,[
+                'label'  => "Je participe au projet",
+                'attr' => [
+                    'class' =>'btn btn-outline-info'
+                ]
+            ])
             ->getForm();
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
-           // $logger = new LoggerInterface();
+            // $logger = new LoggerInterface();
             if ($form->isValid()) {
-
-                $token =  $form->get('token')->getData();
-                \Stripe\Stripe::setApiKey($this->getParameter('stripe_secret_key'));
-                $stripeClient = $this->get('app.stripe.client');
-                $config = $this->getParameter('payment');
-                /** @var User $user */
-
                 $user = $this->getUser();
-                if (!$user->getStripeCustomerId()) {
-                    $stripeClient->createCustomer($user, $token);
-                } else {
-                    $stripeClient->updateCustomerCard($user, $token);
+                $montant =  $form->get('montant')->getData();
+
+                $session->set('donation_montant',$montant);
+
+                \FedaPay\FedaPay::setApiKey($this->getParameter('feday_secret_key'));
+
+
+                try {
+                    $transaction = \FedaPay\Transaction::create(
+                        $this->fedapayTransactionData($montant, $user, $projet)
+                    );
+                    $token = $transaction->generateToken();
+                    return $this->redirect($token->url);
                 }
-                $stripeClient->createInvoiceItem(
-                    $form->get('montant')->getData(),
-                    $user,
-                    "SOUTIENT AU PROJET ".$projet->getNomProjet(),
-                    $config['currency']
-                );
-                // guarantee it charges *right* now
-                $stripeClient->createInvoice($user, true);
+                catch(\Exception $e) {
+                    $this->addFlash(
+                        'danger',
+                        $e->getMessage()
+//                       'Votre participation au projet : '.$projet->getNomProjet().' pour un montant de :'.$montant.' a été pris en compte'
+                    //  $this->generateUrl('first_inscription_fedapay'.$e->getMessage(),array(null),0)
+                    );
+                    return $this->redirectToRoute('payement_admin',['id'=>$id]);
+                }
 
-                $dons =  new Dons();
-                $dateDons = new \DateTime();
-                $dons->setDonateur($user);
-                $dons->setDateDons($dateDons);
-                $dons->setMontant($form->get('montant')->getData());
-                $dons->setProjet($projet);
-                // $dons->setDonateur($this->getUser());
-                $em->persist($dons);
 
-                // $user->setChargeId($charge->id);
-                // $user->setPremium($charge->paid);
-                $em->persist($user);
-                $em->flush();
 
-                //Envoi de mail
-                // 1- au donateur
-                // 2- au porteur de projet
-                // 3- A l'association
-
-                return $this->redirectToRoute('facture_dons',['id'=>$dons->getId()]);
             }
 
 
-//            if ($form->isValid()) {
-//                \Stripe\Stripe::setApiKey($this->getParameter('stripe_secret_key'));
-//               // $config = array();
-//                $config = $this->getParameter('payment');
-//
-//                try {
-//
-//
-//                    $charge = \Stripe\Charge::create([
-//                        'amount' => $form->get('montant')->getData()/*20000$config['decimal'] ? $config['premium_amount'] * 100 : $config['premium_amount']*/,
-//                        'currency' => $config['currency'],
-//                        'description' => $projet->getNomProjet(),
-//                        //'customer'=> $user->getNom(),
-//                        'source' => $form->get('token')->getData(),
-//                        //'receipt_email' => 'gildas31@gmail.com'/*$user->getEmail()*/,
-//                    ]);
-//                } catch (\Stripe\Error\Base $e) {
-//                  //  $logger->error(sprintf('%s exception encountered when creating a premium payment: "%s"', get_class($e), $e->getMessage()), ['exception' => $e]);
-//
-//                    throw $e;
-//                }
-//                // Sauvegades du dons qui vient d'etre effectuee
 
-//            }
         };
+        $session->remove('donation_montant');
 
-        $projet = $em->getRepository('AdminBundle:Projets')->findOneBy(array('id'=>$id, 'selectionne'=>1));
         return $this->render('@Acteur/Donateurs/soutenir.html.twig', array(
-            'projet' => $projet,
-            'form' => $form->createView(),
-            'stripe_public_key' => $this->getParameter('stripe_public_key'),));
+                'projet' => $projet,
+                'form' => $form->createView(),
+                'stripe_public_key' => $this->getParameter('feday_public_key'),
+            )
+        );
     }
 
     /**
@@ -256,4 +225,140 @@ class DonateursController extends Controller
 
         ));
     }
+
+    private function fedapayTransactionData($frais, $user, $projet)
+    {
+        $customer_data = [
+            'firstname' => $user->getNom(),
+            'lastname' => $user->getPrenom(),
+            'email' =>$user->getEmail(),
+            'phone_number' => [
+                'number'  => $user->getTelephone(),
+                'country' => 'bj'
+            ]
+        ];
+        return [
+            'description' => 'Participation au projet',
+            'amount' => $frais,
+            'currency' => ['iso' => 'XOF'],
+            'callback_url' =>  $this->generateUrl('donation_fedapay',['projet'=>$projet->getId()],0),//'https://soutenirunprojet.yo.fr/inscription-feday',//$this->generateUrl('first_inscription_fedapay') https://soutenirunprojet.yo.fr/http://localhost:8888/FparticipativeV3/web/app_dev.php/inscription-feday,
+            'customer' => $customer_data
+        ];
+    }
+
+/*
+*
+*@Route("/inscription-payement", name="first_inscription_payement")
+*
+*/
+    public function preInscriptionPayAction (Request $request,SessionInterface $session){
+        // $session = new Session();
+        $sessionAttente = $session->get("enAttente");
+
+//        $fedapay = $this->get('app.feday.client');
+//        $fedapay->transactionFeday(10000);
+        //  \FedaPay\FedaPay::setEnvironment():
+
+        \FedaPay\FedaPay::setApiKey($this->getParameter('feday_secret_key'));
+
+
+        try {
+            $transaction = \FedaPay\Transaction::create(
+                $this->fedapayTransactionData($this->getParameter('frais_adhesion'), $sessionAttente)
+            );
+            $token = $transaction->generateToken();
+            return $this->redirect($token->url);
+        } catch(\Exception $e) {
+            $this->addFlash(
+                'notice',
+                $this->generateUrl('first_inscription_fedapay'.$e->getMessage(),array(null),0)
+            );
+            return $this->redirectToRoute('first_inscription');
+        }
+
+    }
+    /**
+     *
+     *@Route("/donation-feday/{projet}", name="donation_fedapay")
+     *
+     */
+
+
+    public function callbackAction(Request $request,$projet)
+    {
+        \FedaPay\FedaPay::setApiKey($this->getParameter('feday_secret_key'));
+        $transaction_id = $request->get('id');
+        global $message;// = '';
+        $message='';
+
+
+        global $route;
+        $route = 'first_inscription';
+        try {
+            $transaction = \FedaPay\Transaction::retrieve($transaction_id);
+            switch($transaction->status) {
+                case 'approved':
+                    $message = 'Transaction approuvée.';
+                    $em = $this->getDoctrine()->getManager();
+                    $session = new Session();
+                    $montant = $session->get('donation_montant');
+                    $user = $this->getUser();
+                    $em = $this->getDoctrine()->getManager();
+
+                    $repos = $em->getRepository('AdminBundle:Projets');
+                    $projet = $repos->findOneBy(array('id'=>$projet));
+
+                    $dons =  new Dons();
+                    $dateDons = new \DateTime();
+                    $dons->setDonateur($user);
+                    $dons->setDateDons($dateDons);
+                    $dons->setMontant($montant);
+                    $dons->setProjet($projet);
+                    // $dons->setDonateur($this->getUser());
+                    $em->persist($dons);
+
+
+                    $em->persist($user);
+                    $em->flush();
+
+                    //Envoi de mail
+                    // 1- au donateur
+                    // 2- au porteur de projet
+                    // 3- A l'association
+
+
+                    $this->addFlash(
+                        'success',
+                        'Felicitation!!!! votre transaction s est effectuee avec succes. Veuillez entre le code reçu par sms et par mail dans le formulaire ci-dessous  !!!!!'
+                    );
+                    return $this->redirectToRoute('facture_dons',['id'=>$dons->getId()]);
+                    break;
+                case 'canceled':
+                    $message = 'Transaction annulée.';
+                    $this->addFlash(
+                        'notice',
+                        'Oups!!!! votre transaction n\'a pas pu aboutie. Verifier si vous avez de fond pour effectuer cette operation. Merci  !!!!!'
+                    );
+                    $route='first_inscription';
+                    break;
+                case 'declined':
+                    $message = 'Transaction déclinée.';
+                    $this->addFlash(
+                        'notice',
+                        'Oups!!!! votre transaction n\'a pas pu aboutie. Verifier si vous avez de fond pour effectuer cette operation. Merci  !!!!!'
+                    );
+                    $route ='first_inscription';
+                    break;
+            }
+        } catch(\Exception $e) {
+            $this->addFlash(
+                'notice',
+                $e->getMessage()
+            );
+            return $this->redirectToRoute('first_inscription');
+
+        }
+        return $this->redirectToRoute('first_inscription');
+    }
+
 }

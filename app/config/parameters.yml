@@ -13,10 +13,10 @@ parameters:
     app.path.admin_images: admin_images
     app.path.porteur_plan_affaires: porteur_plan_affaires
 
-#    feday_public_key: pk_sandbox_OqCD15OIqzaw7fv9xtend2WU
-#    feday_secret_key: sk_sandbox_8XkZp1VnWYKbs8_aIQxdhApi
-    feday_public_key: pk_live_S-P5hrtw616pxttShvtS674c
-    feday_secret_key: sk_live_NsRnWCM4X_cKvcrmBK9dFdnH
+    feday_public_key: pk_sandbox_6u83WWjeBceCSk7oqltrQ9eP
+    feday_secret_key: sk_sandbox_u2z6Z21EK-cuYoeoA4q7DRZK
+#    feday_public_key: pk_live_S-P5hrtw616pxttShvtS674c
+#    feday_secret_key: sk_live_NsRnWCM4X_cKvcrmBK9dFdnH
     frais_adhesion: 10000
     app.projets.encours:
     app.projets.boucles:
