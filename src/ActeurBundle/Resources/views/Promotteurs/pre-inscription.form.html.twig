@@ -119,7 +119,7 @@ function choix(choi) {
         if ( choi == "Oui"){
             $('#codeOui').show();
             $('#codeNon').hide();
-            document.location.href= Routing.Route("code-validation")
+            document.location.href= Routing.getBaseUrl()+'/register/porteur/code-validation'
 
         }
         else if( choi == "Non") {
